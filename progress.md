@@ -5,7 +5,8 @@
 在 PageIndex 之上做**「法律效力感知」的政策问答与比对系统**：文档的效力状态
 （现行有效／效力存疑／已废止／系列已废止）作为推理维度进入检索与作答，而不是
 检索完成后再过滤。当前端到端可跑，并支持按历史时点重算效力；语料覆盖约 99%，
-95 项审计全过，validity-QA 80/80。
+核心审计 123 项全过、Web 服务审计 22/22，validity-QA 80/80；代码已同步到
+GitHub `yang-0315/haikou-code`。
 
 ---
 
@@ -92,6 +93,10 @@
 - **条文级部分废止落地**：从修改决定中提取“删去/删除第X条”和只删款、项的事件，
   生成独立索引；检索目录、选条、作答、树节点与 PageIndex 适配器都使用条文级状态，
   不再把“文档整体有效”等同于“每条都有效”。
+- **用户服务入口完成**：本机 Web 页面和异步 JSON API 已落地，支持提问、历史时点、
+  效力状态、拒答原因和引用来源展示；服务审计 22/22。
+- **版本管理完成**：建立 Git 基线，`PageIndex/` 固定为 MIT 上游子模块；项目已合并
+  远程初始提交并推送到 GitHub，`main` 与 `origin/main` 同步。
 
 ---
 
@@ -251,6 +256,30 @@
 - `audit_article_force.py` 28 项全过，覆盖解析、关联、整条/部分删除、历史时点、
   重新公布文本、检索/作答/树/PageIndex、`drop`/`strict` 策略与真实语料样例。
 
+### 13. 面向用户的服务入口
+
+- `service.py` 用 Python 标准库提供同源 Web 页面、异步任务 API 和健康检查，不引入
+  Web 框架依赖；默认监听 `127.0.0.1:8787`。
+- `web/index.html`、`web/app.js`、`web/app.css` 支持政策提问、可选历史时点、效力
+  状态、引用来源和检索说明；HTML 同时使用 UTF-8 BOM、Meta 与 HTTP 响应头编码。
+- 长模型调用以任务方式后台执行，页面轮询 `GET /api/ask/{id}`；提供请求体大小限制、
+  JSON 输入校验、错误脱敏、CSP 和本机监听默认值。
+- `audit_service.py` 22/22 全过；真实 DeepSeek 接口曾完成异步问答验证。
+
+### 14. Git、远程仓库与软著边界
+
+- 项目根目录已建立 Git 仓库，主分支 `main` 跟踪
+  `https://github.com/yang-0315/haikou-code.git`。
+- 首次可运行基线提交为 `225f9c5`，标签为 `baseline-2026-11-22`；远程原有
+  `Initial commit` 已通过合并提交保留，没有覆盖远程历史。
+- `PageIndex/` 作为 MIT 上游子模块引用，固定上游提交 `9c4c3ff`；上游许可证保留在
+  `PageIndex/LICENSE`。
+- 语料库、`.env`、虚拟环境、`haikou/_vendor/`、浏览器调试目录和大型生成索引不进入
+  Git；大型语料需独立备份。
+- `THIRD_PARTY_NOTICES.md` 记录第三方边界，
+  `docs/SOFTWARE_COPYRIGHT_SCOPE.md` 给出现有自研代码的软著建议申报范围。
+- 项目当前没有对自研代码授予开源许可证，对外分发前需单独确定许可证。
+
 ---
 
 ## 未完成的待办
@@ -324,6 +353,7 @@ python haikou\audit_temporal.py
 python haikou\audit_temporal_coverage.py
 python haikou\audit_provider.py
 python haikou\audit_article_force.py
+python haikou\audit_service.py
 python haikou\score_v2.py
 python haikou\stability_check.py
 
@@ -349,6 +379,14 @@ python haikou\audit_article_force.py
 # 模型 Provider 配置与连通性
 python haikou\llm_provider.py --show-config
 python haikou\llm_provider.py --chat "只回复 OK"
+
+# 面向用户的服务
+python haikou\service.py
+
+# Git 状态与远程同步
+git status --short --branch
+git log --oneline --decorate -5
+git push origin main
 ```
 
 ---
@@ -367,24 +405,15 @@ python haikou\llm_provider.py --chat "只回复 OK"
 - **模型配置**：优先 `haikou\.env`，兼容旧 `PageIndex\.env`；参见
   `haikou\llm_provider.example.env`。DeepSeek key 变量为 `DEEPSEEK_API_KEY`。
 - **Git 仓库**：外层项目已建立 `main` 基线；`PageIndex/` 作为上游 MIT 子模块，
-  语料库、虚拟环境、密钥和大型索引不纳入版本控制。重要功能完成后提交并打标签。
+  语料库、虚拟环境、密钥和大型索引不纳入版本控制。远程为
+  `https://github.com/yang-0315/haikou-code.git`，已推送 `main` 和
+  `baseline-2026-11-22` 标签。重要功能完成后提交并同步远程。
+- **GitHub 推送网络**：本机直连 GitHub 间歇性超时；成功推送使用本机 SOCKS5
+  `127.0.0.1:10808`。若新会话推送超时，可检查该代理是否监听，并使用 Git 的
+  `http.proxy=socks5h://127.0.0.1:10808` 临时配置；不要把代理或凭据写进仓库。
 - **索引重建**：批量改语料后第一次查询会现场重建（约 6.5s），之后 0.68s；也可先跑一次查询「烘」索引。
 - **时点证据边界**：正式索引覆盖 1,248 份；明确施行日 635 份，剩余 156 份需人工补证。月份／年份跨过施行或废止日时降为存疑，URL 月份不会单独充当施行日。
 - **写文件约定**：本项目一直用 `apply_patch` 编辑；不要用 `cat`/重定向写文件。
-
----
-
-## 新对话开场提示词（可直接复制）
-
-> 我在 `C:\Users\Lenovo\Desktop\PageIndex` 做一个「海南自贸港政策文档的效力感知问答系统」，
-> 详情见 `progress.md` 和 `SPINE.md`。当前：语料 1,248 份（约 99% 覆盖）、检索索引 43,642 单元、
-> 三态判定（现行有效 1,178／已废止 35／存疑 24／系列已废止 7）、validity-QA 80/80、
-> 时点检索 13/13、时点证据 12/12、Provider 10/10、条文级部分废止 28/28，
-> 核心审计合计 123 项全过，Web 服务审计 22/22。测试题在 `eval_set_v3_additions.json`，
-> 模型输出在 `eval_results_v3.json`，所有者验收 80/80，但 A/B 同源、非独立盲评。
-> 时点证据索引已覆盖 1,248 份，明确施行日 635 份，剩余 156 份人工队列已生成。
-> 模型 Provider 已解耦。下一步我想做【填这里：人工补齐时点日期 / 独立第二人盲评 / 提高表格目录条款直引率 / …】。
-> 请先读 `progress.md`，再开始动手；改完要跑对应审计。
 
 ---
 
@@ -402,6 +431,9 @@ audit_temporal_coverage 12/12
 audit_provider      10/10
 audit_article_force 28/28
 audit_service       22/22
+git worktree        clean
+git remote          main = origin/main
+github repo         https://github.com/yang-0315/haikou-code
 validity-QA         80/80（答案对 54/54、引用合规 80/80、现行有效题 47/47）
 live provider       DeepSeek 经统一 Provider 调用返回 OK
 data validation     80/80 题引用与失效归属通过
