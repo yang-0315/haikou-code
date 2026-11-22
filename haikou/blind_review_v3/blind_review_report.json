@@ -1,0 +1,38 @@
+{
+  "version": 3,
+  "status": "completed_owner_attested_not_independent",
+  "independence": "owner_attested_not_independent",
+  "reviewer_ids": [
+    "A-owner-attested",
+    "B-owner-attested"
+  ],
+  "cases_expected": 80,
+  "completion": {
+    "A": "80/80",
+    "B": "80/80"
+  },
+  "complete_both": 80,
+  "invalid_values": [],
+  "agreement_percent": {
+    "question_quality": 100.0,
+    "expected_behavior": 100.0,
+    "answer_verdict": 100.0,
+    "citation_verdict": 100.0,
+    "force_verdict": 100.0,
+    "confidence": 100.0
+  },
+  "cohen_kappa": {
+    "question_quality": 1.0,
+    "expected_behavior": 1.0,
+    "answer_verdict": 1.0,
+    "citation_verdict": 1.0,
+    "force_verdict": 1.0,
+    "confidence": 1.0
+  },
+  "auto_vs_human": {
+    "resolved": 80,
+    "agreements": 80,
+    "disagreements": 0
+  },
+  "disagreements": []
+}

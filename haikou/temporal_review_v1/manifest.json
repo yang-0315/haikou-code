@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "cases": 156,
+  "priority_counts": {
+    "P0": 6,
+    "P1": 3,
+    "P2": 147,
+    "P3": 0
+  },
+  "instructions": "核对官方来源后填写 review_* 字段，再运行 import_temporal_review.py。"
+}

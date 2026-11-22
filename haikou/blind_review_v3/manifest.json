@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "seed": 20261121,
+  "cases": 80,
+  "reviewers": [
+    "reviewer_A.csv",
+    "reviewer_B.csv"
+  ],
+  "coordinator_only": [
+    "coordinator_key.json"
+  ],
+  "status": "waiting_for_reviewers"
+}

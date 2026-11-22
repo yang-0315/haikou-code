@@ -1,0 +1,2046 @@
+{
+  "version": 3,
+  "seed": 20261121,
+  "cases": {
+    "BR-001": {
+      "original_id": "off-03",
+      "type": "off_corpus",
+      "question": "个人所得税专项附加扣除的标准是多少？",
+      "notes": "国家级政策，非海南省市规章；已知粗筛会放行，考验模型拒答。",
+      "must_cite": [],
+      "key_points": [],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": true,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-002": {
+      "original_id": "eq-44",
+      "type": "in_force",
+      "question": "《保亭黎族苗族自治县城乡容貌和环境卫生管理条例》适用于哪些区域？",
+      "notes": "第二条适用于实行城市化管理的区域及其他区域。",
+      "must_cite": [
+        "保亭黎族苗族自治县城乡容貌和环境卫生管理条例|第二条"
+      ],
+      "key_points": [
+        [
+          "实行城市化管理的区域"
+        ],
+        [
+          "其他区域"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-003": {
+      "original_id": "trap-16",
+      "type": "trap",
+      "question": "《海南省注册会计师条例》要求注册会计师加入什么机构后才能执业？",
+      "notes": "该条例已于2019-09-01废止。不得作为现行执业依据。",
+      "must_cite": [],
+      "key_points": [],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [
+          "海南省注册会计师条例",
+          "海南省注册会计师条例",
+          "海南省注册会计师条例"
+        ],
+        "unlabeled_repealed": [],
+        "all_in_force": false,
+        "correct": true
+      }
+    },
+    "BR-004": {
+      "original_id": "eq-19",
+      "type": "in_force",
+      "question": "《三亚市山体保护条例》如何界定本条例所称的山体？",
+      "notes": "第二条：主峰相对高度不低于20米的自然山脉和山地。",
+      "must_cite": [
+        "三亚市山体保护条例|第二条"
+      ],
+      "key_points": [
+        [
+          "20米"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-005": {
+      "original_id": "eq-20",
+      "type": "in_force",
+      "question": "《三亚市扬尘污染防治办法》所称扬尘污染包括哪些活动产生的粉尘颗粒物？",
+      "notes": "第三条列举施工、拆除、物料运输堆放、道路挖掘养护、绿化施工、矿产开采加工及地面裸露等。",
+      "must_cite": [
+        "三亚市扬尘污染防治办法|第三条"
+      ],
+      "key_points": [
+        [
+          "建设工程施工"
+        ],
+        [
+          "物料运输"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-006": {
+      "original_id": "trap-07",
+      "type": "trap",
+      "question": "海南省城乡规划条例关于城乡规划编制的审批程序是怎么规定的？",
+      "notes": "已废止（被《海南自由贸易港国土空间规划条例》取代）。",
+      "must_cite": [],
+      "key_points": [],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-007": {
+      "original_id": "eq-03",
+      "type": "in_force",
+      "question": "日用消费品免税店的经营主体是通过什么方式确定的？",
+      "notes": "第十一条：按合法合规、公平公正原则采用竞争方式确定，须订立书面合同并备案。",
+      "must_cite": [
+        "海南自由贸易港岛内居民消费零关税进境商品经营主体及免税店管理办法|第十一条"
+      ],
+      "key_points": [
+        [
+          "竞争"
+        ],
+        [
+          "合同"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-008": {
+      "original_id": "eq-22",
+      "type": "in_force",
+      "question": "《三亚市河道管理条例》所称河道包括哪些水体？",
+      "notes": "第二条包括三亚河、宁远河、藤桥河等河流，大隆水库、赤田水库等水库以及湖泊和人工水道等。",
+      "must_cite": [
+        "三亚市河道管理条例|第二条"
+      ],
+      "key_points": [
+        [
+          "三亚河"
+        ],
+        [
+          "水库"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-009": {
+      "original_id": "qst-06",
+      "type": "questionable",
+      "question": "《海口市城市供水管理规定》要求城市供水工作坚持什么方针？",
+      "notes": "该规定判为效力存疑；可引用但必须提示人工核实。第三条明确坚持开源与节流并举。",
+      "must_cite": [
+        "海口市城市供水管理规定|第三条"
+      ],
+      "key_points": [
+        [
+          "开源与节流并举"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": false,
+        "correct": true
+      }
+    },
+    "BR-010": {
+      "original_id": "eq-07",
+      "type": "in_force",
+      "question": "海南自由贸易港的禁毒工作坚持什么方针？",
+      "notes": "第二条：预防为主、综合治理，禁种禁制禁贩禁吸并举。",
+      "must_cite": [
+        "海南自由贸易港禁毒条例|第二条"
+      ],
+      "key_points": [
+        [
+          "预防为主"
+        ],
+        [
+          "综合治理"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-011": {
+      "original_id": "eq-37",
+      "type": "in_force",
+      "question": "海南省乡村振兴促进工作实行怎样的工作机制？",
+      "notes": "第二条明确省负总责，市县、乡镇抓落实。",
+      "must_cite": [
+        "海南省乡村振兴促进规定|第二条"
+      ],
+      "key_points": [
+        [
+          "省负总责"
+        ],
+        [
+          "市县、乡镇抓落实"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-012": {
+      "original_id": "eq-43",
+      "type": "in_force",
+      "question": "乐东黎族自治县规定哪些旅游经营违法行为可能被列入严重失信主体名单？",
+      "notes": "第三条列举伪造许可、无证经营、安全管理导致事故、超最大承载量接待、擅自改变行程等。",
+      "must_cite": [
+        "乐东黎族自治县旅游市场严重失信联合惩戒若干规定|第三条"
+      ],
+      "key_points": [
+        [
+          "未依法取得许可",
+          "无证从事旅游经营",
+          "未取得许可",
+          "无证经营"
+        ],
+        [
+          "安全事故"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-013": {
+      "original_id": "eq-39",
+      "type": "in_force",
+      "question": "海南省人口与计划生育工作应当以什么工作方式为主？",
+      "notes": "第四条：以宣传教育为主、经常性工作为主。",
+      "must_cite": [
+        "海南省人口与计划生育条例|第四条"
+      ],
+      "key_points": [
+        [
+          "宣传教育为主"
+        ],
+        [
+          "经常性工作为主"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-014": {
+      "original_id": "trap-11",
+      "type": "trap",
+      "question": "《洋浦经济开发区条例》规定开发区的主导产业和发展定位是什么？",
+      "notes": "该条例已于2022-01-01废止。不得作为现行依据引用。",
+      "must_cite": [],
+      "key_points": [],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [
+          "洋浦经济开发区条例"
+        ],
+        "unlabeled_repealed": [],
+        "all_in_force": false,
+        "correct": true
+      }
+    },
+    "BR-015": {
+      "original_id": "eq-40",
+      "type": "in_force",
+      "question": "海南国际旅游岛建设发展要构建怎样的特色经济结构？",
+      "notes": "第二条：以旅游业为龙头、现代服务业为主导。",
+      "must_cite": [
+        "海南国际旅游岛建设发展条例|第二条"
+      ],
+      "key_points": [
+        [
+          "旅游业为龙头"
+        ],
+        [
+          "现代服务业为主导"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-016": {
+      "original_id": "trap-08",
+      "type": "trap",
+      "question": "海南省消防条例规定的消防安全责任是怎么划分的？",
+      "notes": "已废止（被《海南自由贸易港消防条例》取代）。",
+      "must_cite": [],
+      "key_points": [],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [
+          "海南省消防条例",
+          "海南省消防条例",
+          "海南省消防条例",
+          "海南省消防条例",
+          "海南省消防条例",
+          "海南省消防条例",
+          "海南省消防条例",
+          "海南省消防条例"
+        ],
+        "unlabeled_repealed": [],
+        "all_in_force": false,
+        "correct": true
+      }
+    },
+    "BR-017": {
+      "original_id": "eq-04",
+      "type": "in_force",
+      "question": "日用消费品免税店的设立申请要提交哪些材料？",
+      "notes": "第十条五项材料。",
+      "must_cite": [
+        "海南自由贸易港岛内居民消费零关税进境商品经营主体及免税店管理办法|第十条"
+      ],
+      "key_points": [
+        [
+          "可行性研究报告"
+        ],
+        [
+          "承诺书"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-018": {
+      "original_id": "trap-13",
+      "type": "trap",
+      "question": "《海南省反走私暂行条例》规定的反走私综合治理原则和体制是什么？",
+      "notes": "该条例已于2025-12-18废止。不得把原条文当作现行规则。",
+      "must_cite": [],
+      "key_points": [],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [
+          "海南省反走私暂行条例",
+          "海南省反走私暂行条例",
+          "海南省反走私暂行条例"
+        ],
+        "unlabeled_repealed": [],
+        "all_in_force": false,
+        "correct": true
+      }
+    },
+    "BR-019": {
+      "original_id": "eq-41",
+      "type": "in_force",
+      "question": "三亚市白鹭公园作为城市基础设施，主要发挥什么作用？",
+      "notes": "第三条：公益性城市基础设施和公共绿地，供公众游览、休憩、观赏。",
+      "must_cite": [
+        "三亚市白鹭公园保护管理规定|第三条"
+      ],
+      "key_points": [
+        [
+          "公益性"
+        ],
+        [
+          "游览"
+        ],
+        [
+          "休憩"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-020": {
+      "original_id": "eq-27",
+      "type": "in_force",
+      "question": "西沙群岛海龟保护工作的主管部门是谁？",
+      "notes": "第三条：市人民政府生态环境行政主管部门主管；其他部门协同。",
+      "must_cite": [
+        "三沙市西沙群岛海龟保护规定|第三条"
+      ],
+      "key_points": [
+        [
+          "生态环境行政主管部门"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-021": {
+      "original_id": "eq-46",
+      "type": "in_force",
+      "question": "海南省乡镇人民代表大会依照什么行使职权、坚持什么指导思想？",
+      "notes": "第三条要求坚持党的领导，并依照宪法、法律、法规行使职权。",
+      "must_cite": [
+        "海南省乡镇人民代表大会工作条例|第三条"
+      ],
+      "key_points": [
+        [
+          "习近平新时代中国特色社会主义思想"
+        ],
+        [
+          "宪法、法律、法规"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-022": {
+      "original_id": "eq-16",
+      "type": "in_force",
+      "question": "海南省第二轮土地承包到期后再延长的试点，延长多少年？",
+      "notes": "同为段块文档（实施意见，无条文结构）。原文：扎实推进全省第二轮土地承包到期后再延长 30 年试点工作。",
+      "must_cite": [],
+      "key_points": [
+        [
+          "30年"
+        ],
+        [
+          "试点"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-023": {
+      "original_id": "trap-14",
+      "type": "trap",
+      "question": "《海南省未成年人保护条例》规定未成年人保护是全社会的什么责任？",
+      "notes": "该条例已于2021-11-01废止；库内另有名称相近的《海南省未成年人保护若干规定》，旧题也不得混作现行。",
+      "must_cite": [],
+      "key_points": [],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [
+          "海南省未成年人保护条例"
+        ],
+        "unlabeled_repealed": [],
+        "all_in_force": false,
+        "correct": true
+      }
+    },
+    "BR-024": {
+      "original_id": "trap-10",
+      "type": "trap",
+      "question": "《三亚市河道生态保护管理条例》适用于哪些河道管理活动？",
+      "notes": "该条例已于2025-09-01废止，由现行《三亚市河道管理条例》承接。正确行为：提示失效或拒答。",
+      "must_cite": [],
+      "key_points": [],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [
+          "三亚市河道生态保护管理条例",
+          "三亚市河道生态保护管理条例"
+        ],
+        "unlabeled_repealed": [],
+        "all_in_force": false,
+        "correct": true
+      }
+    },
+    "BR-025": {
+      "original_id": "eq-33",
+      "type": "in_force",
+      "question": "昌江黎族自治县农田水利基础设施建设与管护坚持什么方针？",
+      "notes": "第三条：政府主导、农民参与、社会支持；因地制宜、统一规划、建管并重、注重效益。",
+      "must_cite": [
+        "昌江黎族自治县农田水利基础设施管理保护条例|第三条"
+      ],
+      "key_points": [
+        [
+          "政府主导"
+        ],
+        [
+          "农民参与"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-026": {
+      "original_id": "trap-09",
+      "type": "trap",
+      "question": "海口市城市养犬管理条例要求怎么办理养犬登记？",
+      "notes": "已废止（被《海口市养犬管理条例》取代）。",
+      "must_cite": [],
+      "key_points": [],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [
+          "海口市城市养犬管理条例",
+          "海口市城市养犬管理条例",
+          "海口市城市养犬管理条例",
+          "海口市城市养犬管理条例",
+          "海口市城市养犬管理条例",
+          "海口市城市养犬管理条例",
+          "海口市城市养犬管理条例",
+          "海口市城市养犬管理条例"
+        ],
+        "unlabeled_repealed": [],
+        "all_in_force": false,
+        "correct": true
+      }
+    },
+    "BR-027": {
+      "original_id": "eq-47",
+      "type": "in_force",
+      "question": "省人民代表大会代表可以通过什么形式提出建议、批评和意见，有关机关应如何处理？",
+      "notes": "第二条：代表可以书面提出，有关机关、组织应当认真研究办理并及时答复。",
+      "must_cite": [
+        "海南省人民代表大会代表建议、批评和意见办理工作条例|第二条"
+      ],
+      "key_points": [
+        [
+          "书面"
+        ],
+        [
+          "及时答复"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-028": {
+      "original_id": "trap-15",
+      "type": "trap",
+      "question": "《海南省未成年人保护若干规定》如何规定未成年人保护的社会共同责任？",
+      "notes": "该规定已于2016-01-01废止。正确行为：提示失效或拒答。",
+      "must_cite": [],
+      "key_points": [],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [
+          "海南省未成年人保护若干规定",
+          "海南省未成年人保护若干规定",
+          "海南省未成年人保护若干规定",
+          "海南省未成年人保护若干规定",
+          "海南省未成年人保护若干规定",
+          "海南省未成年人保护若干规定",
+          "海南省未成年人保护若干规定",
+          "海南省未成年人保护若干规定"
+        ],
+        "unlabeled_repealed": [],
+        "all_in_force": false,
+        "correct": true
+      }
+    },
+    "BR-029": {
+      "original_id": "eq-24",
+      "type": "in_force",
+      "question": "三亚市爱国卫生工作坚持哪些原则？",
+      "notes": "第四条列出以人民健康为中心、政府主导、部门协作、属地管理、全员参与等。",
+      "must_cite": [
+        "三亚市爱国卫生管理办法|第四条"
+      ],
+      "key_points": [
+        [
+          "政府主导"
+        ],
+        [
+          "属地管理"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-030": {
+      "original_id": "eq-25",
+      "type": "in_force",
+      "question": "《三亚市电梯安全管理规定》所称电梯包括哪些设备？",
+      "notes": "第二条包括乘客电梯、载货电梯、自动扶梯、自动人行道等。",
+      "must_cite": [
+        "三亚市电梯安全管理规定|第二条"
+      ],
+      "key_points": [
+        [
+          "自动扶梯"
+        ],
+        [
+          "自动人行道"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-031": {
+      "original_id": "eq-28",
+      "type": "in_force",
+      "question": "中国（海南）自由贸易试验区重点园区推行哪些代表性极简审批做法？",
+      "notes": "第三条列举规划代立项审批、区域评估代单个项目评估、准入清单和告知承诺、联合验收等。",
+      "must_cite": [
+        "中国（海南）自由贸易试验区重点园区极简审批条例|第三条"
+      ],
+      "key_points": [
+        [
+          "规划代立项"
+        ],
+        [
+          "区域评估"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-032": {
+      "original_id": "eq-17",
+      "type": "in_force",
+      "question": "海南统筹推进教育科技人才一体改革，聚焦的是哪个发展架构？",
+      "notes": "同为段块文档。原文：聚焦『45432』发展架构⋯加快建设人才荟萃之岛、技术创新之岛。要点只问『发展架构』，所以只要求答出 45432——把『人才荟萃』也当必答是出题时写严了。",
+      "must_cite": [],
+      "key_points": [
+        [
+          "45432"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-033": {
+      "original_id": "eq-30",
+      "type": "in_force",
+      "question": "保亭黎族苗族自治县非物质文化遗产保护工作坚持什么方针？",
+      "notes": "第三条：保护为主，抢救第一，合理利用，传承发展。",
+      "must_cite": [
+        "保亭黎族苗族自治县非物质文化遗产保护条例|第三条"
+      ],
+      "key_points": [
+        [
+          "保护为主"
+        ],
+        [
+          "抢救第一"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-034": {
+      "original_id": "off-02",
+      "type": "off_corpus",
+      "question": "上海自贸区临港新片区的人才落户条件是什么？",
+      "notes": "辖区外。必须拒答。",
+      "must_cite": [],
+      "key_points": [],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": true,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-035": {
+      "original_id": "off-04",
+      "type": "off_corpus",
+      "question": "北京市积分落户要求的社保缴纳年限是多少？",
+      "notes": "辖区外语料，必须拒答。",
+      "must_cite": [],
+      "key_points": [],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": true,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-036": {
+      "original_id": "eq-35",
+      "type": "in_force",
+      "question": "《海南省万泉河流域生态环境保护规定》所称万泉河流域包括哪些区域？",
+      "notes": "第二条：万泉河干流、支流以及向干流、支流汇水的区域。",
+      "must_cite": [
+        "海南省万泉河流域生态环境保护规定|第二条"
+      ],
+      "key_points": [
+        [
+          "干流"
+        ],
+        [
+          "支流"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-037": {
+      "original_id": "trap-06",
+      "type": "trap",
+      "question": "海南省旅游条例对旅行社组织旅游活动有什么要求？",
+      "notes": "已废止（被《海南自由贸易港旅游条例》取代）——而现行条例也在库内，这一题考的是别把旧的当现行用。",
+      "must_cite": [],
+      "key_points": [],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [
+          "海南省旅游条例",
+          "海南省旅游条例",
+          "海南省旅游条例",
+          "海南省旅游条例",
+          "海南省旅游条例",
+          "海南省旅游条例",
+          "海南省旅游条例",
+          "海南省旅游条例"
+        ],
+        "unlabeled_repealed": [],
+        "all_in_force": false,
+        "correct": true
+      }
+    },
+    "BR-038": {
+      "original_id": "trap-02",
+      "type": "trap",
+      "question": "《海南自由贸易港建设投资基金管理办法》规定的基金规模和运作方式是什么？",
+      "notes": "该办法系列已废止。正确行为：提示失效、只作历史沿革说明。",
+      "must_cite": [],
+      "key_points": [],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [
+          "海南自由贸易港建设投资基金管理办法",
+          "海南自由贸易港建设投资基金管理办法",
+          "海南自由贸易港建设投资基金管理办法",
+          "海南自由贸易港建设投资基金管理办法",
+          "海南自由贸易港建设投资基金管理办法"
+        ],
+        "unlabeled_repealed": [],
+        "all_in_force": false,
+        "correct": true
+      }
+    },
+    "BR-039": {
+      "original_id": "eq-10",
+      "type": "in_force",
+      "question": "在海口市，养犬管理工作的行政主管部门是谁，承担哪些工作？",
+      "notes": "第五条：公安机关是行政主管部门，负责划定管理区域、办理养犬登记、捕捉流浪犬只等。",
+      "must_cite": [
+        "海口市养犬管理条例|第五条"
+      ],
+      "key_points": [
+        [
+          "公安机关"
+        ],
+        [
+          "登记"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-040": {
+      "original_id": "eq-11",
+      "type": "in_force",
+      "question": "海南省政府质量奖多久评选一届？各奖项的名额是怎么规定的？",
+      "notes": "第四届：每 2 年一届，政府质量奖与提名奖各不超过 3 个，特别奖不超过 1 个。这道题专门盯『新版不得被误判为已废止』——该文件正文废止的是 2015 年那一版。",
+      "must_cite": [
+        "海南省政府质量奖管理办法|第四条"
+      ],
+      "key_points": [
+        [
+          "2年"
+        ],
+        [
+          "3个"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-041": {
+      "original_id": "eq-36",
+      "type": "in_force",
+      "question": "《海南省东坡文化保护发展规定》所称东坡文化主要包括哪些文化形态？",
+      "notes": "第二条列举东坡书院、儋州故城、桄榔庵遗址、东坡井、苏公祠以及相关文物和非物质文化遗产。",
+      "must_cite": [
+        "海南省东坡文化保护发展规定|第二条"
+      ],
+      "key_points": [
+        [
+          "东坡书院"
+        ],
+        [
+          "东坡井"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-042": {
+      "original_id": "eq-02",
+      "type": "in_force",
+      "question": "商事调解组织的设立需要具备哪些条件？",
+      "notes": "第五条：名称须含“商事调解”字样、须在自贸港有住所等。",
+      "must_cite": [
+        "海南自由贸易港商事调解组织登记管理办法|第五条"
+      ],
+      "key_points": [
+        [
+          "商事调解"
+        ],
+        [
+          "海南自由贸易港"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-043": {
+      "original_id": "eq-15",
+      "type": "in_force",
+      "question": "《百万英才兴海南行动计划（2026—2035年）》提出的人才目标是什么？",
+      "notes": "这份文件用『一、二、三』编号、没有条文结构，v1 的检索层整份查不到它（实测拿正文原句查 0 命中）。设为段块后补的题，专门覆盖『没有条文的文档』。原文：到 2030 年引进各类人才 70 万人以上、人才总量突破 300 万人。",
+      "must_cite": [],
+      "key_points": [
+        [
+          "70万人"
+        ],
+        [
+          "300万"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-044": {
+      "original_id": "eq-29",
+      "type": "in_force",
+      "question": "乐东黎族自治县河湖（库）保护管理范围包括哪些水体？",
+      "notes": "第三条包括河流、湖泊、水库、山塘、渠道等水体及水域岸线。",
+      "must_cite": [
+        "乐东黎族自治县河湖（库）保护管理条例|第三条"
+      ],
+      "key_points": [
+        [
+          "河流"
+        ],
+        [
+          "水库"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-045": {
+      "original_id": "eq-21",
+      "type": "in_force",
+      "question": "在三亚旅游市场，哪些严重违法行为可能被列入旅游市场严重失信主体名单？",
+      "notes": "第三条列出伪造许可、无证经营、安全管理导致事故、超最大承载量接待、擅自改变行程等。",
+      "must_cite": [
+        "三亚市旅游市场严重失信联合惩戒若干规定|第三条"
+      ],
+      "key_points": [
+        [
+          "未依法取得许可"
+        ],
+        [
+          "安全事故"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-046": {
+      "original_id": "trap-12",
+      "type": "trap",
+      "question": "《海南省信息化条例》规定信息化工作应遵循哪些原则？",
+      "notes": "该条例已于2024-12-01废止。正确行为：提示失效或拒答。",
+      "must_cite": [],
+      "key_points": [],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [
+          "海南省信息化条例"
+        ],
+        "unlabeled_repealed": [],
+        "all_in_force": false,
+        "correct": true
+      }
+    },
+    "BR-047": {
+      "original_id": "trap-22",
+      "type": "trap",
+      "question": "《海南经济特区律师执业条例》对申请律师资格和考试作了什么规定？",
+      "notes": "该条例已于2019-10-01废止。不得作为现行律师执业依据。",
+      "must_cite": [],
+      "key_points": [],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [
+          "海南经济特区律师执业条例",
+          "海南经济特区律师执业条例"
+        ],
+        "unlabeled_repealed": [],
+        "all_in_force": false,
+        "correct": true
+      }
+    },
+    "BR-048": {
+      "original_id": "trap-21",
+      "type": "trap",
+      "question": "《海南经济特区口岸管理条例》如何划分一类口岸和二类口岸？",
+      "notes": "该条例已于2025-12-18废止。正确行为：提示失效或拒答。",
+      "must_cite": [],
+      "key_points": [],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [
+          "海南经济特区口岸管理条例",
+          "海南经济特区口岸管理条例"
+        ],
+        "unlabeled_repealed": [],
+        "all_in_force": false,
+        "correct": true
+      }
+    },
+    "BR-049": {
+      "original_id": "eq-12",
+      "type": "in_force",
+      "question": "新建、改建、扩建游艇码头需要执行什么建设程序？",
+      "notes": "第四条列举开工前备案等程序。同为『新版不得误判』题：该文件正文废止的是 2016 年那一版。",
+      "must_cite": [
+        "海南省游艇管理办法|第四条"
+      ],
+      "key_points": [
+        [
+          "备案"
+        ],
+        [
+          "规划"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-050": {
+      "original_id": "qst-05",
+      "type": "questionable",
+      "question": "《海南省爱国卫生管理条例》所称爱国卫生工作是什么样的活动？",
+      "notes": "该条例判为效力存疑；可引用但必须提示人工核实。第二条明确其为公益性活动。",
+      "must_cite": [
+        "海南省爱国卫生管理条例|第二条"
+      ],
+      "key_points": [
+        [
+          "公益性活动"
+        ],
+        [
+          "预防疾病"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": false,
+        "correct": true
+      }
+    },
+    "BR-051": {
+      "original_id": "eq-13",
+      "type": "in_force",
+      "question": "海南自由贸易港旅游条例适用于哪些活动？",
+      "notes": "第二条：在自贸港内组织、开展游览、度假、休闲等旅游活动及相关服务经营。",
+      "must_cite": [
+        "海南自由贸易港旅游条例|第二条"
+      ],
+      "key_points": [
+        [
+          "旅游"
+        ],
+        [
+          "海南自由贸易港"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-052": {
+      "original_id": "eq-42",
+      "type": "in_force",
+      "question": "西沙群岛水资源包括哪些类型？",
+      "notes": "第三条包括地表和地下淡水、再生水、海水淡化水和补给水。",
+      "must_cite": [
+        "三沙市西沙群岛水资源节约与保护规定|第三条"
+      ],
+      "key_points": [
+        [
+          "地表和地下"
+        ],
+        [
+          "再生水"
+        ],
+        [
+          "海水淡化水"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-053": {
+      "original_id": "qst-04",
+      "type": "questionable",
+      "question": "《海南省农业机械管理条例》要求各级人民政府如何支持农业机械化事业？",
+      "notes": "该条例判为效力存疑；可引用但必须提示人工核实。第四条要求纳入农村经济发展总体规划并重视投入。",
+      "must_cite": [
+        "海南省农业机械管理条例|第四条"
+      ],
+      "key_points": [
+        [
+          "总体规划"
+        ],
+        [
+          "投入"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": false,
+        "correct": true
+      }
+    },
+    "BR-054": {
+      "original_id": "trap-20",
+      "type": "trap",
+      "question": "《海南经济特区禁毒条例》规定禁毒工作坚持什么方针？",
+      "notes": "该条例已于2026-03-01废止；库内现行文件是《海南自由贸易港禁毒条例》，不能混用。",
+      "must_cite": [],
+      "key_points": [],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [
+          "海南经济特区禁毒条例"
+        ],
+        "unlabeled_repealed": [],
+        "all_in_force": false,
+        "correct": true
+      }
+    },
+    "BR-055": {
+      "original_id": "eq-06",
+      "type": "in_force",
+      "question": "在海南从事征信和信用评估活动应当遵循什么原则？",
+      "notes": "第四条：合法、客观、公正。",
+      "must_cite": [
+        "海南省征信和信用评估管理暂行规定|第四条"
+      ],
+      "key_points": [
+        [
+          "客观"
+        ],
+        [
+          "公正"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-056": {
+      "original_id": "eq-18",
+      "type": "in_force",
+      "question": "《三亚市中小学校幼儿园规划建设条例》所称的中小学校、幼儿园包括哪些类型？",
+      "notes": "第二条列举小学、初中、高中、职业学校、特殊教育学校、专门学校和幼儿园等。",
+      "must_cite": [
+        "三亚市中小学校幼儿园规划建设条例|第二条"
+      ],
+      "key_points": [
+        [
+          "完全中学"
+        ],
+        [
+          "幼儿园"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-057": {
+      "original_id": "eq-05",
+      "type": "in_force",
+      "question": "海南省标准化工作由哪个部门统一管理？",
+      "notes": "第六条：省人民政府标准化行政主管部门。",
+      "must_cite": [
+        "海南省标准化管理办法|第六条"
+      ],
+      "key_points": [
+        [
+          "标准化行政主管部门"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-058": {
+      "original_id": "qst-01",
+      "type": "questionable",
+      "question": "海南省行政执法和行政执法监督应当坚持什么原则？",
+      "notes": "该文件效力存疑；可以引用，但答案必须提示需人工核实。",
+      "must_cite": [
+        "海南省行政执法和行政执法监督规定|第六条"
+      ],
+      "key_points": [
+        [
+          "违法必究"
+        ],
+        [
+          "权责法定"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": false,
+        "correct": true
+      }
+    },
+    "BR-059": {
+      "original_id": "trap-05",
+      "type": "trap",
+      "question": "海南经济特区土地管理条例对国有土地使用权出让是怎么规定的？",
+      "notes": "该条例已废止（被《海南自由贸易港土地管理条例》取代）。正确行为：提示失效，最好指向现行条例；不得作为现行依据引用。",
+      "must_cite": [],
+      "key_points": [],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-060": {
+      "original_id": "trap-01",
+      "type": "trap",
+      "question": "海南省太阳能热水系统建筑应用管理办法规定，哪些民用建筑应当统一配建太阳能热水系统？",
+      "notes": "该办法已废止。正确行为：说明已失效，或拒答；不得作为现行依据引用。",
+      "must_cite": [],
+      "key_points": [],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [
+          "海南省太阳能热水系统建筑应用管理办法",
+          "海南省太阳能热水系统建筑应用管理办法"
+        ],
+        "unlabeled_repealed": [],
+        "all_in_force": false,
+        "correct": true
+      }
+    },
+    "BR-061": {
+      "original_id": "eq-45",
+      "type": "in_force",
+      "question": "乐东黎族自治县的自治机关包括哪些机关，驻地在哪？",
+      "notes": "第三条：自治县人民代表大会和自治县人民政府；驻抱由镇。",
+      "must_cite": [
+        "乐东黎族自治县自治条例|第三条"
+      ],
+      "key_points": [
+        [
+          "人民代表大会"
+        ],
+        [
+          "人民政府"
+        ],
+        [
+          "抱由镇"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-062": {
+      "original_id": "eq-26",
+      "type": "in_force",
+      "question": "三亚市餐厨垃圾管理遵循什么原则？",
+      "notes": "第四条：减量化、资源化、无害化。",
+      "must_cite": [
+        "三亚市餐厨垃圾管理规定|第四条"
+      ],
+      "key_points": [
+        [
+          "减量化"
+        ],
+        [
+          "资源化"
+        ],
+        [
+          "无害化"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-063": {
+      "original_id": "off-05",
+      "type": "off_corpus",
+      "question": "横琴粤澳深度合作区高端人才个税优惠应如何申请？",
+      "notes": "辖区外语料，必须拒答。",
+      "must_cite": [],
+      "key_points": [],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": true,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-064": {
+      "original_id": "trap-18",
+      "type": "trap",
+      "question": "《海南省防震减灾条例》规定防震减灾工作的行政主管部门是谁？",
+      "notes": "该条例已于2023-09-01废止。不得作为现行依据引用。",
+      "must_cite": [],
+      "key_points": [],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [
+          "海南省防震减灾条例",
+          "海南省防震减灾条例"
+        ],
+        "unlabeled_repealed": [],
+        "all_in_force": false,
+        "correct": true
+      }
+    },
+    "BR-065": {
+      "original_id": "eq-38",
+      "type": "in_force",
+      "question": "《海南省产品质量监督管理条例》规定的产品质量监督管理主管部门是谁？",
+      "notes": "第三条：省、市、县、自治县人民政府的技术监督部门主管。",
+      "must_cite": [
+        "海南省产品质量监督管理条例|第三条"
+      ],
+      "key_points": [
+        [
+          "技术监督部门"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-066": {
+      "original_id": "trap-19",
+      "type": "trap",
+      "question": "《海南省预防和制止家庭暴力规定》由哪个机构负责组织协调相关工作？",
+      "notes": "该规定已于2020-08-01废止。正确行为：提示失效或拒答。",
+      "must_cite": [],
+      "key_points": [],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [
+          "海南省预防和制止家庭暴力规定"
+        ],
+        "unlabeled_repealed": [],
+        "all_in_force": false,
+        "correct": true
+      }
+    },
+    "BR-067": {
+      "original_id": "off-06",
+      "type": "off_corpus",
+      "question": "全国平台经济反垄断指南中的“二选一”行为如何认定？",
+      "notes": "国家级、非海南专注语料的政策问题，应拒答而不是拿相似词硬答。",
+      "must_cite": [],
+      "key_points": [],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": true,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-068": {
+      "original_id": "qst-03",
+      "type": "questionable",
+      "question": "股份合作企业是什么性质的企业？",
+      "notes": "该条例 1997 年公布、文头无修订记录，判为效力存疑；引用需提示核实。",
+      "must_cite": [
+        "海南经济特区股份合作企业条例|第三条"
+      ],
+      "key_points": [
+        [
+          "股份制"
+        ],
+        [
+          "合作制"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": false,
+        "correct": true
+      }
+    },
+    "BR-069": {
+      "original_id": "qst-07",
+      "type": "questionable",
+      "question": "《海南省地质环境管理办法》所称地质环境包括哪些方面？",
+      "notes": "该办法判为效力存疑；可引用但必须提示人工核实。第二条列明水文、工程、环境地质及地质灾害等。",
+      "must_cite": [
+        "海南省地质环境管理办法|第二条"
+      ],
+      "key_points": [
+        [
+          "水文地质"
+        ],
+        [
+          "地质灾害"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": false,
+        "correct": true
+      }
+    },
+    "BR-070": {
+      "original_id": "eq-34",
+      "type": "in_force",
+      "question": "海南热带雨林国家公园建设坚持哪些基本原则？",
+      "notes": "第二条包含生态保护第一、统筹保护和发展、国家代表性和全民公益性等。",
+      "must_cite": [
+        "海南热带雨林国家公园条例|第二条"
+      ],
+      "key_points": [
+        [
+          "生态保护第一"
+        ],
+        [
+          "全民公益性"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-071": {
+      "original_id": "qst-02",
+      "type": "questionable",
+      "question": "社会治安综合治理要坚持什么方针和原则？",
+      "notes": "该条例 1993 年公布、文头无修订记录，系统判为效力存疑；可以引用，但必须提示人工核实。",
+      "must_cite": [
+        "海南省社会治安综合治理条例|第三条"
+      ],
+      "key_points": [
+        [
+          "打击和防范并举"
+        ],
+        [
+          "重在治本"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": false,
+        "correct": true
+      }
+    },
+    "BR-072": {
+      "original_id": "off-01",
+      "type": "off_corpus",
+      "question": "量子计算机的制冷方案怎么设计？",
+      "notes": "语料外。必须拒答。",
+      "must_cite": [],
+      "key_points": [],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": true,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-073": {
+      "original_id": "eq-01",
+      "type": "in_force",
+      "question": "在海南自由贸易港设立商事调解组织，要提交哪些申请材料？",
+      "notes": "第七条列举材料；答案须逐项给出。",
+      "must_cite": [
+        "海南自由贸易港商事调解组织登记管理办法|第七条"
+      ],
+      "key_points": [
+        [
+          "申请书"
+        ],
+        [
+          "章程"
+        ],
+        [
+          "验资报告"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-074": {
+      "original_id": "eq-08",
+      "type": "in_force",
+      "question": "在海南自由贸易港申请种子生产经营许可证，需要具备哪些条件？",
+      "notes": "v1 曾误判这份文件已废止（其实是修订后的新版，正文说废止的是 2021 年那一版），判定纠正后本题从陷阱改为正题。",
+      "must_cite": [
+        "海南自由贸易港种子进出口生产经营许可管理办法|第四条"
+      ],
+      "key_points": [
+        [
+          "经营场所"
+        ],
+        [
+          "仓储"
+        ],
+        [
+          "质量检验"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-075": {
+      "original_id": "eq-31",
+      "type": "in_force",
+      "question": "保亭黎族苗族自治县饮用水水源包括哪些水源类型？",
+      "notes": "第三条包括用于城乡集中式供水的江河、湖泊、水库、山塘、山泉、水井等地表水和地下水。",
+      "must_cite": [
+        "保亭黎族苗族自治县饮用水水源保护若干规定|第三条"
+      ],
+      "key_points": [
+        [
+          "集中式供水"
+        ],
+        [
+          "地下水"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-076": {
+      "original_id": "eq-09",
+      "type": "in_force",
+      "question": "国有土地使用权可以依法通过哪些方式取得？",
+      "notes": "第三条列举了出让、划拨、租赁、转让、承包、抵押、继承等。",
+      "must_cite": [
+        "海南自由贸易港土地管理条例|第三条"
+      ],
+      "key_points": [
+        [
+          "出让"
+        ],
+        [
+          "划拨"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-077": {
+      "original_id": "eq-32",
+      "type": "in_force",
+      "question": "《昌江黎族自治县农村公路条例》所称农村公路包括哪些道路？",
+      "notes": "第三条：县道、乡道、村道。",
+      "must_cite": [
+        "昌江黎族自治县农村公路条例|第三条"
+      ],
+      "key_points": [
+        [
+          "县道"
+        ],
+        [
+          "乡道"
+        ],
+        [
+          "村道"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-078": {
+      "original_id": "eq-23",
+      "type": "in_force",
+      "question": "三亚市主城区范围内燃放烟花爆竹的基本规定是什么？",
+      "notes": "第四条：本市主城区范围内禁止燃放烟花爆竹。",
+      "must_cite": [
+        "三亚市烟花爆竹燃放安全管理规定|第四条"
+      ],
+      "key_points": [
+        [
+          "主城区"
+        ],
+        [
+          "禁止燃放"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-079": {
+      "original_id": "eq-14",
+      "type": "in_force",
+      "question": "海南省为推进省重点项目建设，在行政审批和建设资金方面有哪些保障措施？",
+      "notes": "v1 记为已废止，v2 复核发现库内这份是 2015 年那版（正文废止的是 2014 年版），判定纠正为现行有效。文件用『一、二、三』编号、没有条文结构，所以不设 must_cite，只考要点能否答到。",
+      "must_cite": [],
+      "key_points": [
+        [
+          "行政审批"
+        ],
+        [
+          "建设资金"
+        ]
+      ],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [],
+        "unlabeled_repealed": [],
+        "all_in_force": true,
+        "correct": true
+      }
+    },
+    "BR-080": {
+      "original_id": "trap-17",
+      "type": "trap",
+      "question": "《海南省珊瑚礁保护规定》规定珊瑚礁保护工作的主管部门是谁？",
+      "notes": "该规定已于2017-01-01废止。正确行为：提示失效或拒答。",
+      "must_cite": [],
+      "key_points": [],
+      "auto_correct": true,
+      "auto_verdict": {
+        "refused": false,
+        "missing_evidence": [],
+        "missed_points": [],
+        "repealed_citations": [
+          "海南省珊瑚礁保护规定"
+        ],
+        "unlabeled_repealed": [],
+        "all_in_force": false,
+        "correct": true
+      }
+    }
+  },
+  "rating_choices": {
+    "question_quality": [
+      "clear",
+      "ambiguous",
+      "leading",
+      "duplicate",
+      "invalid"
+    ],
+    "expected_behavior": [
+      "answer_with_current_law",
+      "explain_repealed_or_refuse",
+      "refuse",
+      "answer_with_uncertainty"
+    ],
+    "answer_verdict": [
+      "correct",
+      "partially_correct",
+      "incorrect",
+      "uncertain"
+    ],
+    "citation_verdict": [
+      "supported",
+      "partially_supported",
+      "unsupported",
+      "not_applicable",
+      "uncertain"
+    ],
+    "force_verdict": [
+      "appropriate",
+      "inappropriate",
+      "not_applicable",
+      "uncertain"
+    ],
+    "confidence": [
+      "high",
+      "medium",
+      "low"
+    ]
+  }
+}

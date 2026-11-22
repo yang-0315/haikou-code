@@ -1,0 +1,4 @@
+[submodule "PageIndex"]
+	path = PageIndex
+	url = https://github.com/VectifyAI/PageIndex.git
+	ignore = untracked

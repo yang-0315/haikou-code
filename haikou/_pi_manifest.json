@@ -1,0 +1,140 @@
+{
+ "version": 1,
+ "key": "文号",
+ "markup": "layout+bookmarks",
+ "storage": "C:\\Users\\Lenovo\\Desktop\\PageIndex\\haikou\\_pi_store",
+ "purpose": "把带版式 PDF 与效力记录缝在一起：键是文号，不是文件名",
+ "documents": {
+  "琼府办〔2021〕71号": {
+   "title": "海南自由贸易港建设投资基金管理办法",
+   "sampled_for": "系列已废止",
+   "force": {
+    "status": "系列已废止",
+    "confidence": "medium",
+    "reason": {
+     "code": "series_repealed",
+     "text": "同名文件的系列已被废止（《海南自由贸易港建设投资基金管理办法》），但本库这份的文号与被点名的文号不同，可能不是同一版本"
+    },
+    "checked": {
+     "废止通知": 23,
+     "文件内废止条款": 30,
+     "点名文件数": 78
+    },
+    "missing": [
+     "本库未收录该系列的全部版本，无法确认本份是否在废止范围内",
+     "本库未覆盖全部政策文件，也未见国家级法律与其他省级栏目"
+    ],
+    "next_steps": [
+     "核对本库这份的文号与被废止文号是否同一版本",
+     "向发布机关确认该系列的最新版本"
+    ],
+    "evidence": {
+     "repealed_by": "海南省人民政府办公厅关于废止《海南自由贸易港建设投资基金管理办法》的通知",
+     "issuer": "海南省人民政府办公厅",
+     "effective_date": "2026-09-11",
+     "scope": "whole",
+     "url": "https://www.hainan.gov.cn/hainan/szfbgtwj/202609/9dd716ba608e4db0b7b3efa477fa99fc.shtml",
+     "matched_by": "标题 海南自由贸易港建设投资基金管理办法"
+    },
+    "caveats": [
+     "本库收录的文号是 琼府办〔2021〕71号，废止通知点名的是 琼府办〔2024〕27号，两者不是同一版本；本库这份很可能是更早的版本，请核对是否还有更晚的版本"
+    ]
+   },
+   "pdf": "C:\\Users\\Lenovo\\Desktop\\PageIndex\\haikou\\_pi_samples\\海南自由贸易港建设投资基金管理办法.pdf",
+   "txt": "C:\\Users\\Lenovo\\Desktop\\database\\海南自由贸易港建设投资基金管理办法.txt",
+   "number": "琼府办〔2021〕71号",
+   "markup": "layout+bookmarks",
+   "doc_id": "pi-5c305b6c7b47456386fe28358cac2047",
+   "stored_name": "海南自由贸易港建设投资基金管理办法.pdf",
+   "pages": 40,
+   "top_nodes": 6,
+   "nodes": 45,
+   "nested": true
+  },
+  "海南省人民政府令第80号": {
+   "title": "海南省关于在琼台湾同胞待遇的若干规定",
+   "sampled_for": "效力存疑",
+   "force": {
+    "status": "效力存疑",
+    "confidence": "medium",
+    "reason": {
+     "code": "questionable",
+     "text": "1995 年公布（距今约 31 年），文头无任何修订记录，本库已索引的废止依据中也未点名——这类老规章更常见的情形是被后续文件替代而非明文废止"
+    },
+    "checked": {
+     "废止通知": 23,
+     "文件内废止条款": 30,
+     "点名文件数": 78
+    },
+    "missing": [
+     "未见该文件被明文废止的依据",
+     "未见后续修订版本或替代文件",
+     "本库未覆盖全部政策文件，也未见国家级法律与其他省级栏目"
+    ],
+    "next_steps": [
+     "查该主题是否已有新版规章或替代文件",
+     "查国家法律法规数据库（flk.npc.gov.cn）确认效力状态",
+     "向发布机关或业务主管部门确认"
+    ],
+    "evidence": {
+     "note": "无废止依据，也无修订记录",
+     "year": 1995,
+     "amended": false
+    },
+    "caveats": [
+     "在核实之前不应作为现行依据；如被替代，其条文可能已被改写"
+    ]
+   },
+   "pdf": "C:\\Users\\Lenovo\\Desktop\\PageIndex\\haikou\\_pi_samples\\海南省关于在琼台湾同胞待遇的若干规定.pdf",
+   "txt": "C:\\Users\\Lenovo\\Desktop\\database\\library\\政府规章\\海南省关于在琼台湾同胞待遇的若干规定.txt",
+   "number": "海南省人民政府令第80号",
+   "markup": "layout+bookmarks",
+   "doc_id": "pi-10277e34d063461585fa2fdcd028515e",
+   "stored_name": "海南省关于在琼台湾同胞待遇的若干规定.pdf",
+   "pages": 12,
+   "top_nodes": 11,
+   "nodes": 11,
+   "nested": false
+  },
+  "海南省人民政府令第329号": {
+   "title": "海南自由贸易港商事调解组织登记管理办法",
+   "sampled_for": "现行有效",
+   "force": {
+    "status": "现行有效",
+    "confidence": "low",
+    "reason": {
+     "code": "in_force",
+     "text": "本库已索引的废止依据中未点名"
+    },
+    "checked": {
+     "废止通知": 23,
+     "文件内废止条款": 30,
+     "点名文件数": 78
+    },
+    "missing": [
+     "本库未覆盖全部政策文件，也未见国家级法律与其他省级栏目"
+    ],
+    "next_steps": [
+     "可直接引用；若用于合规判断，建议再核对最新修订文本"
+    ],
+    "evidence": {
+     "note": "本库已索引的废止依据中未点名"
+    },
+    "caveats": [
+     "本库尚未覆盖全部废止文件，结论仅限已索引范围"
+    ]
+   },
+   "pdf": "C:\\Users\\Lenovo\\Desktop\\PageIndex\\haikou\\_pi_samples\\海南自由贸易港商事调解组织登记管理办法.pdf",
+   "txt": "C:\\Users\\Lenovo\\Desktop\\database\\海南自由贸易港商事调解组织登记管理办法.txt",
+   "number": "海南省人民政府令第329号",
+   "markup": "layout+bookmarks",
+   "doc_id": "pi-eaf3977189514c1fa78a2e9e5fe777da",
+   "stored_name": "海南自由贸易港商事调解组织登记管理办法.pdf",
+   "pages": 25,
+   "top_nodes": 24,
+   "nodes": 24,
+   "nested": false
+  }
+ },
+ "missing_number": []
+}

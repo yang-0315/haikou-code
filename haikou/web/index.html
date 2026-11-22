@@ -1,0 +1,222 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="海南自贸港政策效力感知问答，回答条文同时标出效力状态与时点。">
+  <title>琼策 · 海南政策效力感知问答</title>
+  <link rel="stylesheet" href="assets/app.css?v=3">
+  <script src="assets/app.js?v=3" defer></script>
+</head>
+<body>
+  <div class="ambient ambient-one" aria-hidden="true"></div>
+  <div class="ambient ambient-two" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="琼策首页">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 36 36" role="img">
+          <path d="M8 10.5 18 5l10 5.5v15L18 31 8 25.5z"/>
+          <path d="m12.5 14 5.5-3 5.5 3v8L18 25l-5.5-3z"/>
+        </svg>
+      </span>
+      <span class="brand-copy">
+        <strong>琼策</strong>
+        <small>政策效力感知问答</small>
+      </span>
+    </a>
+    <div class="topbar-meta">
+      <span id="serviceStatus" class="service-status" data-state="loading">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span id="serviceStatusText">正在连接服务</span>
+      </span>
+      <span class="topbar-rule" aria-hidden="true"></span>
+      <span class="topbar-caption">海南自由贸易港政策语料</span>
+    </div>
+  </header>
+
+  <div id="fileNotice" class="system-notice" role="alert" hidden>
+    <strong>请通过服务地址打开页面</strong>
+    <span>
+      直接打开 HTML 文件时问答接口无法连接。请访问
+      <a href="http://127.0.0.1:8787/">http://127.0.0.1:8787/</a>。
+    </span>
+  </div>
+
+  <main>
+    <section class="hero" aria-labelledby="heroTitle">
+      <div class="hero-copy">
+        <p class="eyebrow">HAINAN POLICY INTELLIGENCE</p>
+        <h1 id="heroTitle">让每一条政策回答，<br><em>都带着有效期。</em></h1>
+        <p class="hero-intro">
+          从条文中检索，在推理中判断。回答同时标注现行有效、效力存疑或已废止，
+          并支持回到指定历史时点核对依据。
+        </p>
+      </div>
+      <div class="force-legend" aria-label="效力状态说明">
+        <div class="force-item force-current">
+          <span class="force-symbol" aria-hidden="true"></span>
+          <div><strong>现行有效</strong><small>可作为当前依据</small></div>
+        </div>
+        <div class="force-item force-question">
+          <span class="force-symbol" aria-hidden="true"></span>
+          <div><strong>效力存疑</strong><small>引用前需人工核实</small></div>
+        </div>
+        <div class="force-item force-repealed">
+          <span class="force-symbol" aria-hidden="true"></span>
+          <div><strong>已废止</strong><small>不可作为现行依据</small></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="ask-panel" aria-labelledby="askTitle">
+      <div class="panel-heading">
+        <div>
+          <p class="section-kicker">政策检索</p>
+          <h2 id="askTitle">你想核实哪条规定？</h2>
+        </div>
+        <span class="shortcut-hint"><kbd>Ctrl</kbd><span>+</span><kbd>Enter</kbd> 提问</span>
+      </div>
+
+      <form id="askForm" novalidate>
+        <label class="field-label" for="question">政策问题</label>
+        <div class="question-shell">
+          <textarea id="question" name="question" rows="3" maxlength="800"
+            placeholder="例如：免税店的设立需要满足什么条件？"
+            autocomplete="off" aria-describedby="questionHelp questionCount"></textarea>
+          <div class="question-footer">
+            <span id="questionHelp">请尽量写明政策名称或具体事项。</span>
+            <span id="questionCount" aria-live="polite">0 / 800</span>
+          </div>
+        </div>
+
+        <div class="ask-controls">
+          <div class="asof-field">
+            <label class="field-label" for="asOf">查询时点 <span>选填</span></label>
+            <div class="asof-input">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M7 3v3M17 3v3M4 9h16M5 5h14a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/>
+              </svg>
+              <input id="asOf" name="as_of" maxlength="32"
+                placeholder="2023-12-31 或 2023年"
+                aria-describedby="asOfHelp">
+            </div>
+            <span id="asOfHelp" class="field-help">留空表示按当前效力状态回答</span>
+          </div>
+          <button id="submitButton" class="submit-button" type="submit">
+            <span class="button-label">开始检索</span>
+            <span class="button-spinner" aria-hidden="true"></span>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6"/>
+            </svg>
+          </button>
+        </div>
+      </form>
+
+      <div class="examples" aria-label="问题示例">
+        <span class="examples-label">可以试试</span>
+        <button type="button" class="example-chip"
+          data-question="免税店的设立需要满足什么条件？">免税店设立条件</button>
+        <button type="button" class="example-chip"
+          data-question="对未经登记擅自设立代表机构怎么处罚？">代表机构处罚</button>
+        <button type="button" class="example-chip"
+          data-question="三亚市河道生态保护管理条例第一条是什么？"
+          data-as-of="2023-12-31">历史时点问答</button>
+      </div>
+    </section>
+
+    <section id="resultRegion" class="result-region" aria-live="polite"
+      aria-busy="false" hidden>
+      <div id="loadingState" class="loading-state" hidden>
+        <div class="loading-orbit" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
+        <div>
+          <strong id="loadingTitle">正在检索政策条文</strong>
+          <p id="loadingDetail">系统正在召回候选文件，并核对条文效力。</p>
+        </div>
+      </div>
+
+      <div id="errorState" class="message-card message-error" hidden>
+        <div class="message-icon" aria-hidden="true">!</div>
+        <div>
+          <h2>本次请求未完成</h2>
+          <p id="errorMessage"></p>
+          <button id="retryButton" type="button" class="text-button">重新尝试</button>
+        </div>
+      </div>
+
+      <article id="answerState" class="answer-card" hidden>
+        <header class="answer-header">
+          <div>
+            <p id="answerEyebrow" class="section-kicker">政策回答</p>
+            <h2 id="answerTitle">回答</h2>
+          </div>
+          <button id="copyButton" type="button" class="copy-button">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M9 9h10v11H9zM5 15H4V4h11v1"/>
+            </svg>
+            <span>复制回答</span>
+          </button>
+        </header>
+
+        <div id="answerMeta" class="answer-meta"></div>
+        <div id="answerText" class="answer-text"></div>
+        <div id="refusalBox" class="refusal-box" hidden>
+          <span class="refusal-label">未形成确定性回答</span>
+          <p id="refusalText"></p>
+        </div>
+
+        <section id="sourcesSection" class="sources-section" hidden>
+          <div class="subsection-heading">
+            <h3>引用依据</h3>
+            <span id="sourceCount"></span>
+          </div>
+          <div id="sourceList" class="source-list"></div>
+        </section>
+
+        <details id="traceDetails" class="trace-details">
+          <summary>查看检索与效力判断说明</summary>
+          <div id="traceBody" class="trace-body"></div>
+        </details>
+
+        <footer class="answer-footer">
+          <span>本服务用于政策检索与效力核对，不替代正式法律意见。</span>
+          <button id="newQuestionButton" type="button" class="text-button">继续提问</button>
+        </footer>
+      </article>
+    </section>
+
+    <section class="capabilities" aria-labelledby="capabilityTitle">
+      <div class="capability-heading">
+        <p class="section-kicker">系统能力</p>
+        <h2 id="capabilityTitle">回答不止于“找到了”</h2>
+      </div>
+      <div class="capability-grid">
+        <article>
+          <span class="capability-index">01</span>
+          <h3>效力进入推理</h3>
+          <p>模型先看到每条依据的效力状态，再决定引用哪一条，不做事后掩盖。</p>
+        </article>
+        <article>
+          <span class="capability-index">02</span>
+          <h3>历史时点重算</h3>
+          <p>可按日、月或年核对当时是否已经施行、是否已经废止，并保留时点口径。</p>
+        </article>
+        <article>
+          <span class="capability-index">03</span>
+          <h3>证据可追溯</h3>
+          <p>回答附带具体文件、条文号和效力说明；证据不足时明确拒答。</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>琼策 · 海南政策效力感知问答</span>
+    <span id="corpusSummary">正在读取语料状态</span>
+  </footer>
+</body>
+</html>

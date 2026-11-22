@@ -1,0 +1,48 @@
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+!*.example.env
+
+# Corpus and generated large artifacts
+database/
+_library_backup/
+_catalog_pdfs/
+*.pkl
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+haikou/_vendor/
+
+# Local services and logs
+*.log
+*.log.err
+*.pid
+
+# Editors and operating system
+.idea/
+.vscode/
+.workbuddy/
+.claude/
+Thumbs.db
+desktop.ini
+
+# Browser/debug artifacts
+.edge-debug/
+.edge-headless/
+service-desktop.png
+service-top.png
+
+# Temporary files
+*.tmp
+*.bak
+*~
