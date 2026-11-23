@@ -1,0 +1,65 @@
+<Slide style={{ width: 1280, height: 720, background: '#F5F9FF', padding: 60, fontFamily: 'Microsoft YaHei, Arial' }}>
+  <Box style={{ position: 'relative', width: '100%', height: '100%', gap: 20 }}>
+
+    <Box style={{ height: 88, gap: 10 }}>
+      <Box style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+        <Text style={{ fontSize: 14, color: '#3D7BD9', fontWeight: 600, letterSpacing: 2 }}>POLICY LIBRARY PROGRESS · 04</Text>
+        <Text style={{ fontSize: 14, color: '#6B7C93' }}>validity-QA v4</Text>
+      </Box>
+      <Text style={{ fontSize: 34, fontWeight: 'bold', color: '#1A2230', lineHeight: 1.2 }}>前台问答 84 题全过，陷阱与引用合规是强项</Text>
+      <Box style={{ height: 1, background: '#D7E3F4' }} />
+    </Box>
+
+    <Box style={{ height: 408, flexDirection: 'row', gap: 32 }}>
+
+      <Box style={{ width: 398, height: 408, padding: 30, borderRadius: 10, background: 'linear-gradient(155deg, #1E4FA8 0%, #103A67 100%)', justifyContent: 'space-between' }}>
+        <Box>
+          <Text style={{ fontSize: 16, color: '#BFD6F0', letterSpacing: 2 }}>问答完整通过</Text>
+          <Text style={{ fontSize: 92, fontWeight: 'bold', color: '#FFFFFF', lineHeight: 1.02, marginTop: 10 }}>84/84</Text>
+          <Text style={{ fontSize: 24, fontWeight: 600, color: '#00D4E8', marginTop: 8 }}>100%</Text>
+        </Box>
+        <Box style={{ height: 1, background: 'rgba(255,255,255,0.28)' }} />
+        <Box style={{ gap: 10 }}>
+          <Text style={{ fontSize: 18, color: '#D6E5F7' }}>答案对：57/57</Text>
+          <Text style={{ fontSize: 18, color: '#D6E5F7' }}>引用合规：84/84</Text>
+          <Text style={{ fontSize: 18, color: '#D6E5F7' }}>现行有效题只引现行条文：48/48</Text>
+        </Box>
+      </Box>
+
+      <Box style={{ width: 730, height: 408, padding: 24, borderRadius: 10, background: '#FFFFFF', border: '1px solid #D7E3F4', gap: 6 }}>
+        <Text style={{ fontSize: 22, fontWeight: 600, color: '#1A2230' }}>分项结果</Text>
+        <Box style={{ height: 1, background: '#E2EAF5' }} />
+        {[
+          { label: '正题（in_force）', value: '48/48', note: '必备证据与要点齐全' },
+          { label: '已废止陷阱', value: '21/21', note: '未把失效依据当有效引用' },
+          { label: '语料外问题', value: '6/6', note: '正确拒答' },
+          { label: '效力存疑题', value: '8/8', note: '如实标注需核实' },
+          { label: '历史时点题', value: '1/1', note: '按当时效力作答' },
+          { label: '评分器自检', value: '15/15', note: '否定句与 llm_error 已修正' },
+          { label: '路由覆盖', value: '7/7', note: 'v4 四题覆盖四类关键路由' },
+        ].map((item, idx) => (
+          <Box key={idx} style={{ height: 42, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderBottom: idx === 6 ? 'none' : '1px solid #EEF3F9' }}>
+            <Box style={{ flexDirection: 'row', alignItems: 'center', gap: 14 }}>
+              <Text style={{ width: 168, fontSize: 18, color: '#1A2230' }}>{item.label}</Text>
+              <Text style={{ width: 300, fontSize: 16, color: '#6B7C93' }}>{item.note}</Text>
+            </Box>
+            <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#1E4FA8' }}>{item.value}</Text>
+          </Box>
+        ))}
+      </Box>
+    </Box>
+
+    <Box style={{ height: 54, padding: '0 22px', borderRadius: 10, background: '#E7F0FB', flexDirection: 'row', alignItems: 'center', gap: 14 }}>
+      <Box style={{ width: 4, height: 30, borderRadius: 2, background: '#D9534F' }} />
+      <Text style={{ fontSize: 17, color: '#1A2230', lineHeight: 1.5 }}>
+        <span style={{ fontWeight: 'bold' }}>口径提醒：</span>最新批次唯一未通过项是结果缓存代码指纹过期；诊断复评仍为 84/84，需
+        <span style={{ color: '#D9534F', fontWeight: 600 }}>正式重跑固化</span>。
+      </Text>
+    </Box>
+
+    <Box style={{ position: 'absolute', left: 0, right: 0, bottom: 0, flexDirection: 'row', justifyContent: 'space-between' }}>
+      <Text style={{ fontSize: 14, color: '#8B9BB0' }}>来源：2026-11-22_round-02 / 2026-11-23_catalog-direct-citation</Text>
+      <Text style={{ fontSize: 14, color: '#8B9BB0' }}>04 / 07</Text>
+      </Box>
+  </Box>
+</Slide>

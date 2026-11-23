@@ -1,0 +1,51 @@
+<Slide style={{ width: 1280, height: 720, background: '#FFFFFF', padding: 0 }}>
+  <Box style={{ width: '100%', height: '100%', flexDirection: 'column' }}>
+    <Box style={{ height: 72, background: '#1E4FA8', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 60px' }}>
+      <Text style={{ fontSize: 34, fontWeight: 'bold', color: '#FFFFFF' }}>本轮测试 · 真实客户端与上游</Text>
+      <Text style={{ fontSize: 16, color: '#C9DAF5' }}>02 · TEST RESULTS</Text>
+    </Box>
+
+    <Box style={{ flex: 1, flexDirection: 'column', padding: '22px 60px 0 60px' }}>
+      <Box style={{ flexDirection: 'row', gap: 20, marginBottom: 16 }}>
+        <Box style={{ flex: 1, background: '#E8EFF8', border: '1px solid #C9DAF5', padding: '14px 20px' }}>
+          <Text style={{ fontSize: 40, fontWeight: 'bold', color: '#1E4FA8', lineHeight: 1.1 }}>10/10</Text>
+          <Text style={{ fontSize: 17, color: '#1A2230', fontWeight: 600, marginTop: 4 }}>真实 PageIndex 客户端审计</Text>
+          <Text style={{ fontSize: 15, color: '#4A5568', marginTop: 4 }}>补跑后无跳过；嵌套节点与 force 标注检查均通过</Text>
+        </Box>
+        <Box style={{ flex: 1, background: '#F7F9FC', border: '1px solid #D6DCE5', padding: '14px 20px' }}>
+          <Text style={{ fontSize: 40, fontWeight: 'bold', color: '#1A2230', lineHeight: 1.1 }}>668/673</Text>
+          <Text style={{ fontSize: 17, color: '#1A2230', fontWeight: 600, marginTop: 4 }}>上游单元测试（77 skipped）</Text>
+          <Text style={{ fontSize: 15, color: '#4A5568', marginTop: 4 }}>5 项失败均属 Windows 平台前提，未改动上游源码</Text>
+        </Box>
+      </Box>
+
+      <Text style={{ fontSize: 20, fontWeight: 600, color: '#1E4FA8', marginBottom: 8 }}>上游 5 项失败归因（均为环境/平台，非项目代码）</Text>
+      <Box style={{ flexDirection: 'column', gap: 7, flex: 1 }}>
+        {[
+          ['1', 'env_not_loaded_from_install_dir', 'Windows 符号链接需额外权限，返回 WinError 1314'],
+          ['2', 'list_documents_skips_unsafe_directory_names', '测试假设 POSIX 文件名语义，反斜杠被 Windows 当路径分隔符'],
+          ['3', 'concurrent_same_name_submits_store_unique_names', '可稳定复现的上游 Windows 并发命名问题，待上游确认实现语义'],
+          ['4', 'cloud_upload_normalizes[Q"3.pdf]', 'Windows 文件名不允许双引号，测试准备阶段即失败'],
+          ['5', 'cloud_upload_normalizes[Q\\r\\n3.pdf]', 'Windows 文件名不允许换行符，测试准备阶段即失败'],
+        ].map((r, i) => (
+          <Box key={i} style={{ flexDirection: 'row', gap: 12, alignItems: 'flex-start', padding: '7px 0', borderBottom: '1px solid #E5E7EB' }}>
+            <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#1E4FA8', width: 20 }}>{r[0]}</Text>
+            <Text style={{ fontSize: 15, color: '#1A2230', width: 400 }}>{r[1]}</Text>
+            <Text style={{ fontSize: 14, color: '#4A5568', flex: 1, lineHeight: 1.4 }}>{r[2]}</Text>
+          </Box>
+        ))}
+      </Box>
+
+      <Box style={{ background: '#E8EFF8', padding: '12px 18px', marginTop: 12, marginBottom: 16 }}>
+        <Text style={{ fontSize: 15, color: '#4A5568' }}>
+          原始 pytest 输出保存在 <span style={{ color: '#1A2230' }}>test_runs/2026-11-22_round-01/pageindex-pytest.stdout.txt</span>；本轮为完成测试安装 pytest 9.2.0，位于 .gitignore 范围内。
+        </Text>
+      </Box>
+    </Box>
+
+    <Box style={{ height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 60px' }}>
+      <Text style={{ fontSize: 14, color: '#8B97A8' }}>项目进度汇报 · 2026-11-22</Text>
+      <Text style={{ fontSize: 14, color: '#8B97A8' }}>07 / 10</Text>
+    </Box>
+  </Box>
+</Slide>

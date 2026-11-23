@@ -18,6 +18,7 @@ sys.path.insert(0, HERE)
 
 import reasoning_retrieval
 import service
+import update_workflow
 
 
 class Audit:
@@ -114,8 +115,11 @@ def main():
                     "default-src 'self'" in headers.get(
                         "Content-Security-Policy", ""))
         audit.check("首页引用可移植的脚本和样式",
-                    'href="assets/app.css?v=3"' in html
-                    and 'src="assets/app.js?v=3"' in html)
+                    'href="assets/app.css?v=4"' in html
+                    and 'src="assets/app.js?v=4"' in html)
+        audit.check("首页展示政策库更新账本",
+                    'id="updatesList"' in html
+                    and "更新有审核闸门" in html)
         audit.check("首页声明文件与 HTTP 双编码",
                     '<meta charset="utf-8">' in html
                     and 'http-equiv="Content-Type"' in html
@@ -132,6 +136,16 @@ def main():
                     health.get("database", {}).get("corpus_files", 0) > 0)
         audit.check("健康接口不返回密钥",
                     "api_key" not in health.get("provider", {}))
+        audit.check("健康接口报告更新积压",
+                    isinstance(health.get("updates"), dict)
+                    and "pending" in health["updates"])
+        status, _, updates, _ = request(port, "GET", "/api/updates")
+        serialized_updates = json.dumps(updates, ensure_ascii=False)
+        audit.check("更新接口返回公开摘要",
+                    status == 200 and isinstance(updates.get("items"), list))
+        audit.check("更新接口不暴露本地路径",
+                    "body_file" not in serialized_updates
+                    and "数据库" not in serialized_updates)
 
         print("== 问答任务 ==")
         status, _, created, _ = request(
@@ -183,6 +197,12 @@ def main():
             port, "POST", "/api/ask", b"x" * (service.MAX_BODY_BYTES + 1),
             {"Content-Type": "application/json"})
         audit.check("超大请求返回 413", status == 413)
+        with update_workflow.publish_lock(reasoning_retrieval.DEFAULT_DB):
+            status, _, blocked, _ = request(
+                port, "POST", "/api/ask", {"question": "发布期间查询"})
+        audit.check("发布期间拒绝新查询",
+                    status == 503
+                    and "发布更新" in blocked.get("error", ""))
         status, _, _, _ = request(
             port, "GET", "/api/ask/00000000000000000000000000000000")
         audit.check("未知任务返回 404", status == 404)

@@ -32,6 +32,8 @@
   const serviceStatusText = $("#serviceStatusText");
   const corpusSummary = $("#corpusSummary");
   const fileNotice = $("#fileNotice");
+  const updatesSummary = $("#updatesSummary");
+  const updatesList = $("#updatesList");
 
   let currentJobId = null;
   let pollTimer = null;
@@ -56,6 +58,16 @@
     select_parse: "证据选择结果无法解析",
     select_empty: "所选条文在候选文件中不存在",
     llm_error: "模型服务暂不可用",
+  };
+
+  const updateStatusLabels = {
+    pending: "待补证",
+    staging: "正在取证",
+    stage_error: "取证异常",
+    staged: "已取证",
+    verified: "已审核",
+    rejected: "已拒绝",
+    published: "已发布",
   };
 
   function updateCounter() {
@@ -257,6 +269,13 @@
         number.textContent = source.doc_number;
         doc.appendChild(number);
       }
+      const page = source.evidence?.page;
+      if (page) {
+        const location = document.createElement("small");
+        const pageEnd = source.evidence.page_end || page;
+        location.textContent = `PDF 第 ${page}${pageEnd > page ? `–${pageEnd}` : ""} 页`;
+        doc.appendChild(location);
+      }
       main.appendChild(doc);
 
       const badge = document.createElement("span");
@@ -272,6 +291,13 @@
         reason.className = "source-force";
         reason.textContent = reasonText;
         item.appendChild(reason);
+      }
+      const quote = source.evidence?.text;
+      if (quote) {
+        const evidence = document.createElement("blockquote");
+        evidence.className = "source-quote";
+        evidence.textContent = quote;
+        item.appendChild(evidence);
       }
       sourceList.appendChild(item);
     });
@@ -436,6 +462,94 @@
     }
   }
 
+  function updateStatusClass(status) {
+    if (status === "published" || status === "verified") {
+      return "status-current";
+    }
+    if (status === "stage_error") {
+      return "status-repealed";
+    }
+    if (status === "staged" || status === "pending" || status === "staging") {
+      return "status-questionable";
+    }
+    return "";
+  }
+
+  function renderUpdates(updates) {
+    updatesList.replaceChildren();
+    const pending = Number(updates.pending || 0);
+    const verified = Number(updates.verified || 0);
+    const published = Number(updates.published || 0);
+    updatesSummary.textContent = updates.available
+      ? `待补证 ${pending} · 已审核 ${verified} · 已发布 ${published}`
+      : (updates.message || "暂无更新记录");
+
+    const items = Array.isArray(updates.items) ? updates.items : [];
+    if (!items.length) {
+      const empty = document.createElement("p");
+      empty.className = "updates-empty";
+      empty.textContent = updates.message || "最近没有发现待审核的政策变化。";
+      updatesList.appendChild(empty);
+      return;
+    }
+    items.forEach((update) => {
+      const item = document.createElement("article");
+      item.className = "update-item";
+
+      const marker = document.createElement("span");
+      marker.className = "update-marker";
+      marker.textContent = update.kind_label || "政策变化";
+      item.appendChild(marker);
+
+      const main = document.createElement("div");
+      main.className = "update-main";
+      const title = document.createElement("strong");
+      title.textContent = update.title || "未命名文件";
+      main.appendChild(title);
+      const meta = document.createElement("span");
+      const detected = update.detected_at
+        ? `发现于 ${String(update.detected_at).slice(0, 10)}`
+        : "更新时间待确认";
+      meta.textContent = detected;
+      main.appendChild(meta);
+      item.appendChild(main);
+
+      const badge = document.createElement("span");
+      badge.className = `status-badge ${updateStatusClass(update.status)}`.trim();
+      badge.textContent = updateStatusLabels[update.status] || "待核对";
+      item.appendChild(badge);
+
+      if (update.official_url) {
+        const link = document.createElement("a");
+        link.className = "update-link";
+        link.href = update.official_url;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.textContent = "查看官方原文";
+        item.appendChild(link);
+      }
+      updatesList.appendChild(item);
+    });
+  }
+
+  async function loadUpdates() {
+    try {
+      const response = await fetch("/api/updates", {
+        headers: { Accept: "application/json" },
+        cache: "no-store",
+      });
+      const updates = await parseResponse(response);
+      renderUpdates(updates);
+    } catch {
+      updatesSummary.textContent = "更新账本暂不可用";
+      updatesList.replaceChildren();
+      const empty = document.createElement("p");
+      empty.className = "updates-empty";
+      empty.textContent = "无法读取最近更新状态，请稍后重试。";
+      updatesList.appendChild(empty);
+    }
+  }
+
   form.addEventListener("submit", (event) => {
     event.preventDefault();
     submitQuestion();
@@ -465,4 +579,5 @@
     document.documentElement.classList.add("file-mode");
   }
   loadHealth();
+  loadUpdates();
 })();

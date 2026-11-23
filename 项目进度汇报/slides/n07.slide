@@ -1,0 +1,80 @@
+<Slide style={{ width: 1280, height: 720, background: '#FFFFFF', padding: 0 }}>
+  <Box style={{ width: '100%', height: '100%', flexDirection: 'column' }}>
+    <Box style={{ height: 72, background: '#3D7BD9', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 60px' }}>
+      <Text style={{ fontSize: 34, fontWeight: 'bold', color: '#FFFFFF' }}>存在的问题 ③ 工程与评测</Text>
+      <Text style={{ fontSize: 16, color: '#C9DAF5' }}>03 · ISSUES (3/3)</Text>
+    </Box>
+
+    <Box style={{ flex: 1, flexDirection: 'column', padding: '14px 60px 0 60px' }}>
+      {[
+        {
+          n: '1', t: '独立第二人盲评缺失',
+          a: 'A/B 两表 80/80 通过，κ=1.000，但报告标记为 completed_owner_attested_not_independent。',
+          b: '两表来自同一所有者确认后转录，κ 高只说明自我一致。',
+          c: '不能作为"独立人工评测"证据，评测可信度受限 —— 当前最需补的评测短板。',
+          d: '高优先级：由未参与实现者填新匿名表，形成有效 κ。',
+        },
+        {
+          n: '2', t: '上游 PageIndex 5 项失败',
+          a: '上游单测 668 passed / 77 skipped / 5 failed；项目侧 19/19、10/10 均通过。',
+          b: '全为 Windows 平台前提：符号链接权限、POSIX 文件名假设、并发命名、文件名禁用字符。',
+          c: '上游测试本地无法全绿，但不影响项目功能；已逐条归因，未改上游源码。',
+          d: '待上游确认实现语义；pytest 装在 .gitignore 环境，无代码污染。',
+        },
+        {
+          n: '3', t: '2024／2022 版指导目录未建',
+          a: '目前只建 2023 版（1,625 页 → 2,839 事项），2024 与 2022 版尚未建。',
+          b: '同一套流程需分别跑 build，各约 2–3 分钟，尚未执行。',
+          c: '跨年度目录比对能力不完整。',
+          d: '高优先级：python catalog_index.py --build --only 2024（2022 同理）。',
+        },
+        {
+          n: '4', t: '格式与规模边界',
+          a: '11 份正文过短、75 份 <500 字（多为正常短文）；老式 .doc 附件读不了。',
+          b: '源文件格式与正文长度差异；.doc 二进制格式未纳入解析链路。',
+          c: '少量历史文件无法入库；短文无结构信息可用，依赖句块兜底。',
+          d: '低优先级已知边界，暂不阻塞主链路。',
+        },
+        {
+          n: '5', t: '比较题候选数启发式',
+          a: '候选数由"点名文件数＋显式数量词"推断。',
+          b: '没有真正的数量理解，"哪些／若干个"无法解析。',
+          c: '模糊表述退化到默认 4 份候选，可能漏掉相关文件。',
+          d: '低优先级已知边界。',
+        },
+      ].map((it, i) => (
+        <Box key={i} style={{ borderLeft: '4px solid #3D7BD9', background: i % 2 === 0 ? '#F7F9FC' : '#FFFFFF', padding: '7px 14px', marginBottom: 8 }}>
+          <Box style={{ flexDirection: 'row', alignItems: 'center', gap: 10, marginBottom: 3 }}>
+            <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#3D7BD9' }}>{it.n}</Text>
+            <Text style={{ fontSize: 18, fontWeight: 600, color: '#1A2230' }}>{it.t}</Text>
+          </Box>
+          <Box style={{ flexDirection: 'row', gap: 16, marginBottom: 3 }}>
+            <Box style={{ flex: 1, flexDirection: 'row', gap: 6 }}>
+              <Text style={{ fontSize: 13, fontWeight: 600, color: '#3D7BD9' }}>现象</Text>
+              <Text style={{ fontSize: 13, color: '#4A5568', lineHeight: 1.38, flex: 1 }}>{it.a}</Text>
+            </Box>
+            <Box style={{ flex: 1, flexDirection: 'row', gap: 6 }}>
+              <Text style={{ fontSize: 13, fontWeight: 600, color: '#3D7BD9' }}>成因</Text>
+              <Text style={{ fontSize: 13, color: '#4A5568', lineHeight: 1.38, flex: 1 }}>{it.b}</Text>
+            </Box>
+          </Box>
+          <Box style={{ flexDirection: 'row', gap: 16 }}>
+            <Box style={{ flex: 1, flexDirection: 'row', gap: 6 }}>
+              <Text style={{ fontSize: 13, fontWeight: 600, color: '#1E4FA8' }}>影响</Text>
+              <Text style={{ fontSize: 13, color: '#4A5568', lineHeight: 1.38, flex: 1 }}>{it.c}</Text>
+            </Box>
+            <Box style={{ flex: 1, flexDirection: 'row', gap: 6 }}>
+              <Text style={{ fontSize: 13, fontWeight: 600, color: '#1E4FA8' }}>处理</Text>
+              <Text style={{ fontSize: 13, color: '#1A2230', fontWeight: 600, lineHeight: 1.38, flex: 1 }}>{it.d}</Text>
+            </Box>
+          </Box>
+        </Box>
+      ))}
+    </Box>
+
+    <Box style={{ height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 60px' }}>
+      <Text style={{ fontSize: 14, color: '#8B97A8' }}>项目进度汇报 · 2026-11-22</Text>
+      <Text style={{ fontSize: 14, color: '#8B97A8' }}>07 / 09</Text>
+    </Box>
+  </Box>
+</Slide>

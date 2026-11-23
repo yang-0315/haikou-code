@@ -1,0 +1,80 @@
+<Slide style={{ width: 1280, height: 720, background: '#FFFFFF', padding: 0 }}>
+  <Box style={{ width: '100%', height: '100%', flexDirection: 'column' }}>
+    <Box style={{ height: 72, background: '#B8860B', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 60px' }}>
+      <Text style={{ fontSize: 34, fontWeight: 'bold', color: '#FFFFFF' }}>存在的问题 ② 技术能力</Text>
+      <Text style={{ fontSize: 16, color: '#F7E3B0' }}>03 · ISSUES (2/3)</Text>
+    </Box>
+
+    <Box style={{ flex: 1, flexDirection: 'column', padding: '12px 60px 0 60px' }}>
+      {[
+        {
+          n: '1', t: '反馈式二次路由未实现',
+          a: '七类策略、候选数 4–10 自适应、前置拒答已落地，路由审计 13/13。',
+          b: '当前是一次性规则决策，没有"首轮结果反馈"环节。',
+          c: '首轮证据不足或选错通道时不会自动换路重试，只能给弱答案或拒答。',
+          d: '中优先级：按首轮召回质量自动换路再试。',
+        },
+        {
+          n: '2', t: '条文级"修改为"未覆盖',
+          a: '已识别 60 事件 / 35 决定 / 57 文档 / 313 条文目标；整条与款项删除已覆盖。',
+          b: '索引只提取"删去／删除第X条"；单纯"修改为"未保存新旧文本差异。',
+          c: '被改写条文仍按文档级有效处理，可能用旧文本作答；跨变更日已降为存疑。',
+          d: '中优先级：为被改写条文保存新旧文本差异。',
+        },
+        {
+          n: '3', t: '系列已废止 7 份版本难分辨',
+          a: '效力分布中"系列已废止"7 份，靠单一状态无法定论。',
+          b: '多版本标题带"试行／修订"变体，文号与版本谱系未联合判定。',
+          c: '可能把已被新版本取代的旧文本当作现行依据。',
+          d: '中优先级：版本谱系＋文号联合判定。',
+        },
+        {
+          n: '4', t: '事项索引未持久化',
+          a: '2,839 条事项索引每次查询现场建，约 0.2 秒。',
+          b: '索引未落盘，每次启动重建。',
+          c: '单查询多 0.2 秒，语料扩大后线性增长。',
+          d: '中优先级：并入持久化索引。',
+        },
+        {
+          n: '5', t: 'chinastruct 闲置',
+          a: '中文版式结构提取模块未进主链路；真实 PageIndex 样例仅 3 份文本 PDF。',
+          b: '库里没有带版式 PDF 语料，3 份退化为页节点，无法形成章→条嵌套。',
+          c: '中文结构提取缺真实验证，也限制"效力挂回真实 PageIndex 树"的展示。',
+          d: '用户已单独规划带版式中文效力语料库，本 PPT 不展开。',
+        },
+      ].map((it, i) => (
+        <Box key={i} style={{ borderLeft: '4px solid #B8860B', background: i % 2 === 0 ? '#F7F9FC' : '#FFFFFF', padding: '7px 14px', marginBottom: 8 }}>
+          <Box style={{ flexDirection: 'row', alignItems: 'center', gap: 10, marginBottom: 3 }}>
+            <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#B8860B' }}>{it.n}</Text>
+            <Text style={{ fontSize: 18, fontWeight: 600, color: '#1A2230' }}>{it.t}</Text>
+          </Box>
+          <Box style={{ flexDirection: 'row', gap: 16, marginBottom: 3 }}>
+            <Box style={{ flex: 1, flexDirection: 'row', gap: 6 }}>
+              <Text style={{ fontSize: 13, fontWeight: 600, color: '#B8860B' }}>现象</Text>
+              <Text style={{ fontSize: 13, color: '#4A5568', lineHeight: 1.38, flex: 1 }}>{it.a}</Text>
+            </Box>
+            <Box style={{ flex: 1, flexDirection: 'row', gap: 6 }}>
+              <Text style={{ fontSize: 13, fontWeight: 600, color: '#B8860B' }}>成因</Text>
+              <Text style={{ fontSize: 13, color: '#4A5568', lineHeight: 1.38, flex: 1 }}>{it.b}</Text>
+            </Box>
+          </Box>
+          <Box style={{ flexDirection: 'row', gap: 16 }}>
+            <Box style={{ flex: 1, flexDirection: 'row', gap: 6 }}>
+              <Text style={{ fontSize: 13, fontWeight: 600, color: '#1E4FA8' }}>影响</Text>
+              <Text style={{ fontSize: 13, color: '#4A5568', lineHeight: 1.38, flex: 1 }}>{it.c}</Text>
+            </Box>
+            <Box style={{ flex: 1, flexDirection: 'row', gap: 6 }}>
+              <Text style={{ fontSize: 13, fontWeight: 600, color: '#1E4FA8' }}>处理</Text>
+              <Text style={{ fontSize: 13, color: '#1A2230', fontWeight: 600, lineHeight: 1.38, flex: 1 }}>{it.d}</Text>
+            </Box>
+          </Box>
+        </Box>
+      ))}
+    </Box>
+
+    <Box style={{ height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 60px' }}>
+      <Text style={{ fontSize: 14, color: '#8B97A8' }}>项目进度汇报 · 2026-11-22</Text>
+      <Text style={{ fontSize: 14, color: '#8B97A8' }}>06 / 09</Text>
+    </Box>
+  </Box>
+</Slide>

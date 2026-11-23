@@ -121,7 +121,11 @@ def main():
 
     passed = sum(1 for ok in results if ok is True)
     skipped = sum(1 for ok in results if ok is None)
+    failed = len(results) - passed - skipped
     print(f"\n通过 {passed}/{len(results) - skipped}（跳过 {skipped}）")
+    if failed:
+        print(f"问题 {failed} 项")
+        raise SystemExit(1)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,41 @@
+<Slide style={{ width: 1280, height: 720, background: 'linear-gradient(135deg, #0A2342 0%, #103A67 55%, #16457C 100%)', padding: 60, fontFamily: 'Microsoft YaHei, Arial' }}>
+  <Box style={{ position: 'relative', width: '100%', height: '100%', gap: 20 }}>
+
+    <Box style={{ height: 230, gap: 18 }}>
+      <Box style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+        <Box style={{ width: 32, height: 2, background: '#E8B75A' }} />
+        <Text style={{ fontSize: 16, color: '#E8B75A', fontWeight: 600, letterSpacing: 3 }}>CONCLUSION · NEXT STEPS</Text>
+      </Box>
+      <Text style={{ fontSize: 48, fontWeight: 'bold', color: '#FFFFFF', lineHeight: 1.2 }}>
+        政策库可持续维护，<br />下一步先补外部验证
+      </Text>
+      <Text style={{ fontSize: 18, color: '#BFD6F0', lineHeight: 1.6 }}>
+        政策库底座、依据追溯与前台问答评测已完成；待固化正式重跑结果并引入独立评审。
+      </Text>
+    </Box>
+
+    <Box style={{ height: 1, background: 'rgba(255,255,255,0.24)' }} />
+
+    <Box style={{ height: 240, flexDirection: 'row', gap: 20 }}>
+      {[
+        { no: '01', title: '正式重跑', desc: '用当前代码重生成 84 题结果，消除缓存指纹告警。' },
+        { no: '02', title: '独立盲评', desc: '由未参与实现的政策/法律人员评审，计算 Cohen κ。' },
+        { no: '03', title: '真实题对比', desc: '30–50 道真实工作题，增加带联网助手基线。' },
+        { no: '04', title: '依据补证', desc: '补 156 份施行日、712 份文号，建 2024/2022 目录。' },
+      ].map((item, idx) => (
+        <Box key={idx} style={{ width: 275, height: 240, padding: 22, borderRadius: 10, background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.16)', justifyContent: 'space-between' }}>
+          <Text style={{ fontSize: 30, fontWeight: 'bold', color: idx === 1 ? '#E8B75A' : '#00D4E8' }}>{item.no}</Text>
+          <Text style={{ fontSize: 24, fontWeight: 600, color: '#FFFFFF' }}>{item.title}</Text>
+          <Text style={{ fontSize: 18, color: '#C8DCF2', lineHeight: 1.6 }}>{item.desc}</Text>
+        </Box>
+      ))}
+    </Box>
+
+    <Box style={{ height: 54, padding: '0 22px', borderRadius: 10, background: 'rgba(255,255,255,0.10)', flexDirection: 'row', alignItems: 'center', gap: 14 }}>
+      <Box style={{ width: 4, height: 28, borderRadius: 2, background: '#E8B75A' }} />
+      <Text style={{ fontSize: 18, color: '#FFFFFF', lineHeight: 1.5 }}>
+        <span style={{ fontWeight: 'bold' }}>目标：</span>把内部 84/84 转化为可对外说明的验证结论。
+      </Text>
+    </Box>
+  </Box>
+</Slide>

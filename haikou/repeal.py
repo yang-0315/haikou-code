@@ -444,6 +444,91 @@ def issuing_body(meta: dict, text: str) -> str | None:
     return meta.get("ContentSource") or None
 
 
+def declared_repeal_count(title: str) -> int | None:
+    """Read the repeal count from the clause nearest to "废止".
+
+    Mixed titles contain both "等16个规章的修改决定" and "等7个规章的废止决定".
+    Taking the first count compares 16 modifications with four repeal names.
+    """
+    candidates = list(re.finditer(
+        r"等\s*([一二三四五六七八九十百\d]+)\s*(?:件|个|部|项)",
+        title,
+    ))
+    if not candidates:
+        return None
+    repeal_positions = [match.start() for match in re.finditer("废止", title)]
+    if repeal_positions:
+        candidate = min(
+            candidates,
+            key=lambda match: min(
+                abs(match.start() - position) for position in repeal_positions
+            ),
+        )
+    else:
+        candidate = candidates[0]
+    token = candidate.group(1)
+    if token.isdigit():
+        return int(token)
+    digits = {"一": 1, "二": 2, "三": 3, "四": 4, "五": 5, "六": 6,
+              "七": 7, "八": 8, "九": 9}
+    if "十" not in token:
+        return sum(digits.get(char, 0) for char in token)
+    head, _, tail = token.partition("十")
+    base = (int(head) if head.isdigit() else digits.get(head, 1) if head else 1)
+    return base * 10 + sum(digits.get(char, 0) for char in tail)
+
+
+ENUM_HEADING = re.compile(
+    r"决定废止下列[^：:\n]{0,20}[：:]"
+)
+ENUM_ITEM = re.compile(
+    r"(?m)^\s*[（(][一二三四五六七八九十百\d]+[）)]\s*(.+?)\s*$"
+)
+NUMBERED_ITEM = re.compile(
+    r"(?m)^\s*[一二三四五六七八九十百]+、\s*(.+?)\s*$"
+)
+
+
+def enumerated_repeal_items(text: str) -> list[str]:
+    """Read names from a "决定废止下列N个规章" enumerated attachment list."""
+    headings = list(ENUM_HEADING.finditer(text))
+    out = []
+    for index, heading in enumerate(headings):
+        end = headings[index + 1].start() if index + 1 < len(headings) else len(text)
+        block = text[heading.end():end]
+        for match in ENUM_ITEM.finditer(block):
+            name = match.group(1).strip()
+            name = re.split(r"[（(]\s*19\d{2}\s*年", name, maxsplit=1)[0]
+            name = re.sub(r"[。；;，,]+$", "", name).strip()
+            if name and name not in out:
+                out.append(name)
+    return clean_names(out)
+
+
+def numbered_repeal_items(text: str) -> list[str]:
+    """Read Chinese-numbered repeal items when the body lists them directly."""
+    out = []
+    for match in NUMBERED_ITEM.finditer(text):
+        name = match.group(1).strip()
+        if "修编" in name:
+            name = re.sub(
+                r"[（(]\s*(?:19|20)\d{2}\s*年[^）)]*会议通过[）)]\s*$",
+                "",
+                name,
+            )
+        else:
+            name = re.split(
+                r"[（(]\s*(?:19|20)\d{2}\s*年", name, maxsplit=1
+            )[0]
+        name = re.sub(r"[。；;，,]+$", "", name).strip()
+        # A numbered item can be the title of a decision that itself contains
+        # 《纲要》. The generic name cleaner rejects book-title brackets because
+        # it expects bare instrument names, so keep the complete legal title.
+        if 4 <= len(name) <= 120 and name not in out:
+            out.append(name)
+    return out
+
+
 def parse_notice(url: str, html: str) -> dict:
     meta = meta_fields(html)
     title = meta.get("ArticleTitle") or ""
@@ -451,7 +536,9 @@ def parse_notice(url: str, html: str) -> dict:
     flat = text.replace("\n", "")
 
     repealed_names = named_documents(text, title)
-    for extra in listed_documents(text) + inline_series(text):
+    for extra in (listed_documents(text) + inline_series(text)
+                  + enumerated_repeal_items(text)
+                  + numbered_repeal_items(text)):
         if extra not in repealed_names:
             repealed_names.append(extra)
     repealed_names = clean_names(repealed_names)
@@ -489,31 +576,7 @@ def parse_notice(url: str, html: str) -> dict:
     numbers = document_numbers(flat)
     # a notice that says "等N件" but lists fewer means the list lives in an
     # attachment we did not fetch — record the shortfall instead of hiding it
-    hint = None
-    for candidate in re.finditer(
-            r"等\s*([一二三四五六七八九十百\d]+)\s*(?:件|个|部|项)", title):
-        window = title[max(0, candidate.start() - 40):candidate.start() + 6]
-        if any(word in window for word in REPEAL_WORDS):
-            hint = candidate
-            break
-    if hint is None and "废止" not in title:
-        hint = re.search(r"等\s*([一二三四五六七八九十百\d]+)\s*(?:件|个|部|项)",
-                         title)
-    declared = None
-    if hint:
-        token = hint.group(1)
-        if token.isdigit():
-            declared = int(token)
-        elif "十" not in token:
-            declared = sum({"一": 1, "二": 2, "三": 3, "四": 4, "五": 5, "六": 6,
-                            "七": 7, "八": 8, "九": 9}.get(c, 0) for c in token)
-        else:
-            head, _, tail = token.partition("十")
-            declared = (int(head) if head.isdigit() else
-                        {"一": 1, "二": 2, "三": 3, "四": 4, "五": 5, "六": 6,
-                         "七": 7, "八": 8, "九": 9}.get(head, 1) if head else 1) * 10
-            declared += sum({"一": 1, "二": 2, "三": 3, "四": 4, "五": 5, "六": 6,
-                             "七": 7, "八": 8, "九": 9}.get(c, 0) for c in tail)
+    declared = declared_repeal_count(title)
     complete = declared is None or len(repealed_names) >= declared
     return {
         "notice_title": title,

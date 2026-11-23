@@ -1,0 +1,26 @@
+<Slide style={{ width: 1280, height: 720, background: '#FFFFFF', padding: 0 }}>
+  <Box style={{ width: '100%', height: '100%', flexDirection: 'column', padding: '60px 80px 40px 80px' }}>
+    <Text style={{ fontSize: 36, fontWeight: 'bold', color: '#1E4FA8', lineHeight: 1.2 }}>目录</Text>
+    <Text style={{ fontSize: 16, color: '#8B97A8', letterSpacing: 2, marginTop: 4 }}>CONTENTS</Text>
+    <Box style={{ height: 1, background: '#D6DCE5', marginTop: 16, marginBottom: 28 }} />
+
+    <Box style={{ flexDirection: 'column', gap: 12 }}>
+      {[
+        { n: '01', t: '项目定位', d: '解决什么问题、效力如何进入推理' },
+        { n: '02', t: '系统架构', d: '一份协议、三类检索后端、统一 Provider' },
+        { n: '03', t: '当前进度', d: '语料、索引、效力判定的规模与覆盖' },
+        { n: '04', t: '本轮测试数据', d: '批次总览、84 题评测、审计与真实客户端' },
+        { n: '05', t: '问题与下一步', d: '现存短板、优先级与后续计划' },
+      ].map((it, i) => (
+        <Box key={i} style={{ flexDirection: 'row', alignItems: 'center', gap: 24, padding: '10px 0' }}>
+          <Text style={{ fontSize: 34, fontWeight: 'bold', color: '#1E4FA8', width: 68 }}>{it.n}</Text>
+          <Box style={{ width: 1, height: 40, background: '#D6DCE5' }} />
+          <Box style={{ flexDirection: 'column', gap: 2 }}>
+            <Text style={{ fontSize: 23, fontWeight: 600, color: '#1A2230' }}>{it.t}</Text>
+            <Text style={{ fontSize: 16, color: '#8B97A8' }}>{it.d}</Text>
+          </Box>
+        </Box>
+      ))}
+    </Box>
+  </Box>
+</Slide>

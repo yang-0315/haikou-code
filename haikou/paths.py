@@ -5,7 +5,10 @@ import os
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 WORKSPACE = os.path.dirname(HERE)
-LEGACY_DATABASE = r"C:\Users\Lenovo\Desktop\database"
+LEGACY_DATABASE = os.path.abspath(os.environ.get(
+    "POLICY_DATABASE_LEGACY",
+    os.path.join(os.path.expanduser("~"), "Desktop", "database"),
+))
 WORKSPACE_DATABASE = os.path.join(WORKSPACE, "database")
 
 

@@ -1,0 +1,66 @@
+<Slide style={{ width: 1280, height: 720, background: '#FFFFFF', padding: 0 }}>
+  <Box style={{ width: '100%', height: '100%', flexDirection: 'column' }}>
+    <Box style={{ height: 72, background: '#1E4FA8', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 60px' }}>
+      <Text style={{ fontSize: 34, fontWeight: 'bold', color: '#FFFFFF' }}>本轮测试数据</Text>
+      <Text style={{ fontSize: 16, color: '#C9DAF5' }}>02 · TEST RESULTS</Text>
+    </Box>
+
+    <Box style={{ flex: 1, flexDirection: 'column', padding: '20px 60px 0 60px' }}>
+      <Box style={{ flexDirection: 'row', alignItems: 'center', gap: 14, marginBottom: 12 }}>
+        <Box style={{ background: '#E8EFF8', padding: '6px 12px' }}>
+          <Text style={{ fontSize: 15, fontWeight: 600, color: '#1E4FA8' }}>批次 2026-11-22_round-01</Text>
+        </Box>
+        <Text style={{ fontSize: 14, color: '#4A5568' }}>21:20–21:28 · Git a20edc3 · 核心结论 PASS · 在线模型 PASS</Text>
+      </Box>
+
+      <Box style={{ flexDirection: 'row', gap: 14, marginBottom: 14 }}>
+        {[
+          { n: '19/19', t: '自研核心测试' }, { n: '22/22', t: 'Web 服务审计' },
+          { n: '84/84', t: 'validity-QA' }, { n: '10/10', t: '真实 PageIndex' },
+        ].map((k, i) => (
+          <Box key={i} style={{ flex: 1, border: '1px solid #D6DCE5', borderTop: '3px solid #1E4FA8', padding: '10px 14px' }}>
+            <Text style={{ fontSize: 32, fontWeight: 'bold', color: '#1E4FA8', lineHeight: 1.1 }}>{k.n}</Text>
+            <Text style={{ fontSize: 15, color: '#4A5568', marginTop: 2 }}>{k.t}</Text>
+          </Box>
+        ))}
+      </Box>
+
+      <Text style={{ fontSize: 18, fontWeight: 600, color: '#1E4FA8', marginBottom: 7 }}>84 题分项（全部通过）· 答案 57/57 · 引用合规 84/84</Text>
+      <Box style={{ flexDirection: 'row', gap: 10, marginBottom: 14 }}>
+        {[
+          { n: '48/48', t: '现行有效' }, { n: '21/21', t: '失效陷阱' },
+          { n: '8/8', t: '效力存疑' }, { n: '6/6', t: '语料外拒答' }, { n: '1/1', t: '历史时点' },
+        ].map((k, i) => (
+          <Box key={i} style={{ flex: 1, background: '#F7F9FC', border: '1px solid #E5E7EB', padding: '8px 10px' }}>
+            <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#1E4FA8' }}>{k.n}</Text>
+            <Text style={{ fontSize: 14, color: '#4A5568', marginTop: 2 }}>{k.t}</Text>
+          </Box>
+        ))}
+      </Box>
+
+      <Text style={{ fontSize: 18, fontWeight: 600, color: '#1E4FA8', marginBottom: 7 }}>12 项离线审计（全部可复跑）</Text>
+      <Box style={{ background: '#F7F9FC', padding: '10px 14px', marginBottom: 12 }}>
+        <Text style={{ fontSize: 15, color: '#1A2230', lineHeight: 1.7 }}>
+          协议 6/6 · 路由 13/13 · 事项 7/7 · 效力树与适配 10/10 · 沿树 8/8 · 推理检索 16/16 · 时点 13/13 · 时点证据 12/12 · Provider 10/10 · 条文级废止 28/28 · Web 服务 22/22 · 策略稳定性 0 处反向放宽
+        </Text>
+      </Box>
+
+      <Box style={{ background: '#E8EFF8', padding: '10px 14px', marginBottom: 14 }}>
+        <Text style={{ fontSize: 15, color: '#4A5568', lineHeight: 1.6 }}>
+          <span style={{ fontWeight: 'bold', color: '#1A2230' }}>本轮新增：</span>4 道路由覆盖题（精确条号 / 多文档 / 事项目录 / 历史时点）全通过；真实客户端审计补跑后无跳过。
+        </Text>
+      </Box>
+
+      <Box style={{ background: '#FFFFFF', border: '1px solid #E5E7EB', padding: '10px 14px' }}>
+        <Text style={{ fontSize: 15, color: '#4A5568', lineHeight: 1.6 }}>
+          <span style={{ fontWeight: 'bold', color: '#1A2230' }}>上游 PageIndex：</span>668 passed / 77 skipped / 5 failed；5 项失败均为 Windows 平台前提（符号链接权限、POSIX 文件名假设、并发命名、文件名禁用字符），未改动上游源码。
+        </Text>
+      </Box>
+    </Box>
+
+    <Box style={{ height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 60px' }}>
+      <Text style={{ fontSize: 14, color: '#8B97A8' }}>项目进度汇报 · 2026-11-22</Text>
+      <Text style={{ fontSize: 14, color: '#8B97A8' }}>04 / 09</Text>
+    </Box>
+  </Box>
+</Slide>

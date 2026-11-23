@@ -1,0 +1,83 @@
+<Slide style={{ width: 1280, height: 720, background: '#F5F9FF', padding: 60, fontFamily: 'Microsoft YaHei, Arial' }}>
+  <Box style={{ position: 'relative', width: '100%', height: '100%', gap: 20 }}>
+
+    <Box style={{ height: 88, gap: 10 }}>
+      <Box style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+        <Text style={{ fontSize: 14, color: '#3D7BD9', fontWeight: 600, letterSpacing: 2 }}>POLICY LIBRARY PROGRESS · 03</Text>
+        <Text style={{ fontSize: 14, color: '#6B7C93' }}>测试数据总览</Text>
+      </Box>
+      <Text style={{ fontSize: 34, fontWeight: 'bold', color: '#1A2230', lineHeight: 1.2 }}>政策库数据底座已具备全量评测条件</Text>
+      <Box style={{ height: 1, background: '#D7E3F4' }} />
+    </Box>
+
+    <Box style={{ height: 408, flexDirection: 'row', gap: 32 }}>
+
+      {/* 左侧非对称 KPI 区 */}
+      <Box style={{ width: 690, height: 408, gap: 20 }}>
+        <Box style={{ height: 194, padding: 26, borderRadius: 10, background: 'linear-gradient(120deg, #1E4FA8 0%, #2F67BC 100%)', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+          <Box>
+            <Text style={{ fontSize: 16, color: '#BFD6F0', letterSpacing: 1 }}>入库正文</Text>
+            <Text style={{ fontSize: 72, fontWeight: 'bold', color: '#FFFFFF', lineHeight: 1.05, marginTop: 6 }}>1,248</Text>
+            <Text style={{ fontSize: 18, color: '#D6E5F7', marginTop: 4 }}>目录去重后覆盖率 99%</Text>
+          </Box>
+          <Box style={{ width: 1, height: 120, background: 'rgba(255,255,255,0.28)' }} />
+          <Box style={{ width: 210 }}>
+            <Text style={{ fontSize: 16, color: '#BFD6F0', letterSpacing: 1 }}>去空白总字数</Text>
+            <Text style={{ fontSize: 48, fontWeight: 'bold', color: '#FFFFFF', lineHeight: 1.1, marginTop: 10 }}>887 万</Text>
+            <Text style={{ fontSize: 16, color: '#D6E5F7', marginTop: 6 }}>中位 4,460 字 · 乱码 0</Text>
+          </Box>
+        </Box>
+
+        <Box style={{ height: 194, flexDirection: 'row', gap: 20 }}>
+          <Box style={{ width: 335, padding: 24, borderRadius: 10, background: '#FFFFFF', border: '1px solid #D7E3F4', justifyContent: 'space-between' }}>
+            <Text style={{ fontSize: 16, color: '#6B7C93' }}>可追溯依据单元</Text>
+            <Text style={{ fontSize: 56, fontWeight: 'bold', color: '#1E4FA8', lineHeight: 1.05 }}>43,642</Text>
+            <Text style={{ fontSize: 18, color: '#1A2230' }}>条文 24,471 + 句块 19,171</Text>
+          </Box>
+          <Box style={{ width: 335, padding: 24, borderRadius: 10, background: '#FFFFFF', border: '1px solid #D7E3F4', justifyContent: 'space-between' }}>
+            <Text style={{ fontSize: 16, color: '#6B7C93' }}>2023 版事项目录</Text>
+            <Text style={{ fontSize: 56, fontWeight: 'bold', color: '#1E4FA8', lineHeight: 1.05 }}>3,877</Text>
+            <Text style={{ fontSize: 18, color: '#1A2230' }}>条款直引 3,877/3,877 · 100%</Text>
+          </Box>
+        </Box>
+      </Box>
+
+      {/* 右侧效力分布 */}
+      <Box style={{ width: 438, height: 408, padding: 20, borderRadius: 10, background: '#FFFFFF', border: '1px solid #D7E3F4', gap: 8 }}>
+        <Box>
+          <Text style={{ fontSize: 22, fontWeight: 600, color: '#1A2230' }}>效力状态分布</Text>
+          <Text style={{ fontSize: 14, color: '#6B7C93', marginTop: 4 }}>基于 1,244 份文档判定</Text>
+        </Box>
+        <Box style={{ height: 1, background: '#E2EAF5' }} />
+        {[
+          { label: '现行有效', count: '1,178', pct: '95%', width: '95%', color: '#1E4FA8' },
+          { label: '已废止', count: '35', pct: '2.8%', width: '8%', color: '#D9534F' },
+          { label: '效力存疑', count: '24', pct: '1.9%', width: '6%', color: '#E8A33D' },
+          { label: '系列已废止', count: '7', pct: '0.6%', width: '4%', color: '#7C8DA3' },
+        ].map((item, idx) => (
+          <Box key={idx} style={{ height: 62, gap: 6, justifyContent: 'center' }}>
+            <Box style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+              <Text style={{ fontSize: 18, color: '#1A2230' }}>{item.label}</Text>
+              <Text style={{ fontSize: 18, fontWeight: 600, color: item.color }}>{item.count} · {item.pct}</Text>
+            </Box>
+            <Box style={{ height: 10, borderRadius: 5, background: '#E7EEF8' }}>
+              <Box style={{ width: item.width, height: 10, borderRadius: 5, background: item.color }} />
+            </Box>
+          </Box>
+        ))}
+      </Box>
+    </Box>
+
+    <Box style={{ height: 54, padding: '0 22px', borderRadius: 10, background: '#E7F0FB', flexDirection: 'row', alignItems: 'center', gap: 14 }}>
+      <Box style={{ width: 4, height: 26, borderRadius: 2, background: '#1E4FA8' }} />
+      <Text style={{ fontSize: 18, color: '#1A2230', lineHeight: 1.5 }}>
+        <span style={{ fontWeight: 'bold' }}>判断：</span>语料覆盖与索引规模已不再是评测瓶颈，剩余差距集中在效力约束、证据链和外部验证。
+      </Text>
+    </Box>
+
+    <Box style={{ position: 'absolute', left: 0, right: 0, bottom: 0, flexDirection: 'row', justifyContent: 'space-between' }}>
+      <Text style={{ fontSize: 14, color: '#8B9BB0' }}>来源：progress.md 当前数字 / 效力判定</Text>
+      <Text style={{ fontSize: 14, color: '#8B9BB0' }}>03 / 07</Text>
+    </Box>
+  </Box>
+</Slide>

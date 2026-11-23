@@ -10,7 +10,8 @@ import os
 import re
 import sys
 
-sys.path.insert(0, r"C:\Users\Lenovo\Desktop\PageIndex\haikou")
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
 
 import docstore
 import reasoning_retrieval as rr
@@ -65,12 +66,13 @@ def main():
 
     # 1c. 真调模型看它会不会硬答（需要联网）
     def live_refusal():
-        try:
-            result = rr.ask("量子计算机的制冷方案", DB, 4)
-        except Exception as exc:
-            return None, f"跳过（{type(exc).__name__}，需联网）"
-        return result["answer"] is None, \
-            f"阶段 {result['refusal_stage']}；{(result['refusal'] or '')[:60]}"
+        result = rr.ask("量子计算机的制冷方案", DB, 4)
+        stage = result["refusal_stage"]
+        if stage == "llm_error":
+            return None, ("跳过（模型调用失败，未验证拒答）："
+                          f"{(result['refusal'] or '')[:80]}")
+        return (result["answer"] is None and stage == "model"), \
+            f"阶段 {stage}；{(result['refusal'] or '')[:60]}"
     results.append(probe("空召回：真模型也拒答（联网）", live_refusal))
 
     # 2. 正常召回
@@ -111,6 +113,85 @@ def main():
              f"；采用目录正式名={official}"
              f"；未入正文 {[(v['doc'][:16], v['status']) for v in doc['variants']]}")
     results.append(probe("版本组只留现行有效的那一版进正文", version_group))
+
+    # 4b. “关于修改《X》的决定”不能顶替用户点名的 X 正文
+    def amendment_not_substitute():
+        cases = [
+            ("海南经济特区土地管理条例对国有土地使用权出让是怎么规定的？",
+             "海南经济特区土地管理条例", "海南自由贸易港土地管理条例"),
+            ("海南省城乡规划条例关于城乡规划编制的审批程序是怎么规定的？",
+             "海南省城乡规划条例", "海南自由贸易港国土空间规划条例"),
+        ]
+        details = []
+        for query, title, replacement in cases:
+            names = [doc["doc"] for doc in rr.recall(DB, query, 4)]
+            decisions = [name for name in names
+                         if rr.retrieval.amendment_target(name)]
+            status = rr.status_of(layer, DB, title)["status"]
+            ok = (title in names and replacement in names
+                  and not decisions and status == "已废止")
+            details.append(f"{title[:12]}：原名={title in names}，"
+                           f"替代法={replacement in names}，"
+                           f"修改决定={len(decisions)}，状态={status}")
+            if not ok:
+                return False, "；".join(details)
+        return True, "；".join(details)
+    results.append(probe("修改决定不得替代被点名的原法规", amendment_not_substitute))
+
+    def repealed_tree_fallback():
+        cases = [
+            ("海南经济特区土地管理条例对国有土地使用权出让是怎么规定的？",
+             "海南经济特区土地管理条例", "海南自由贸易港土地管理条例"),
+            ("海南省城乡规划条例关于城乡规划编制的审批程序是怎么规定的？",
+             "海南省城乡规划条例", "海南自由贸易港国土空间规划条例"),
+        ]
+        details = []
+        refusal = fake_model(
+            '{"answerable": false, "nodes": [], "reason": "测试拒答"}')
+        for query, old_title, replacement in cases:
+            result = rr.ask(query, DB, chat_fn=refusal)
+            answer = result.get("answer") or ""
+            ok = (result.get("refusal_stage") is None
+                  and old_title in answer and "废止" in answer
+                  and replacement in answer and bool(result.get("sources")))
+            details.append(
+                f"{old_title[:12]}：路由="
+                f"{(result.get('route') or {}).get('strategy')}，"
+                f"明确旧法={old_title in answer and '废止' in answer}，"
+                f"来源={len(result.get('sources') or [])}")
+            if not ok:
+                return False, "；".join(details)
+        return True, "；".join(details)
+    results.append(probe("沿树拒答时仍给出点名校验与现行替代法规",
+                         repealed_tree_fallback))
+
+    def negated_old_law_notice():
+        query = "海口市城市养犬管理条例要求怎么办理养犬登记？"
+        docs = rr.recall(DB, query, 4)
+        result = rr.ask(
+            query,
+            DB,
+            chat_fn=fake_model(
+                '{"answerable": true, "read": ["海口市养犬管理条例|第十六条"],'
+                ' "reason": "测试静默换文件", "force_note": ""}'),
+        )
+        # The fake model select call and answer call share one response; force
+        # the exact regression shape instead of relying on prompt randomness.
+        result["answer"] = (
+            "您提及的是“海口市城市养犬管理条例”，但政策库对应"
+            "《海口市养犬管理条例》，所引条文均现行有效，"
+            "未出现“已废止”或“效力存疑”。")
+        result["force_note"] = ""
+        rr.ensure_named_repealed_notice(
+            result, layer, docs, query, DB)
+        answer = result.get("answer") or ""
+        return (
+            "海口市城市养犬管理条例" in answer
+            and answer.index("已废止") < answer.index("您提及")
+            and "海口市养犬管理条例" in answer
+        ), f"前置失效提示={'已废止' in answer}"
+    results.append(probe("否定句不能掩盖点名旧法被替代",
+                         negated_old_law_notice))
 
     # 5. 条号在多份文档中重复时，裸条号是否会过度选中
     def bare_article_numbers():
@@ -226,7 +307,11 @@ def main():
     passed = sum(1 for ok, _ in results if ok is True)
     skipped = sum(1 for ok, detail in results
                   if ok is None or (detail or "").endswith("（跳过）"))
+    failed = len(results) - passed - skipped
     print(f"\n通过 {passed}/{len(results) - skipped}（跳过 {skipped}）")
+    if failed:
+        print(f"问题 {failed} 项")
+        raise SystemExit(1)
 
 
 if __name__ == "__main__":

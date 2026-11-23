@@ -28,6 +28,10 @@ haikou/_vendor/
 *.log.err
 *.pid
 
+# Generated test evidence
+test_runs/*/
+!test_runs/README.md
+
 # Editors and operating system
 .idea/
 .vscode/

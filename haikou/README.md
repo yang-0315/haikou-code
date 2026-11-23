@@ -1,4 +1,4 @@
-# haikou：政策文档的效力层
+# haikou：海南政策持续更新、效力层与执法问答
 
 给 PageIndex 的树检索加上"这条规定还有效吗"这一层。对外只有两个接入点，
 内部是一条数据流。
@@ -33,10 +33,37 @@
 | 模型 Provider | `llm_provider.py` | 统一 DeepSeek／OpenAI／OpenAI-compatible／本地模型接口、配置、重试与错误 |
 | 路由层 | `retrieval_router.py` | 先判断问题该走哪条检索路（条号／单文档树／多文档／表格目录／语料外） |
 | 事项目录 | `catalog_index.py` | 从官方 PDF 附件还原《执法事项指导目录》的事项—法律—条款结构 |
+| 更新发现 | `policy_update_scan.py` | 扫描官方栏目、生成稳定候选 ID 和待审核账本，不改政策库 |
+| 更新工作流 | `update_workflow.py` | 正文/附件取证、哈希与差异、人工审核闸门、加锁发布及失败回滚 |
 | 推理检索 | `reasoning_retrieval.py` | 模型读带效力的目录、自行选条并作答 |
 | 树索引 | `tree_index.py` | 把正文切成 PageIndex 形状的树（章 → 条，按页计跨度），每个节点带 force；并充当客户端数据层 |
 | 沿树检索 | `tree_retrieval.py` | 模型按 node_id 在树上选节点、按节点读正文——与 `reasoning_retrieval` 同一套协议，换的是寻址方式 |
 | 客户端适配 | `pageindex_force_adapter.py` | 把效力注入 PageIndex 客户端的工具返回 |
+
+## 政策更新闭环
+
+```text
+官方栏目扫描
+ → 候选账本与 update_review.csv
+ → 页面/附件取证、SHA-256、正文差异
+ → 人工填写核对人、官方证据和发布动作
+ → 加锁事务发布
+ → 重建效力、时点、检索和带效力树索引
+ → Web 展示待核实变化
+```
+
+```powershell
+python policy_update_scan.py --max-pages 1 --apply
+python update_workflow.py stage
+python update_workflow.py import-review
+python update_workflow.py publish --id CANDIDATE_ID
+python audit_update_workflow.py
+```
+
+取证阶段只写 `_update_workflow/` 快照，不修改正文或目录。发布前必须存在
+`verified_by`、核对时间、官方证据句和有效动作；发布过程有跨进程锁、完整备份
+与失败回滚。详细步骤见
+[`docs/UPDATE_WORKFLOW_RUNBOOK.md`](../docs/UPDATE_WORKFLOW_RUNBOOK.md)。
 
 ## 两个接入点
 
@@ -215,8 +242,8 @@ python tree_retrieval.py "三亚市河道生态保护管理条例第一条" --as
 - 查询时点早于文头日期时判为尚未公布；
 - 缺少明确施行日或系列版本不唯一时，不把结果升级成确定有效。
 
-全量 1,248 份均进入正式证据索引：明确施行日 **635 份**；305 份规划、通知、
-政策措施按发布日处理；剩余需施行日但缺失的 **156 份**进入人工核对队列。
+全量 1,248 份均进入正式证据索引：明确施行日 **752 份**；261 份规划、通知、
+政策措施按发布日处理；剩余需施行日但缺失的 **83 份**进入人工核对队列。
 每条明确日期都保存来源句、置信度和缺失项；索引带语料文件数／字节／mtime 指纹，语料
 变化后不会被继续使用。
 
@@ -292,14 +319,14 @@ python retrieval_router.py "海南省消防条例和自贸港消防条例有什�
 
 **表格型目录：从"只能拒答"做到"事项级索引"。** 网页正文是列式摊平的（6 万行里
 只有 2 行能整行认成事项名），但页面上挂着官方 PDF 附件——改从 PDF 的**字符
-坐标**还原表格：`find_tables({"vertical_strategy": "text",
-"horizontal_strategy": "lines"})` 得到 6 列，再把"事项名称｜法律名称"的合并格
-按**本页表头算出的分界**劈开（表头位置随章节偏移，所以逐页取）。实测能还原出
-"对未经登记…的行政处罚" / "《外国企业常驻代表机构登记管理条例》"这样的干净条目。
+坐标**还原表格：先从 PDF 原始竖线聚类得到逐页 8 列边界，再用跨表宽的横线切
+事项行，不依赖随章节漂移的固定格号。单元格内部横线切出来的半句，按"事项名称
+列是否以『对』起头"并回同一事项；跨页续排在相邻页保留同序号时合并原文。
 
-- **2023 版：1,625 页 → 2,839 个事项**，事项名形态合格 **99%**
-- 条款列可直引 **27%**：后段章节列位会偏、文本串行。这类条目不引原文，只给
-  事项名与法律名，并明确提示"按官方表格原件核对"——**不把串行文本当依据**
+- **2022／2023／2024 三版共 11,602 个事项**：4,056／3,877／3,669；各版事项名
+  形态合格约 99.9%，条款列均可直引 **100%**，且全部从法定条号起读
+- 同一问题默认优先同时检索最新版本；不同版本串行构建，目录状态原子落盘
+- 回答来源携带 PDF 页码、法律名称和原文，Web 来源卡片可直接查看引文
 - 路由：目录类问题 → `catalog_item`（事项级检索），来源带效力状态；
   事项索引无匹配 → `catalog_empty` 拒答
 - 防住的旧隐患：点名目录时曾会把 7,016 条"条款引用"当条文灌进候选，现在注入
@@ -307,8 +334,28 @@ python retrieval_router.py "海南省消防条例和自贸港消防条例有什�
 
 ```bash
 python catalog_index.py --build --only 2023   # 下载官方 PDF 附件并解析（约 2.5 分钟）
-python audit_catalog.py                       # 7 项：形态、检索、效力、串行条款、路由
+python catalog_index.py --build --only 2024
+python catalog_index.py --build --only 2022
+python catalog_index.py --stats
+python audit_catalog.py                       # 10 项：三版、形态、直引、续页、检索、路由
 ```
+
+### 时点日期与文号数据债
+
+- 时点缺口由 156 份降到 **83 份**，明确施行日 **752 份**；
+- “自公布之日起施行”支持 PDF 折行和文头日期，但 URL 月份仍不单独作为证据；
+- 文号提取由 536 份提升到 **733 份**，支持政府文号、政府令和人大公告号；
+- 515 份待补文号进入 `document_number_review_v1/review_queue.csv`，不从标题猜号。
+
+```bash
+python data_debt.py audit --samples 12
+python data_debt.py build-numbers
+python data_debt.py build-number-review
+python audit_data_debt.py
+```
+
+三类数据债的修复口径和剩余边界见
+[`docs/DATA_DEBT_RUNBOOK.md`](../docs/DATA_DEBT_RUNBOOK.md)。
 
 ### 路径二：PageIndex 客户端（PDF）
 
@@ -589,7 +636,7 @@ python score_v2.py       # 用标注重算精确率/召回率
 python verify_evidence.py  # 核对单条证据链（重抓原文比对）
 python audit_reasoning.py  # 推理检索的功能审计：召回、版本组、选条、拒答
 python audit_router.py     # 路由审计：七种策略归位、候选自适应、繁简同路、可复现、按路由拒答
-python audit_catalog.py    # 事项级目录审计：形态、检索、效力、串行条款、路由接入
+python audit_catalog.py    # 事项级目录审计：形态、直引、续页、检索、效力和路由接入
 python spine_check.py      # 守住 spine：协议一份源、无副本、依赖方向、判定一致
 python audit_repeal_targets.py  # 重抓废止通知，核对"被废止名单"
 python audit_tree_force.py      # 树审计：条文一致、节点带 force、跨度合法、客户端三接缝
@@ -612,29 +659,40 @@ python build_temporal_review_queue.py   # 生成剩余缺口的人工核对表
 python import_temporal_review.py        # 将已填核对表写入 _temporal_overrides.json
 ```
 
-19 份抽检样本上：精确率 100%（13/13），召回率 100%（4/4），
-过度标记 2 份。
+19 份历史抽检样本（当时 128 份语料）：二分类一致 17/19（89%），
+“现行有效”精确率 100%（13/13），非现行召回率 100%（4/4），过度标记 2 份。
 
-`audit_reasoning.py` 12 项里 11 项离线可跑，只有"真模型是否拒答"要联网。
+`audit_reasoning.py` 17 项里 16 项离线可跑，只有“真模型是否拒答”要联网。
 
 ### validity-QA 评测
 
 分类指标（三态判定对没对）不等于问答指标。`eval_set.json` 保留 v2 的 30 道
-基础题，`eval_set_v3_additions.json` 独立保存新增 50 题；加载时通过 `extends`
-合并成 80 道端到端题。每题带人工读条文写下的真值：`must_cite`（答案必须引到
-的条文）、`key_points`（答案必须出现的要点）、`type`（该题的正确行为）。
-模型回答单独写到 `eval_results_v3.json`，与题集和项目进度文档分离。
+基础题，`eval_set_v3_additions.json` 保存新增 50 题，
+`eval_set_v4_additions.json` 再补 4 道路由覆盖题；加载时通过 `extends` 合并成
+**84 道端到端题**。每题带人工读条文写下的真值：`must_cite`（答案必须引到的
+条文）、`key_points`（答案必须出现的要点）、`type`（该题的正确行为）。
+模型回答单独写到 `eval_results_v4.json`，与题集和项目进度文档分离。
 
 | 类型 | 题数 | 正确行为 |
 |---|---|---|
-| `in_force` | 47 | 必须作答，且引用的条文都是现行有效 |
-| `trap` | 20 | 涉及已废止文件：拒答，或引用但明确标注失效 |
+| `in_force` | 48 | 必须作答，且引用的条文都是现行有效 |
+| `trap` | 21 | 涉及已废止文件：拒答，或引用但明确标注失效 |
 | `off_corpus` | 6 | 必须拒答 |
-| `questionable` | 7 | 可引用，但必须提示人工核实 |
+| `questionable` | 8 | 可引用，但必须提示部分失效、存疑或人工核实 |
+| `temporal` | 1 | 必须按指定历史时点作答，不能改写成当前有效 |
 
 评分分三条，互不掩盖：答案对（必备证据＋要点齐）、引用合规（没有未标注的
-失效引用）、现行有效题只引现行有效条文。当前成绩 **80/80**：答案对 54/54、
-现行有效题 47/47、陷阱题 20/20、存疑题 7/7、语料外 6/6、引用合规 80/80。
+失效引用）、现行有效题只引现行有效条文。v4 新增题分别锁定
+`article_exact`、`multi_doc`、`catalog_item` 和
+`single_doc_tree + as_of`，并通过 `expected_route` 检查真实路由。当前代码在线
+复跑成绩 **84/84**：答案对 57/57、现行有效题 48/48、陷阱题 21/21、存疑题 8/8、
+语料外 6/6、历史时点 1/1、引用合规 84/84。`trap-05`、`trap-07` 已修复：
+修改决定不再替代被点名的原法规；已废止法规会同时触发现行替代法规召回和失效
+提示，树检索与条文检索行为一致。
+
+每题结果还保存生成时间、Provider、模型、题集哈希、代码哈希和语料指纹。
+离线复评默认拒绝缺元数据或指纹不一致的旧缓存；仅做诊断时才使用
+`--allow-stale`。
 
 **v2 的两处改动值得记下来。** 一是**删掉了两道前提已变的题**：种子进出口许可、
 重点项目建设保障措施原来被当成"已废止的旧版"，语料补全并修掉自指误判后，发现
@@ -646,19 +704,20 @@ python import_temporal_review.py        # 将已填核对表写入 _temporal_ove
 - **同名新旧版的陷阱**（trap-05…09）：土地管理、旅游、城乡规划、消防、养犬——
   库里同时有**已废止的旧版**和**现行新版**，问法贴近旧版，考的是别把旧版当现行用。
 
-`--selftest` 用构造答案验证评分器本身（10 项，离线）：漏引证据、答漏要点、
-该拒未拒、不该拒却拒、把失效条文当现行依据、存疑未提示核实，都在覆盖内。
+`--selftest` 用构造答案验证评分器本身（15 项，离线）：漏引证据、答漏要点、
+该拒未拒、不该拒却拒、把失效条文当现行依据、部分失效条文未提示风险、
+`llm_error` 冒充拒答、否定句误当失效提示，都在覆盖内。
 `--validate-data` 是第二道离线闸门：逐条检查题号/题面唯一、`must_cite` 指向的
 条文真实存在、题型与当前效力一致，以及每道陷阱题确实点名了已知失效文件。
 
 ```bash
 python eval_qa.py --validate-data       # 只校验测试数据，不调模型
-python eval_qa.py --run                 # 跑完整 80 题并写专属结果文件
+python eval_qa.py --run                 # 跑完整 84 题并写专属结果文件
 python eval_qa.py --run --only eq-38    # 只重跑一题并更新缓存
 python eval_qa.py                       # 用缓存离线复评
 ```
 
-### 80 题双人人工盲评
+### v3 的 80 题双人人工盲评
 
 `blind_review_v3/README.md` 定义评审流程。`build_blind_review.py` 用固定随机种子
 生成题序相同的 `reviewer_A.csv` 与 `reviewer_B.csv`，表中只有题面、候选回答、
@@ -674,9 +733,10 @@ python score_blind_review.py
 Cohen κ，并列出自动评分和人工共识不一致的题。报告写到
 `blind_review_v3/blind_review_report.md` 与 `.json`。
 
-当前 A/B 两表已由同一所有者确认后转录，状态为
+当前 v3 A/B 两表已由同一所有者确认后转录，状态为
 `completed_owner_attested_not_independent`：80/80 与自动评分一致，但两表同源，
-因此这组 Cohen κ 不能当作两名独立评审者一致的证据。
+因此这组 Cohen κ 不能当作两名独立评审者一致的证据。v4 新增的 4 题尚未进入
+独立盲评，不能把 v3 的人工结果外推到这 4 题。
 
 ## 已知边界
 
@@ -705,8 +765,8 @@ Cohen κ，并列出自动评分和人工共识不一致的题。报告写到
 - **模型调用有重试**：Provider 对网络错误、429／5xx 统一退避重试；认证错误立即失败。
   最终失败返回 `refusal_stage="llm_error"`，不泄露密钥，也不让一次网络抖动把整轮
   评测打崩。
-- **时点日期覆盖**：明确施行日 635/1,248，政策发布型 305；仍需人工核对施行日的
-  156 份已进入 `temporal_review_v1/review_queue.csv`。系统不会把“公布了但没识别到
+- **时点日期覆盖**：明确施行日 752/1,248，政策发布型 261；仍需人工核对施行日的
+  83 份已进入 `temporal_review_v1/review_queue.csv`。系统不会把“公布了但没识别到
   施行日”当成有效；月／年区间跨过事件时也降为存疑。
 - **语料外主题靠模型兜底**：粗筛只拦得住"点名了别处"这一类。像「个人所得
   税专项附加扣除标准」这种用海南邻近词汇、实为国家级政策的提问会被放行，

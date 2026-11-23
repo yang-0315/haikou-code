@@ -1,0 +1,67 @@
+<Slide style={{ width: 1280, height: 720, background: '#FFFFFF', padding: 0 }}>
+  <Box style={{ width: '100%', height: '100%', flexDirection: 'column' }}>
+    <Box style={{ height: 72, background: '#1E4FA8', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 60px' }}>
+      <Text style={{ fontSize: 34, fontWeight: 'bold', color: '#FFFFFF' }}>存在的问题</Text>
+      <Text style={{ fontSize: 16, color: '#C9DAF5' }}>03 · ISSUES</Text>
+    </Box>
+
+    <Box style={{ flex: 1, flexDirection: 'column', padding: '22px 60px 0 60px' }}>
+      <Box style={{ flexDirection: 'row', gap: 18, flex: 1 }}>
+        <Box style={{ flex: 1, border: '1px solid #D6DCE5', borderTop: '3px solid #D9534F', padding: '14px 16px', flexDirection: 'column' }}>
+          <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#D9534F', marginBottom: 10 }}>数据质量</Text>
+          {[
+            '条款可直引率仅 27%：表格目录后段章节列位偏移，当前只给事项名＋法律名，不引原文',
+            '712 份没有文号（有文号 536 / 1,248），只能靠标题检索',
+            '156 份缺明确施行日，需人工补证；系列已废止 7 份版本难分辨',
+            '1 份废止决定标题声明废止 4 件、正文只列 1 件，其余疑在附件',
+          ].map((s, i) => (
+            <Box key={i} style={{ flexDirection: 'row', gap: 8, marginBottom: 9 }}>
+              <Text style={{ fontSize: 16, color: '#D9534F', fontWeight: 'bold' }}>·</Text>
+              <Text style={{ fontSize: 15, color: '#1A2230', lineHeight: 1.45 }}>{s}</Text>
+            </Box>
+          ))}
+        </Box>
+        <Box style={{ flex: 1, border: '1px solid #D6DCE5', borderTop: '3px solid #FFC107', padding: '14px 16px', flexDirection: 'column' }}>
+          <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#B8860B', marginBottom: 10 }}>技术能力</Text>
+          {[
+            '反馈式二次路由未实现：当前一次性规则决策，证据不足不会自动换路重试',
+            '条文级「修改为」未覆盖：只处理整条删除与款/项删除，改写仍按文档级有效',
+            '事项索引每次查询现场建（2,839 条约 0.2s），未持久化',
+            '比较题候选数为启发式（点名文件数＋数量词），模糊说法退化到 4 份',
+            'chinastruct 闲置：当前无 PDF 语料，真实 PageIndex 样例仅 3 份文本 PDF',
+          ].map((s, i) => (
+            <Box key={i} style={{ flexDirection: 'row', gap: 8, marginBottom: 9 }}>
+              <Text style={{ fontSize: 16, color: '#B8860B', fontWeight: 'bold' }}>·</Text>
+              <Text style={{ fontSize: 15, color: '#1A2230', lineHeight: 1.45 }}>{s}</Text>
+            </Box>
+          ))}
+        </Box>
+        <Box style={{ flex: 1, border: '1px solid #D6DCE5', borderTop: '3px solid #3D7BD9', padding: '14px 16px', flexDirection: 'column' }}>
+          <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#3D7BD9', marginBottom: 10 }}>工程与评测</Text>
+          {[
+            '独立第二人盲评缺失：A/B 两表同源，已标记非独立，无法形成 Cohen κ',
+            '上游 PageIndex 5 项 Windows 平台失败，待上游确认（已归因，非项目代码）',
+            '2024／2022 版指导目录未建，同一套流程各约 2–3 分钟',
+            '11 份正文过短、75 份 <500 字；老式 .doc 附件读不了（PDF/DOCX 已支持）',
+          ].map((s, i) => (
+            <Box key={i} style={{ flexDirection: 'row', gap: 8, marginBottom: 9 }}>
+              <Text style={{ fontSize: 16, color: '#3D7BD9', fontWeight: 'bold' }}>·</Text>
+              <Text style={{ fontSize: 15, color: '#1A2230', lineHeight: 1.45 }}>{s}</Text>
+            </Box>
+          ))}
+        </Box>
+      </Box>
+
+      <Box style={{ background: '#F7F9FC', padding: '12px 18px', marginTop: 14, marginBottom: 16 }}>
+        <Text style={{ fontSize: 15, color: '#4A5568' }}>
+          <span style={{ fontWeight: 'bold', color: '#1A2230' }}>总体判断：</span>核心链路已跑通并通过测试，当前短板集中在「引用可直引率」「时点人工补证」「独立评测」三处，均已列入下一步。
+        </Text>
+      </Box>
+    </Box>
+
+    <Box style={{ height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 60px' }}>
+      <Text style={{ fontSize: 14, color: '#8B97A8' }}>项目进度汇报 · 2026-11-22</Text>
+      <Text style={{ fontSize: 14, color: '#8B97A8' }}>08 / 10</Text>
+    </Box>
+  </Box>
+</Slide>

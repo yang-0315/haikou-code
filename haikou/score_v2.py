@@ -3,7 +3,8 @@ import os
 import re
 import sys
 
-sys.path.insert(0, r"C:\Users\Lenovo\Desktop\PageIndex\haikou")
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
 
 from warn import load_index, own_numbers, status_for
 
@@ -73,15 +74,22 @@ def main():
     over = [r for r in rows if r["human_ok"] is True and r["new"] != "现行有效"]
     invalid = [r for r in rows if r["human_ok"] is False]
 
-    print(f"\n== 指标 ==")
+    classification_ok = sum(
+        (item["new"] == "现行有效") == item["human_ok"] for item in rows
+    )
+    print(f"\n== 指标（二分类：现行有效／非现行） ==")
+    print(f"  人工与系统二分类一致 {classification_ok}/{len(rows)}"
+          f" → 准确率 {classification_ok/max(len(rows),1):.0%}")
     print(f"  系统说「现行有效」{len(said_in_force)} 份，其中人工确认为有效 "
           f"{len(truly_valid)} 份 → 精确率 "
           f"{len(truly_valid)/max(len(said_in_force),1):.0%}")
-    print(f"  人工判无效 {len(invalid)} 份，被系统标出 "
-          f"{len(invalid)-len(misses)} 份 → 召回率 "
+    print(f"  人工判无效 {len(invalid)} 份，被系统标为非现行 "
+          f"{len(invalid)-len(misses)} 份 → 非现行召回率 "
           f"{(len(invalid)-len(misses))/max(len(invalid),1):.0%}")
     print(f"  过度标记（人工说有效、系统未说有效）{len(over)} 份")
     print(f"  残留漏报 {len(misses)} 份")
+    print("  说明：效力存疑只算“非现行/需核实”，不等同于已确认废止；"
+          "本文件是当时 128 份语料的历史抽检，不代表当前 1,244 份全量精度。")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,62 @@
+<Slide style={{ width: 1280, height: 720, background: '#F5F9FF', padding: 60, fontFamily: 'Microsoft YaHei, Arial' }}>
+  <Box style={{ position: 'relative', width: '100%', height: '100%', gap: 22 }}>
+
+    {/* 标题组 */}
+    <Box style={{ height: 88, gap: 10 }}>
+      <Box style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+        <Text style={{ fontSize: 14, color: '#3D7BD9', fontWeight: 600, letterSpacing: 2 }}>POLICY LIBRARY PROGRESS · 02</Text>
+        <Text style={{ fontSize: 14, color: '#6B7C93' }}>截至 2026-11-23</Text>
+      </Box>
+      <Text style={{ fontSize: 34, fontWeight: 'bold', color: '#1A2230', lineHeight: 1.2 }}>政策库底座已跑通，问答作为前台能力接入</Text>
+      <Box style={{ height: 1, background: '#D7E3F4' }} />
+    </Box>
+
+    {/* 主体：左色块 + 右进度 */}
+    <Box style={{ height: 408, flexDirection: 'row', gap: 32 }}>
+
+      <Box style={{ width: 330, height: 408, padding: 30, borderRadius: 10, background: 'linear-gradient(155deg, #1E4FA8 0%, #103A67 100%)', justifyContent: 'space-between' }}>
+        <Box>
+          <Text style={{ fontSize: 16, color: '#AFC6E4', letterSpacing: 2 }}>库底座能力</Text>
+          <Text style={{ fontSize: 86, fontWeight: 'bold', color: '#FFFFFF', lineHeight: 1.05, marginTop: 12 }}>4/4</Text>
+          <Text style={{ fontSize: 24, fontWeight: 600, color: '#FFFFFF', marginTop: 8 }}>已闭环</Text>
+        </Box>
+        <Box style={{ height: 1, background: 'rgba(255,255,255,0.28)' }} />
+        <Text style={{ fontSize: 18, color: '#C8DCF2', lineHeight: 1.6 }}>
+          语料入库 → 效力维护 → 依据追溯 → 前台问答，统一使用同一套效力协议。
+        </Text>
+      </Box>
+
+      <Box style={{ width: 798, height: 408, justifyContent: 'space-between' }}>
+        {[
+          { no: '01', title: '效力状态维护', desc: '三态一档判定；状态含义、选条、作答规则一处定义，供政策库与前台问答共用。' },
+          { no: '02', title: '条文级依据索引', desc: '43,642 个检索单元覆盖 1,244 份文档；整条删除与款/项部分失效进入选条与作答。' },
+          { no: '03', title: '官方目录直引', desc: '2023 版指导目录 3,877 个事项，条款直引 3,877/3,877，全部从法定条号起读。' },
+          { no: '04', title: '前台问答入口', desc: '本机 Web 与异步 API 审计 22/22；问答调用政策库依据并展示来源，模型可配置切换。' },
+        ].map((item, idx) => (
+          <Box key={idx} style={{ height: 100, flexDirection: 'row', gap: 18, alignItems: 'center' }}>
+            <Text style={{ width: 38, fontSize: 18, fontWeight: 'bold', color: '#3D7BD9' }}>{item.no}</Text>
+            <Box style={{ width: 1, height: 56, background: '#D7E3F4' }} />
+            <Box style={{ width: 720, gap: 6 }}>
+              <Text style={{ fontSize: 22, fontWeight: 600, color: '#1A2230' }}>{item.title}</Text>
+              <Text style={{ fontSize: 18, color: '#6B7C93', lineHeight: 1.5 }}>{item.desc}</Text>
+            </Box>
+          </Box>
+        ))}
+      </Box>
+    </Box>
+
+    {/* 结论条 */}
+    <Box style={{ height: 54, padding: '0 22px', borderRadius: 10, background: '#E7F0FB', flexDirection: 'row', alignItems: 'center', gap: 14 }}>
+      <Box style={{ width: 4, height: 26, borderRadius: 2, background: '#1E4FA8' }} />
+      <Text style={{ fontSize: 18, color: '#1A2230', lineHeight: 1.5 }}>
+        <span style={{ fontWeight: 'bold' }}>结论：</span>系统已可跑、可查、可溯源；
+        <span style={{ color: '#D9534F', fontWeight: 600 }}>本轮修复仍是未提交改动</span>，完成正式重跑后需固化版本。
+      </Text>
+    </Box>
+
+    <Box style={{ position: 'absolute', left: 0, right: 0, bottom: 0, flexDirection: 'row', justifyContent: 'space-between' }}>
+      <Text style={{ fontSize: 14, color: '#8B9BB0' }}>来源：progress.md / 2026-11-23 批次</Text>
+      <Text style={{ fontSize: 14, color: '#8B9BB0' }}>02 / 07</Text>
+    </Box>
+  </Box>
+</Slide>

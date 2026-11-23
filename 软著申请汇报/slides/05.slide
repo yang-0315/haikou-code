@@ -1,0 +1,76 @@
+<Slide style={{ width: 1280, height: 720, background: '#F5F9FF', padding: 60, fontFamily: 'Microsoft YaHei, Arial' }}>
+  <Box style={{ position: 'relative', width: '100%', height: '100%', gap: 16 }}>
+
+    <Box style={{ height: 84, gap: 8 }}>
+      <Box style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+        <Text style={{ fontSize: 14, color: '#3D7BD9', fontWeight: 600, letterSpacing: 2 }}>COPYRIGHT FILING · 05</Text>
+        <Text style={{ fontSize: 14, color: '#6B7C93' }}>开发记录与验收证据</Text>
+      </Box>
+      <Text style={{ fontSize: 32, fontWeight: 'bold', color: '#1A2230', lineHeight: 1.2 }}>对比实验保留为验收记录，不再承担商业证明</Text>
+      <Box style={{ height: 1, background: '#D7E3F4' }} />
+    </Box>
+
+    <Box style={{ height: 392, flexDirection: 'row', gap: 28 }}>
+
+      <Box style={{ width: 560, height: 392, padding: 20, borderRadius: 10, background: '#FFFFFF', border: '1px solid #D7E3F4', gap: 10 }}>
+        <Text style={{ fontSize: 21, fontWeight: 600, color: '#1A2230' }}>三方案完整通过（同一 84 题）</Text>
+        <Box style={{ height: 1, background: '#E2EAF5' }} />
+        {[
+          { label: '效力感知系统', value: 82, width: 294, color: '#1E4FA8' },
+          { label: '普通本地 RAG', value: 49, width: 176, color: '#3D7BD9' },
+          { label: '无检索直接模型', value: 3, width: 14, color: '#D9534F' },
+        ].map((item, idx) => (
+          <Box key={idx} style={{ height: 72, flexDirection: 'row', alignItems: 'center', gap: 12, padding: '0 8px', background: idx % 2 === 0 ? '#F8FAFD' : '#FFFFFF', borderRadius: 8 }}>
+            <Text style={{ width: 140, fontSize: 17, fontWeight: 600, color: '#1A2230' }}>{item.label}</Text>
+            <Box style={{ width: 300, height: 32, borderRadius: 6, background: '#E8EFF8', justifyContent: 'center' }}>
+              <Box style={{ width: item.width, height: 32, borderRadius: 6, background: item.color }} />
+            </Box>
+            <Text style={{ width: 40, fontSize: 22, fontWeight: 'bold', color: item.color }}>{item.value}</Text>
+          </Box>
+        ))}
+        <Box style={{ height: 76, padding: 12, borderRadius: 8, background: '#F8FAFD', justifyContent: 'center' }}>
+          <Text style={{ fontSize: 15, color: '#6B7C93', lineHeight: 1.5 }}>
+            有效力约束时 82/84；移除效力信息后 49/84；无语料直接模型 3/84。<br />答案要点：57/57 vs 51/57 vs 23/57。
+          </Text>
+        </Box>
+      </Box>
+
+      <Box style={{ width: 572, height: 392, padding: 20, borderRadius: 10, background: '#FFFFFF', border: '1px solid #D7E3F4', gap: 10 }}>
+        <Text style={{ fontSize: 21, fontWeight: 600, color: '#1A2230' }}>分题型正确率对比</Text>
+        <Box style={{ height: 1, background: '#E2EAF5' }} />
+        <Box style={{ height: 32, flexDirection: 'row', alignItems: 'center', padding: '0 10px', background: '#EEF4FC', borderRadius: 6 }}>
+          <Text style={{ width: 190, fontSize: 15, fontWeight: 600, color: '#1E4FA8' }}>题型</Text>
+          <Text style={{ width: 122, fontSize: 15, fontWeight: 600, color: '#1E4FA8' }}>效力系统</Text>
+          <Text style={{ width: 110, fontSize: 15, fontWeight: 600, color: '#1E4FA8' }}>普通 RAG</Text>
+          <Text style={{ width: 100, fontSize: 15, fontWeight: 600, color: '#1E4FA8' }}>直接模型</Text>
+        </Box>
+        {[
+          { t: '正题（48）', a: '48/48', b: '39/48', c: '1/48' },
+          { t: '已废止陷阱（21）', a: '19/21', b: '4/21', c: '0/21' },
+          { t: '效力存疑（8）', a: '8/8', b: '0/8', c: '0/8' },
+          { t: '语料外（6）', a: '6/6', b: '6/6', c: '2/6' },
+          { t: '历史时点（1）', a: '1/1', b: '0/1', c: '0/1' },
+        ].map((item, idx) => (
+          <Box key={idx} style={{ height: 42, flexDirection: 'row', alignItems: 'center', padding: '0 10px', background: idx % 2 === 0 ? '#FFFFFF' : '#F8FAFD', borderRadius: 6 }}>
+            <Text style={{ width: 190, fontSize: 16, color: '#1A2230' }}>{item.t}</Text>
+            <Text style={{ width: 122, fontSize: 16, fontWeight: 'bold', color: '#1E4FA8' }}>{item.a}</Text>
+            <Text style={{ width: 110, fontSize: 16, color: '#6B7C93' }}>{item.b}</Text>
+            <Text style={{ width: 100, fontSize: 16, color: '#D9534F' }}>{item.c}</Text>
+          </Box>
+        ))}
+      </Box>
+    </Box>
+
+    <Box style={{ height: 56, padding: '0 20px', borderRadius: 10, background: '#E7F0FB', flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+      <Box style={{ width: 4, height: 30, borderRadius: 2, background: '#1E4FA8' }} />
+      <Text style={{ fontSize: 16, color: '#1A2230', lineHeight: 1.4 }}>
+        <span style={{ fontWeight: 'bold' }}>用途变化：</span>同一模型、同一题集的对照数据，作为开发过程与功能验收证据归档；联网模型对比不再是申报前置条件。
+      </Text>
+    </Box>
+
+    <Box style={{ position: 'absolute', left: 0, right: 0, bottom: 0, flexDirection: 'row', justifyContent: 'space-between' }}>
+      <Text style={{ fontSize: 13, color: '#8B9BB0' }}>来源：comparison-01 / PROJECT_SUMMARY_2026-11-23.md</Text>
+      <Text style={{ fontSize: 13, color: '#8B9BB0' }}>05 / 07</Text>
+    </Box>
+  </Box>
+</Slide>

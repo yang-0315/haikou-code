@@ -1,0 +1,61 @@
+<Slide style={{ width: 1280, height: 720, background: '#F5F9FF', padding: 60, fontFamily: 'Microsoft YaHei, Arial' }}>
+  <Box style={{ position: 'relative', width: '100%', height: '100%', gap: 20 }}>
+
+    <Box style={{ height: 88, gap: 10 }}>
+      <Box style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+        <Text style={{ fontSize: 14, color: '#3D7BD9', fontWeight: 600, letterSpacing: 2 }}>POLICY LIBRARY PROGRESS · 06</Text>
+        <Text style={{ fontSize: 14, color: '#6B7C93' }}>问题与解决方案</Text>
+      </Box>
+      <Text style={{ fontSize: 34, fontWeight: 'bold', color: '#1A2230', lineHeight: 1.2 }}>政策库五个缺口都有明确解法，优先级已经排好</Text>
+      <Box style={{ height: 1, background: '#D7E3F4' }} />
+    </Box>
+
+    <Box style={{ height: 408, flexDirection: 'row', gap: 32 }}>
+
+      <Box style={{ width: 250, height: 408, padding: 26, borderRadius: 10, background: 'linear-gradient(155deg, #1E4FA8 0%, #103A67 100%)', justifyContent: 'space-between' }}>
+        <Box>
+          <Text style={{ fontSize: 16, color: '#BFD6F0', letterSpacing: 2 }}>关键缺口</Text>
+          <Text style={{ fontSize: 92, fontWeight: 'bold', color: '#FFFFFF', lineHeight: 1.05, marginTop: 10 }}>5</Text>
+          <Text style={{ fontSize: 24, fontWeight: 600, color: '#00D4E8', marginTop: 6 }}>均有解法</Text>
+        </Box>
+        <Box style={{ height: 1, background: 'rgba(255,255,255,0.28)' }} />
+        <Text style={{ fontSize: 18, color: '#D6E5F7', lineHeight: 1.6 }}>
+          共性问题不是功能缺失，而是依据更新可信度、外部有效性与数据边界。
+        </Text>
+      </Box>
+
+      <Box style={{ width: 878, height: 408, padding: 16, borderRadius: 10, background: '#FFFFFF', border: '1px solid #D7E3F4', gap: 4 }}>
+        <Box style={{ height: 32, flexDirection: 'row', alignItems: 'center', padding: '0 12px', background: '#EEF4FC', borderRadius: 6 }}>
+          <Text style={{ width: 210, fontSize: 16, fontWeight: 600, color: '#1E4FA8' }}>问题</Text>
+          <Text style={{ width: 250, fontSize: 16, fontWeight: 600, color: '#1E4FA8' }}>影响</Text>
+          <Text style={{ width: 380, fontSize: 16, fontWeight: 600, color: '#1E4FA8' }}>解决方案</Text>
+        </Box>
+        {[
+          { p: '问答独立盲评缺失', i: 'v3 A/B 同源；v4 新增 4 题未盲评', s: '引入未参与实现的政策/法律人员独立评审，输出 Cohen κ' },
+          { p: '真实使用价值未验证', i: '84 题与三方案对比仍是内部集', s: '30–50 道真实工作题 + 联网助手盲评；看失效引用、时点错误、查证时间、接受率' },
+          { p: '156 份缺施行日', i: '跨日区间降级为效力存疑', s: '按 review_queue.csv 官方补证，回灌 _temporal_index.json' },
+          { p: '目录与文号缺口', i: '712 份无文号；2024/2022 目录未建', s: '补文号抽取；批量执行 --only 2024 / --only 2022' },
+          { p: '上游并发命名缺陷', i: 'PageIndex 同名并发入库失败；5 项 pytest 失败', s: '保持子模块边界并留证；仅在明确授权后修改上游' },
+        ].map((item, idx) => (
+          <Box key={idx} style={{ height: 64, flexDirection: 'row', alignItems: 'center', padding: '0 12px', background: idx % 2 === 0 ? '#FFFFFF' : '#F8FAFD', borderRadius: 6 }}>
+            <Text style={{ width: 210, fontSize: 16, fontWeight: 600, color: idx === 0 || idx === 1 ? '#D9534F' : '#1A2230' }}>{item.p}</Text>
+            <Text style={{ width: 250, fontSize: 16, color: '#6B7C93', lineHeight: 1.4 }}>{item.i}</Text>
+            <Text style={{ width: 380, fontSize: 16, color: '#1A2230', lineHeight: 1.4 }}>{item.s}</Text>
+          </Box>
+        ))}
+      </Box>
+    </Box>
+
+    <Box style={{ height: 54, padding: '0 22px', borderRadius: 10, background: '#E7F0FB', flexDirection: 'row', alignItems: 'center', gap: 14 }}>
+      <Box style={{ width: 4, height: 28, borderRadius: 2, background: '#1E4FA8' }} />
+      <Text style={{ fontSize: 17, color: '#1A2230', lineHeight: 1.5 }}>
+        <span style={{ fontWeight: 'bold' }}>推进顺序：</span>先做独立验证和真实题对比，再补时点证据与文号，最后处理上游边界。
+      </Text>
+    </Box>
+
+    <Box style={{ position: 'absolute', left: 0, right: 0, bottom: 0, flexDirection: 'row', justifyContent: 'space-between' }}>
+      <Text style={{ fontSize: 14, color: '#8B9BB0' }}>来源：progress.md 未完成待办 / round-02 findings</Text>
+      <Text style={{ fontSize: 14, color: '#8B9BB0' }}>06 / 07</Text>
+    </Box>
+  </Box>
+</Slide>

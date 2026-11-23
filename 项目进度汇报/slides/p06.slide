@@ -1,0 +1,51 @@
+<Slide style={{ width: 1280, height: 720, background: '#FFFFFF', padding: 0 }}>
+  <Box style={{ width: '100%', height: '100%', flexDirection: 'column' }}>
+    <Box style={{ height: 72, background: '#1E4FA8', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 60px' }}>
+      <Text style={{ fontSize: 34, fontWeight: 'bold', color: '#FFFFFF' }}>本轮测试 · 审计矩阵</Text>
+      <Text style={{ fontSize: 16, color: '#C9DAF5' }}>02 · TEST RESULTS</Text>
+    </Box>
+
+    <Box style={{ flex: 1, flexDirection: 'column', padding: '22px 60px 0 60px' }}>
+      <Text style={{ fontSize: 17, color: '#4A5568', marginBottom: 12 }}>
+        12 项离线审计全部通过，覆盖协议、检索、树、时点、服务全链路；均可复跑，无需在线模型。
+      </Text>
+      <Box style={{ flexDirection: 'row', gap: 24, flex: 1 }}>
+        <Box style={{ flex: 1, flexDirection: 'column' }}>
+          {[
+            ['推理协议单一来源与依赖方向', '6/6'], ['检索策略路由', '13/13'],
+            ['事项目录解析与接入', '7/7'], ['带效力树与 PageIndex 适配', '10/10'],
+            ['沿树检索', '8/8'], ['带效力推理检索', '16/16'],
+          ].map((r, i) => (
+            <Box key={i} style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: '10px 0', borderBottom: '1px solid #E5E7EB' }}>
+              <Text style={{ fontSize: 16, color: '#1A2230' }}>{r[0]}</Text>
+              <Text style={{ fontSize: 18, color: '#1E4FA8', fontWeight: 600 }}>{r[1]}</Text>
+            </Box>
+          ))}
+        </Box>
+        <Box style={{ flex: 1, flexDirection: 'column' }}>
+          {[
+            ['历史时点效力计算', '13/13'], ['时点证据索引与降级边界', '12/12'],
+            ['模型 Provider 配置与重试', '10/10'], ['条文级部分废止', '28/28'],
+            ['Web 服务与异步 API', '22/22'], ['效力和引用策略稳定性', '0 处反向放宽'],
+          ].map((r, i) => (
+            <Box key={i} style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: '10px 0', borderBottom: '1px solid #E5E7EB' }}>
+              <Text style={{ fontSize: 16, color: '#1A2230' }}>{r[0]}</Text>
+              <Text style={{ fontSize: 18, color: '#1E4FA8', fontWeight: 600 }}>{r[1]}</Text>
+            </Box>
+          ))}
+        </Box>
+      </Box>
+
+      <Box style={{ background: '#F7F9FC', padding: '14px 18px', marginTop: 14, marginBottom: 16 }}>
+        <Text style={{ fontSize: 16, color: '#4A5568' }}>
+          <span style={{ fontWeight: 'bold', color: '#1A2230' }}>废止关系与名称闸门：</span>发现 1 份标题声明废止 4 件、正文仅列 1 件，其余可能在附件中 —— 已记录为待核验项，未误判为通过。
+        </Text>
+      </Box>
+    </Box>
+
+    <Box style={{ height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 60px' }}>
+      <Text style={{ fontSize: 14, color: '#8B97A8' }}>项目进度汇报 · 2026-11-22</Text>
+      <Text style={{ fontSize: 14, color: '#8B97A8' }}>06 / 10</Text>
+    </Box>
+  </Box>
+</Slide>

@@ -8,6 +8,7 @@
 import os
 import re
 import sys
+from collections import defaultdict
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
@@ -35,47 +36,110 @@ def main():
         print("没有事项索引：先跑 python catalog_index.py --build --only 2023")
         return
     results = []
+    by_year = defaultdict(list)
+    for row in rows:
+        by_year[row.get("catalog_year")].append(row)
     good = [r for r in rows
             if r["item"].startswith("对")
             and re.search(r"(行政处罚|行政强制)", r["item"])]
 
+    def versions_present():
+        missing = sorted({2022, 2023, 2024} - set(by_year))
+        detail = "；".join(
+            f"{year} 版 {len(by_year.get(year, []))} 项"
+            for year in (2022, 2023, 2024))
+        return not missing, detail
+    results.append(probe("2022／2023／2024 三版目录均已建立",
+                         versions_present))
+
     def coverage():
-        ratio = len(good) / len(rows)
-        return ratio >= 0.95, (f"事项 {len(rows)} 条，形态合格 {len(good)}"
-                               f"（{ratio * 100:.0f}%）")
-    results.append(probe("事项名形态合格率 ≥95%", coverage))
+        details = []
+        ok = True
+        for year in (2022, 2023, 2024):
+            group = by_year[year]
+            year_good = [row for row in group
+                         if row["item"].startswith("对")
+                         and re.search(r"(行政处罚|行政强制)", row["item"])]
+            ratio = len(year_good) / len(group)
+            ok = ok and ratio >= 0.95
+            details.append(
+                f"{year}: {len(year_good)}/{len(group)}（{ratio * 100:.1f}%）")
+        return ok, "；".join(details)
+    results.append(probe("各版事项名形态合格率 ≥95%", coverage))
 
     def clause_clean():
-        clean = [r for r in rows
-                 if re.search(r"第[一二三四五六七八九十百\d]+条", r["article"])
-                 and len(r["article"]) >= 20]
-        return len(clean) > 0, (f"条款可直引 {len(clean)}/{len(rows)}"
-                                f"（{len(clean) / len(rows) * 100:.0f}%），"
-                                "其余按原文不完整处理")
-    results.append(probe("条款可直引比例（仅报告，不作门槛）", clause_clean))
+        details = []
+        ok = True
+        for year in (2022, 2023, 2024):
+            group = by_year[year]
+            clean = [r for r in group
+                     if catalog_index.ARTICLE_RE.search(r["article"])
+                     and len(r["article"]) >= 20]
+            ratio = len(clean) / len(group)
+            ok = ok and ratio >= 0.95
+            details.append(
+                f"{year}: {len(clean)}/{len(group)}（{ratio * 100:.2f}%）")
+        return ok, "；".join(details)
+    results.append(probe("各版条款可直引比例 ≥95%", clause_clean))
+
+    def clause_starts():
+        details = []
+        ok = True
+        total = 0
+        started = 0
+        for year in (2022, 2023, 2024):
+            group = by_year[year]
+            starts = [r for r in group
+                      if catalog_index.ARTICLE_RE.match(
+                          r["article"].removeprefix("（接上页）"))]
+            ok = ok and len(starts) == len(group)
+            total += len(group)
+            started += len(starts)
+            details.append(f"{year}: {len(starts)}/{len(group)}")
+        return ok, "；".join(details) + (
+            f"；合计 {started}/{total}")
+    results.append(probe("各版条款列从法定条号起读", clause_starts))
+
+    def continuation_merged():
+        row = next((r for r in by_year[2023] if r["page"] == 13
+                    and r["page_end"] == 14 and r["seq_total"] == 9), None)
+        return bool(row and "第二十五条" in row["article"]), (
+            "第9项已合并第13–14页续段" if row
+            else "未找到第9项跨页续段")
+    results.append(probe("跨页事项已合并且保留续页条款", continuation_merged))
 
     def search_hits():
         hits = catalog_index.search_items("对未经登记擅自设立代表机构怎么处罚",
                                           DB, 3)
-        ok = bool(hits) and hits[0]["item_row"]["item"].startswith("对未经登记")
-        return ok, (f"首位：{hits[0]['item_row']['item'][:36]}" if hits else "无命中")
+        ok = (bool(hits)
+              and hits[0]["item_row"]["item"].startswith("对未经登记")
+              and hits[0]["catalog_year"] == 2024)
+        return ok, (
+            f"首位：{hits[0]['catalog_year']} 版 "
+            f"{hits[0]['item_row']['item'][:30]}" if hits else "无命中")
     results.append(probe("事项检索：首位是正确事项", search_hits))
 
     def force_attached():
         result = catalog_index.answer_catalog(
             "对未经登记擅自设立代表机构怎么处罚", DB,
             chat_fn=lambda *args, **kwargs: "（假模型）")
-        ok = bool(result["sources"]) and all(
-            s["status"] for s in result["sources"])
-        return ok, f"来源状态：{[s['status'] for s in result['sources'][:3]]}"
-    results.append(probe("事项来源带效力状态", force_attached))
+        ok = bool(result["sources"]) and all(s["status"]
+                                             for s in result["sources"])
+        evidence = result["sources"][0].get("evidence", {}) if ok else {}
+        ok = bool(ok and evidence.get("text")
+                  and evidence.get("page"))
+        return ok, (
+            f"来源状态：{[s['status'] for s in result['sources'][:3]]}；"
+            f"证据：第{evidence.get('page')}页 {evidence.get('text', '')[:28]}")
+    results.append(probe("事项来源带效力状态、页码与条款原文", force_attached))
 
-    def unclean_flagged():
-        result = catalog_index.answer_catalog(
-            "擅自改变物业管理用房用途怎么处罚", DB,
-            chat_fn=lambda *args, **kwargs: "（假模型）")
-        return bool(result["notes"]), (result["notes"][:1] or "没有提示")
-    results.append(probe("串行条款会被标出来（不当作依据）", unclean_flagged))
+    def split_fragment_repaired():
+        row = next((r for r in by_year[2023] if r["page"] == 125
+                    and r["seq_total"] == 267), None)
+        ok = bool(row and row["item"].startswith("对拍卖企业雇佣")
+                  and row["article"].startswith("第四十七条"))
+        return ok, (row["article"][:45] if row else "未找到事项267")
+    results.append(probe("单元格内分行片段并回完整条款", split_fragment_repaired))
 
     def route_wired():
         from reasoning_retrieval import ask
@@ -98,7 +162,11 @@ def main():
 
     passed = sum(1 for ok in results if ok is True)
     skipped = sum(1 for ok in results if ok is None)
+    failed = len(results) - passed - skipped
     print(f"\n通过 {passed}/{len(results) - skipped}（跳过 {skipped}）")
+    if failed:
+        print(f"问题 {failed} 项")
+        raise SystemExit(1)
 
 
 if __name__ == "__main__":

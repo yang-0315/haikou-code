@@ -3,7 +3,8 @@ import os
 import re
 import sys
 
-sys.path.insert(0, r"C:\Users\Lenovo\Desktop\PageIndex\haikou")
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
 
 from paths import DEFAULT_DATABASE as DB
 SPOT = os.path.join(DB, "_spotcheck.md")
@@ -35,14 +36,21 @@ def main():
     pass_ = [r for r in rows if r["system"] == "现行有效"]
     misses = [r for r in pass_ if not r["human_valid"]]
     agree = [r for r in pass_ if r["human_valid"]]
+    classification_ok = sum(
+        (row["system"] == "现行有效") == row["human_valid"] for row in rows
+    )
 
     print(f"抽检 {len(rows)} 份\n")
-    print("== 一致性 ==")
+    print("== 一致性（二分类：现行有效／非现行） ==")
+    print(f"  人工与系统二分类一致 {classification_ok}/{len(rows)}"
+          f" → 准确率 {classification_ok/max(len(rows),1):.0%}")
     print(f"  系统判现行有效 {len(pass_)} 份：人工同意 {len(agree)}，"
           f"漏报 {len(misses)}（{len(misses)/max(len(pass_),1):.0%}）")
-    print(f"  系统判已废止   {len(flagged)} 份："
+    print(f"  系统判非现行   {len(flagged)} 份："
           f"人工同意 {sum(1 for r in flagged if not r['human_valid'])}，"
           f"人工不同意 {sum(1 for r in flagged if r['human_valid'])}")
+    print("  说明：这里的非现行包含已废止、系列已废止和效力存疑，"
+          "不能解释为“精确判出已废止”。")
 
     if misses:
         print("\n== 漏报明细（系统说现行有效，人工说无效）==")

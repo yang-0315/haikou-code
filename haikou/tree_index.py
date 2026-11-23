@@ -213,8 +213,10 @@ def build_store(database: str, out_path: str | None = None,
     store = {"version": 1, "page_chars": PAGE_CHARS,
              "database": database, "docs": docs}
     target = out_path or os.path.join(database, STORE_NAME)
-    with open(target, "w", encoding="utf-8") as handle:
+    temp = target + ".tmp"
+    with open(temp, "w", encoding="utf-8") as handle:
         json.dump(store, handle, ensure_ascii=False)
+    os.replace(temp, target)
     return store
 
 

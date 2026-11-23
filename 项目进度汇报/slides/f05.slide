@@ -1,0 +1,28 @@
+<Slide style={{ width: 1280, height: 720, background: 'linear-gradient(155deg, #F5F9FF 0%, #FFFFFF 50%, #EDF3FC 100%)', padding: 0 }}>
+  <Box style={{ position: 'relative', width: '100%', height: '100%', flexDirection: 'column' }}>
+    <Box style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: 12, background: 'linear-gradient(90deg, #1E4FA8 0%, #3D7BD9 100%)' }} />
+    <Box style={{ position: 'absolute', top: 12, right: 0, width: 420, height: 420, background: 'linear-gradient(225deg, #D6E4F7 0%, #FFFFFF 100%)', opacity: 0.75, borderRadius: '0 0 0 210px' }} />
+
+    <Box style={{ position: 'relative', flex: 1, padding: '0 80px', justifyContent: 'center' }}>
+      <Text style={{ fontSize: 46, fontWeight: 'bold', color: '#1E4FA8', marginBottom: 36 }}>进度小结</Text>
+      <Box style={{ flexDirection: 'column', gap: 20 }}>
+        {[
+          ['覆盖完成', '1,248 份语料、检索 100%、效力判定全量', '#1E4FA8'],
+          ['测试通过', '自研 19/19、审计 12 项全过、validity-QA 84/84', '#3D7BD9'],
+          ['三项短板', '可直引率 27%、独立盲评缺失、156 份待补施行日', '#B8860B'],
+        ].map((r, i) => (
+          <Box key={i} style={{ flexDirection: 'row', gap: 20, alignItems: 'center', background: '#FFFFFF', border: '1px solid #D6DCE5', borderLeft: '4px solid ' + r[2], padding: '12px 18px' }}>
+            <Text style={{ fontSize: 20, fontWeight: 600, color: r[2], width: 130 }}>{r[0]}</Text>
+            <Text style={{ fontSize: 19, color: '#1A2230', flex: 1 }}>{r[1]}</Text>
+          </Box>
+        ))}
+      </Box>
+      <Text style={{ fontSize: 48, fontWeight: 'bold', color: '#1A2230', marginTop: 68 }}>谢谢</Text>
+    </Box>
+
+    <Box style={{ position: 'relative', padding: '0 80px 50px 80px' }}>
+      <Box style={{ height: 1, background: 'linear-gradient(90deg, #1E4FA8, #FFFFFF)', marginBottom: 18 }} />
+      <Text style={{ fontSize: 15, color: '#8B97A8' }}>项目进度汇报 · 2026-11-22</Text>
+    </Box>
+  </Box>
+</Slide>

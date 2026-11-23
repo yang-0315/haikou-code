@@ -4,7 +4,8 @@ import os
 import re
 import sys
 
-sys.path.insert(0, r"C:\Users\Lenovo\Desktop\PageIndex\haikou")
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
 
 from repeal import body_text, document_numbers, fetch, meta_fields
 

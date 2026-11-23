@@ -31,7 +31,10 @@ KINDS = {
 _EFFECTIVE_TAIL = re.compile(
     r"\s*(?:起\s*)?(?:正式\s*)?(?:施行|执行|实施|生效)")
 _SELF_RULE = re.compile(r"本条例|本办法|本规定|本决定|本细则|本实施方案|本规划")
-_IMPLEMENT_RULE = re.compile(r"自(?:发布|公布)之日起(?:施行|执行|实施|生效)")
+_IMPLEMENT_RULE = re.compile(
+    r"(?:自)?(?:发布|公布|印发|下发)之日起(?:施行|执行|实施|生效)"
+    r"|自本(?:条例|办法|规定|决定|细则|规划|方案)"
+    r"(?:发布|公布|印发)之日起(?:施行|执行|实施|生效)")
 _EFFECTIVE_TO = re.compile(r"有效期(?:至|到)")
 
 
@@ -151,7 +154,10 @@ def extract_evidence(title: str, text: str, url: str | None = None,
     adopted_date = strongest(adopted)
     effective_row = strongest(effective)
     expiry_row = strongest(expiry)
-    rule_without_day = bool(_IMPLEMENT_RULE.search(text))
+    # PDF line wrapping often splits "公布之\n日起施行"; whitespace is not
+    # semantic here and must not hide an explicit implementation rule.
+    rule_without_day = bool(
+        _IMPLEMENT_RULE.search(re.sub(r"\s+", "", text)))
 
     if published:
         events.append({
@@ -178,14 +184,18 @@ def extract_evidence(title: str, text: str, url: str | None = None,
             "source": "正文施行条款", "evidence": effective_row["sentence"][:220],
             "confidence": "high",
         })
-    elif rule_without_day and published:
+    elif rule_without_day and (published or document_date):
         # "自公布之日起施行" is auditable when the same document supplies an
-        # explicit publication date.  A URL month alone is never sufficient.
+        # explicit date.  The masthead date is acceptable here because the
+        # implementation rule itself points to publication/issuance.  A URL
+        # month alone is never sufficient.
+        basis_row = published or head_candidates[0]
         events.append({
-            "kind": "effective", "date": published["date"],
-            "source": "自公布之日起施行＋明确公布日",
-            "evidence": published["sentence"][:220],
-            "confidence": "high",
+            "kind": "effective", "date": basis_row["date"],
+            "source": ("自公布之日起施行＋明确公布日" if published
+                       else "自公布之日起施行＋文头日期"),
+            "evidence": basis_row["sentence"][:220],
+            "confidence": "high" if published else "medium",
         })
     if expiry_row:
         events.append({
@@ -197,9 +207,11 @@ def extract_evidence(title: str, text: str, url: str | None = None,
     effective_date = effective_row["date"] if effective_row else None
     published_date = published["date"] if published else None
     effective_basis = effective_row["sentence"][:220] if effective_row else None
-    if not effective_date and rule_without_day and published_date:
-        effective_date = published_date
-        effective_basis = "自公布之日起施行；采用明确公布日"
+    if not effective_date and rule_without_day and (published_date or document_date):
+        effective_date = published_date or document_date
+        effective_basis = (
+            "自公布之日起施行；采用明确公布日" if published_date
+            else "自公布之日起施行；采用文头日期")
     elif not effective_date and rule_without_day:
         effective_basis = "自公布／发布之日起施行，但未识别到可用公布日"
 

@@ -1,0 +1,66 @@
+<Slide style={{ width: 1280, height: 720, background: '#F5F9FF', padding: 60, fontFamily: 'Microsoft YaHei, Arial' }}>
+  <Box style={{ position: 'relative', width: '100%', height: '100%', gap: 16 }}>
+
+    <Box style={{ height: 84, gap: 8 }}>
+      <Box style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+        <Text style={{ fontSize: 14, color: '#3D7BD9', fontWeight: 600, letterSpacing: 2 }}>COPYRIGHT FILING · 04</Text>
+        <Text style={{ fontSize: 14, color: '#6B7C93' }}>验收测试口径</Text>
+      </Box>
+      <Text style={{ fontSize: 32, fontWeight: 'bold', color: '#1A2230', lineHeight: 1.2 }}>严格复评 82/84，验收数字全部带指纹可追溯</Text>
+      <Box style={{ height: 1, background: '#D7E3F4' }} />
+    </Box>
+
+    <Box style={{ height: 392, flexDirection: 'row', gap: 28 }}>
+
+      <Box style={{ width: 382, height: 392, padding: 26, borderRadius: 10, background: 'linear-gradient(155deg, #1E4FA8 0%, #103A67 100%)', justifyContent: 'space-between' }}>
+        <Box>
+          <Text style={{ fontSize: 16, color: '#BFD6F0', letterSpacing: 2 }}>validity-QA v4 严格复评</Text>
+          <Text style={{ fontSize: 88, fontWeight: 'bold', color: '#FFFFFF', lineHeight: 1.02, marginTop: 10 }}>82/84</Text>
+          <Text style={{ fontSize: 24, fontWeight: 600, color: '#00D4E8', marginTop: 6 }}>答案对 57/57 · 引用合规 84/84</Text>
+        </Box>
+        <Box style={{ height: 1, background: 'rgba(255,255,255,0.28)' }} />
+        <Box style={{ gap: 10 }}>
+          <Text style={{ fontSize: 17, color: '#D6E5F7' }}>正题 48/48　语料外 6/6</Text>
+          <Text style={{ fontSize: 17, color: '#D6E5F7' }}>存疑 8/8　历史时点 1/1</Text>
+          <Text style={{ fontSize: 17, color: '#FFD9A0' }}>已废止陷阱 19/21</Text>
+        </Box>
+      </Box>
+
+      <Box style={{ width: 750, height: 392, padding: 20, borderRadius: 10, background: '#FFFFFF', border: '1px solid #D7E3F4', gap: 8 }}>
+        <Text style={{ fontSize: 21, fontWeight: 600, color: '#1A2230' }}>验收结果与数据底座</Text>
+        <Box style={{ height: 1, background: '#E2EAF5' }} />
+        <Box style={{ height: 34, flexDirection: 'row', alignItems: 'center', padding: '0 12px', background: '#EEF4FC', borderRadius: 6 }}>
+          <Text style={{ width: 300, fontSize: 15, fontWeight: 600, color: '#1E4FA8' }}>检查项</Text>
+          <Text style={{ width: 180, fontSize: 15, fontWeight: 600, color: '#1E4FA8' }}>结果</Text>
+          <Text style={{ width: 210, fontSize: 15, fontWeight: 600, color: '#1E4FA8' }}>证据</Text>
+        </Box>
+        {[
+          { a: '核心审计合计', b: '97 项全过', c: '9 类审计' },
+          { a: 'Web 服务审计', b: '22/22', c: '本机页面与 API' },
+          { a: '条文部分废止审计', b: '28/28', c: '整条与款/项' },
+          { a: '语料与检索单元', b: '1,248 / 43,642', c: '覆盖 1,244 份' },
+          { a: '事项目录直引', b: '3,877/3,877', c: '2023 版指导目录' },
+          { a: '三方案对比', b: '82 / 49 / 3', c: '同一模型同一 84 题' },
+        ].map((item, idx) => (
+          <Box key={idx} style={{ height: 40, flexDirection: 'row', alignItems: 'center', padding: '0 12px', background: idx % 2 === 0 ? '#FFFFFF' : '#F8FAFD', borderRadius: 6 }}>
+            <Text style={{ width: 300, fontSize: 16, color: '#1A2230' }}>{item.a}</Text>
+            <Text style={{ width: 180, fontSize: 16, fontWeight: 600, color: '#1E4FA8' }}>{item.b}</Text>
+            <Text style={{ width: 210, fontSize: 15, color: '#6B7C93' }}>{item.c}</Text>
+          </Box>
+        ))}
+      </Box>
+    </Box>
+
+    <Box style={{ height: 56, padding: '0 20px', borderRadius: 10, background: '#FFF4F3', flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+      <Box style={{ width: 4, height: 30, borderRadius: 2, background: '#D9534F' }} />
+      <Text style={{ fontSize: 16, color: '#1A2230', lineHeight: 1.4 }}>
+        <span style={{ fontWeight: 'bold', color: '#D9534F' }}>口径更正：</span>早期 84/84 含评分器假通过；修正后严格复评 82/84，trap-05、trap-07 两题旧法失效未正确说明。
+      </Text>
+    </Box>
+
+    <Box style={{ position: 'absolute', left: 0, right: 0, bottom: 0, flexDirection: 'row', justifyContent: 'space-between' }}>
+      <Text style={{ fontSize: 13, color: '#8B9BB0' }}>来源：progress.md / 2026-11-23 批次验证汇总</Text>
+      <Text style={{ fontSize: 13, color: '#8B9BB0' }}>04 / 07</Text>
+    </Box>
+  </Box>
+</Slide>

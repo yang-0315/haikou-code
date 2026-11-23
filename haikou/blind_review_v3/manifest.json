@@ -9,5 +9,6 @@
   "coordinator_only": [
     "coordinator_key.json"
   ],
-  "status": "waiting_for_reviewers"
+  "status": "completed_owner_attested_not_independent",
+  "independence": "owner_attested_not_independent"
 }

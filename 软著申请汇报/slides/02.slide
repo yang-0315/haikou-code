@@ -1,0 +1,60 @@
+<Slide style={{ width: 1280, height: 720, background: '#F5F9FF', padding: 60, fontFamily: 'Microsoft YaHei, Arial' }}>
+  <Box style={{ position: 'relative', width: '100%', height: '100%', gap: 16 }}>
+
+    <Box style={{ height: 84, gap: 8 }}>
+      <Box style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+        <Text style={{ fontSize: 14, color: '#3D7BD9', fontWeight: 600, letterSpacing: 2 }}>COPYRIGHT FILING · 02</Text>
+        <Text style={{ fontSize: 14, color: '#6B7C93' }}>目标更新 2026-11-23</Text>
+      </Box>
+      <Text style={{ fontSize: 32, fontWeight: 'bold', color: '#1A2230', lineHeight: 1.2 }}>项目最终目标转为申请软件著作权</Text>
+      <Box style={{ height: 1, background: '#D7E3F4' }} />
+    </Box>
+
+    <Box style={{ height: 392, flexDirection: 'row', gap: 28 }}>
+
+      <Box style={{ width: 330, height: 392, padding: 26, borderRadius: 10, background: 'linear-gradient(155deg, #1E4FA8 0%, #103A67 100%)', justifyContent: 'space-between' }}>
+        <Box>
+          <Text style={{ fontSize: 16, color: '#BFD6F0', letterSpacing: 2 }}>申报对象</Text>
+          <Text style={{ fontSize: 84, fontWeight: 'bold', color: '#FFFFFF', lineHeight: 1.05, marginTop: 8 }}>V1.0</Text>
+          <Text style={{ fontSize: 24, fontWeight: 600, color: '#00D4E8', marginTop: 4 }}>独立软件</Text>
+        </Box>
+        <Box style={{ height: 1, background: 'rgba(255,255,255,0.28)' }} />
+        <Box style={{ gap: 10 }}>
+          <Text style={{ fontSize: 16, color: '#D6E5F7', lineHeight: 1.5 }}>海南自由贸易港政策法规<br />效力感知检索与问答系统</Text>
+          <Text style={{ fontSize: 14, color: '#AFC6E4' }}>简称：政策效力感知问答系统</Text>
+        </Box>
+      </Box>
+
+      <Box style={{ width: 802, height: 392, padding: 20, borderRadius: 10, background: '#FFFFFF', border: '1px solid #D7E3F4', gap: 10 }}>
+        <Text style={{ fontSize: 22, fontWeight: 600, color: '#1A2230' }}>目标变化：三条边界重新划定</Text>
+        <Box style={{ height: 1, background: '#E2EAF5' }} />
+        {[
+          { n: '01', t: '最终目标', from: '验证产品竞争力、与联网助手比较', to: '申请软件著作权，形成规范申报材料' },
+          { n: '02', t: '不再前置', from: '能否胜过联网模型、真实用户付费', to: '不再作为继续开发或申报的必要条件' },
+          { n: '03', t: '保留价值', from: '测试批次、对比实验、失败归因', to: '转为开发记录与软件验收证据' },
+        ].map((item, idx) => (
+          <Box key={idx} style={{ height: 92, padding: 14, borderRadius: 8, background: idx === 1 ? '#FFF4F3' : '#F8FAFD', gap: 6 }}>
+            <Box style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+              <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#1E4FA8' }}>{item.n}</Text>
+              <Text style={{ fontSize: 18, fontWeight: 600, color: '#1A2230' }}>{item.t}</Text>
+            </Box>
+            <Text style={{ fontSize: 15, color: '#8B9BB0' }}>原：{item.from}</Text>
+            <Text style={{ fontSize: 16, color: idx === 1 ? '#D9534F' : '#1A2230', fontWeight: 600 }}>现：{item.to}</Text>
+          </Box>
+        ))}
+      </Box>
+    </Box>
+
+    <Box style={{ height: 56, padding: '0 20px', borderRadius: 10, background: '#E7F0FB', flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+      <Box style={{ width: 4, height: 30, borderRadius: 2, background: '#1E4FA8' }} />
+      <Text style={{ fontSize: 16, color: '#1A2230', lineHeight: 1.4 }}>
+        <span style={{ fontWeight: 'bold' }}>登记信息：</span>开发完成 2026-11-23 · 独立开发 · 原始取得 · 应用软件；发表状态按 GitHub 实际公开记录填写。
+      </Text>
+    </Box>
+
+    <Box style={{ position: 'absolute', left: 0, right: 0, bottom: 0, flexDirection: 'row', justifyContent: 'space-between' }}>
+      <Text style={{ fontSize: 13, color: '#8B9BB0' }}>来源：README.md / SOFTWARE_COPYRIGHT_APPLICATION_PLAN.md</Text>
+      <Text style={{ fontSize: 13, color: '#8B9BB0' }}>02 / 07</Text>
+    </Box>
+  </Box>
+</Slide>

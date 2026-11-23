@@ -1,0 +1,116 @@
+<Slide style={{ width: 1280, height: 720, background: 'linear-gradient(135deg, #F7FAFE 0%, #FFFFFF 55%, #F2F7FD 100%)', padding: 0 }}>
+  <Box style={{ position: 'relative', width: '100%', height: '100%', flexDirection: 'column' }}>
+    {/* 右上几何装饰 */}
+    <Box style={{ position: 'absolute', top: 84, right: 0, width: 260, height: 260, opacity: 0.5 }}>
+      <svg width={260} height={260} viewBox='0 0 260 260'>
+        <circle cx='150' cy='110' r='120' fill='none' stroke='#9DBFE8' strokeWidth='1' opacity='0.4' />
+        <circle cx='150' cy='110' r='84' fill='none' stroke='#7FA9DE' strokeWidth='1' opacity='0.5' />
+        <circle cx='150' cy='110' r='48' fill='none' stroke='#E8B75A' strokeWidth='1.5' opacity='0.55' />
+        <circle cx='234' cy='110' r='4' fill='#E8B75A' />
+      </svg>
+    </Box>
+
+    {/* 深色标题条 */}
+    <Box style={{ position: 'relative', height: 76, background: 'linear-gradient(90deg, #0A2342 0%, #16457C 100%)', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 60px' }}>
+      <Box style={{ flexDirection: 'row', alignItems: 'center', gap: 16 }}>
+        <Box style={{ width: 5, height: 34, background: 'linear-gradient(180deg, #E8B75A, #00C2D6)', borderRadius: 3 }} />
+        <Text style={{ fontSize: 33, fontWeight: 'bold', color: '#FFFFFF' }}>当前进度与测试</Text>
+      </Box>
+      <Box style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+        <Text style={{ fontSize: 15, color: '#8FB3DC', letterSpacing: 1 }}>PROGRESS & TEST</Text>
+        <Text style={{ fontSize: 26, fontWeight: 'bold', color: '#E8B75A' }}>01</Text>
+      </Box>
+    </Box>
+
+    <Box style={{ position: 'relative', flex: 1, flexDirection: 'column', padding: '20px 60px 0 60px' }}>
+      {/* KPI 三卡 */}
+      <Box style={{ flexDirection: 'row', gap: 16, marginBottom: 14 }}>
+        {[
+          { n: '1,248', u: '份', t: '政策正文', d: '覆盖目录约 99%', ic: 'file-text', c: '#1E5AA8' },
+          { n: '43,642', u: '个', t: '检索单元', d: '条文＋句块', ic: 'layer-group', c: '#00A8BC' },
+          { n: '84', u: '题', t: 'validity-QA', d: '评测 100% 通过', ic: 'clipboard', c: '#D9972A' },
+        ].map((k, i) => (
+          <Box key={i} style={{ flex: 1, background: '#FFFFFF', border: '1px solid #E3EBF5', borderRadius: 10, boxShadow: '0 4px 16px rgba(10,35,66,0.08)', borderTop: '3px solid ' + k.c, padding: '14px 18px' }}>
+            <Box style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+              <Box style={{ flexDirection: 'row', alignItems: 'flex-end', gap: 6 }}>
+                <Text style={{ fontSize: 42, fontWeight: 'bold', color: k.c, lineHeight: 1.1 }}>{k.n}</Text>
+                <Text style={{ fontSize: 17, color: '#5A6B80', marginBottom: 6 }}>{k.u}</Text>
+              </Box>
+              <Box style={{ width: 36, height: 36, borderRadius: 9, background: k.c + '18', alignItems: 'center', justifyContent: 'center' }}>
+                <FAIcon name={k.ic} style={{ fill: k.c, width: 19, height: 19 }} />
+              </Box>
+            </Box>
+            <Text style={{ fontSize: 18, fontWeight: 600, color: '#16243A', marginTop: 4 }}>{k.t}</Text>
+            <Text style={{ fontSize: 13.5, color: '#8A97A8', marginTop: 2 }}>{k.d}</Text>
+          </Box>
+        ))}
+      </Box>
+
+      {/* 本轮测试标题 + 四卡 */}
+      <Box style={{ flexDirection: 'row', alignItems: 'center', gap: 10, marginBottom: 9 }}>
+        <FAIcon name='flask' style={{ fill: '#1E5AA8', width: 18, height: 18 }} />
+        <Text style={{ fontSize: 19, fontWeight: 600, color: '#0A2342' }}>本轮测试</Text>
+        <Text style={{ fontSize: 13, color: '#8A97A8' }}>批次 2026-11-22_round-01 · Git a20edc3</Text>
+      </Box>
+      <Box style={{ flexDirection: 'row', gap: 12, marginBottom: 14 }}>
+        {[
+          { n: '19/19', t: '自研核心', ic: 'check-circle' }, { n: '22/22', t: 'Web 服务', ic: 'server' },
+          { n: '84/84', t: 'validity-QA', ic: 'clipboard' }, { n: '10/10', t: '真实 PageIndex', ic: 'cube' },
+        ].map((k, i) => (
+          <Box key={i} style={{ flex: 1, background: '#FFFFFF', border: '1px solid #E3EBF5', borderRadius: 9, boxShadow: '0 3px 10px rgba(10,35,66,0.06)', padding: '10px 14px', flexDirection: 'row', alignItems: 'center', gap: 13 }}>
+            <FAIcon name={k.ic} style={{ fill: '#00A8BC', width: 22, height: 22 }} />
+            <Box>
+              <Text style={{ fontSize: 27, fontWeight: 'bold', color: '#0A2342', lineHeight: 1.1 }}>{k.n}</Text>
+              <Text style={{ fontSize: 13.5, color: '#5A6B80' }}>{k.t}</Text>
+            </Box>
+          </Box>
+        ))}
+      </Box>
+
+      {/* 两栏：效力分布 + 分项 */}
+      <Box style={{ flexDirection: 'row', gap: 24, flex: 1 }}>
+        <Box style={{ flex: 1, flexDirection: 'column' }}>
+          <Text style={{ fontSize: 18, fontWeight: 600, color: '#0A2342', marginBottom: 9, borderLeft: '3px solid #E8B75A', paddingLeft: 10 }}>效力判定分布（1,244 份）</Text>
+          {[
+            { c: '#1E5AA8', n: '现行有效', v: '1,178（95%）' },
+            { c: '#C0392B', n: '已废止', v: '35' },
+            { c: '#D9972A', n: '效力存疑', v: '24' },
+            { c: '#8A97A8', n: '系列已废止', v: '7' },
+          ].map((s, i) => (
+            <Box key={i} style={{ flexDirection: 'row', alignItems: 'center', gap: 12, padding: '7px 4px', borderBottom: '1px solid #EDF1F7' }}>
+              <Box style={{ width: 10, height: 10, background: s.c, borderRadius: 5 }} />
+              <Text style={{ fontSize: 15.5, color: '#16243A', flex: 1 }}>{s.n}</Text>
+              <Text style={{ fontSize: 15.5, color: '#0A2342', fontWeight: 600 }}>{s.v}</Text>
+            </Box>
+          ))}
+        </Box>
+        <Box style={{ flex: 1, flexDirection: 'column' }}>
+          <Text style={{ fontSize: 18, fontWeight: 600, color: '#0A2342', marginBottom: 9, borderLeft: '3px solid #00C2D6', paddingLeft: 10 }}>84 题分项 · 答案 57/57 · 引用 84/84</Text>
+          <Box style={{ flexDirection: 'row', gap: 9, flexWrap: 'wrap' }}>
+            {[
+              { n: '48/48', t: '现行有效' }, { n: '21/21', t: '失效陷阱' },
+              { n: '8/8', t: '效力存疑' }, { n: '6/6', t: '语料外拒答' }, { n: '1/1', t: '历史时点' },
+            ].map((k, i) => (
+              <Box key={i} style={{ width: '31%', background: '#FFFFFF', border: '1px solid #E3EBF5', borderRadius: 7, boxShadow: '0 2px 8px rgba(10,35,66,0.05)', padding: '9px 11px', marginBottom: 9 }}>
+                <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#0A2342' }}>{k.n}</Text>
+                <Text style={{ fontSize: 12.5, color: '#5A6B80' }}>{k.t}</Text>
+              </Box>
+            ))}
+          </Box>
+        </Box>
+      </Box>
+
+      {/* 审计结论条 */}
+      <Box style={{ background: 'linear-gradient(90deg, #EAF2FC 0%, #F7FAFE 100%)', borderRadius: 8, borderLeft: '3px solid #1E5AA8', padding: '10px 16px', margin: '10px 0 14px 0' }}>
+        <Text style={{ fontSize: 13.5, color: '#5A6B80', lineHeight: 1.5 }}>
+          <span style={{ fontWeight: 600, color: '#0A2342' }}>12 项离线审计全过</span>（协议 6/6 · 路由 13/13 · 树 10/10 · 时点 13/13 · 条文级 28/28 · 服务 22/22 …）；上游 PageIndex 668 passed / 77 skipped / 5 failed，5 项均 Windows 平台前提，未改上游源码。
+        </Text>
+      </Box>
+    </Box>
+
+    <Box style={{ position: 'relative', height: 34, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 60px' }}>
+      <Text style={{ fontSize: 12.5, color: '#9AA6B6' }}>项目进度汇报 · 2026-11-22</Text>
+      <Text style={{ fontSize: 12.5, color: '#9AA6B6', fontWeight: 600 }}>02 / 06</Text>
+    </Box>
+  </Box>
+</Slide>

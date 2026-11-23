@@ -23,7 +23,7 @@ import retrieval
 import temporal
 from force_layer import ForceLayer, doc_key
 from force_protocol import (MAX_BLOCKS, build_answer_prompt,
-                            build_select_prompt)
+                            build_select_prompt, explicit_invalidity)
 from warn import IN_FORCE, QUESTIONABLE, REPEALED, SERIES_REPEALED
 
 from paths import DEFAULT_DATABASE as DEFAULT_DB
@@ -117,7 +117,8 @@ def status_of(layer: ForceLayer, database: str, doc_name: str,
 _VERSION_RANK = {IN_FORCE: 0, QUESTIONABLE: 1, REPEALED: 2, SERIES_REPEALED: 3}
 
 
-def recall(database: str, query: str, docs_wanted: int) -> list[dict]:
+def recall(database: str, query: str, docs_wanted: int,
+           as_of=None) -> list[dict]:
     """Cheap recall first: which documents could hold the answer."""
     in_scope, _ = scope_query(query)
     if not in_scope:
@@ -130,8 +131,22 @@ def recall(database: str, query: str, docs_wanted: int) -> list[dict]:
     hits = index.search(query, top_k=60)
     # 题名通道：问题里点名的文档直接进候选并排在最前——否则会被"提到它的
     # 别的文件"挤掉（实测问某条例的名字，首位命中的是另一份文件）
-    for path in retrieval.docs_named_in(query, database):
+    named_paths = retrieval.docs_named_in(query, database)
+    asks_about_instrument = any(
+        word in query for word in (
+            "修改", "修订", "修正", "决定", "变化", "沿革",
+            "新旧", "替代", "废止"))
+    if not asks_about_instrument:
+        # 修改决定是修改工具，不是被修改法规的正文。普通事实问法不应给它
+        # 与现行法规同等的候选地位；明确问修改、沿革或废止时才保留。
+        hits = [
+            hit for hit in hits
+            if not retrieval.amendment_target(hit["doc"])
+        ]
+    for path in named_paths:
         title = os.path.splitext(os.path.basename(path))[0]
+        if (retrieval.amendment_target(title) and not asks_about_instrument):
+            continue
         parsed = retrieval.parse_articles(path, {})
         # 表格型目录只切得出乱序的"条款引用"，不是条文；直接注入会把几千条
         # 伪条文灌进候选（实测那份指导目录有 7,016 条）。这类问题由路由拒答。
@@ -142,6 +157,33 @@ def recall(database: str, query: str, docs_wanted: int) -> list[dict]:
         # （同名的条号在分组时会去重，不会重复）
         hits = [dict(unit, score=999.0, coverage=1.0) for unit in units] + hits
     layer_ = retrieval.layer(database)
+    # 原法规已废止时，把废止依据点名的现行替代法规一并送进候选。用户仍能
+    # 看到原法规的失效状态，同时不必再靠词法碰运气才能找到新法。
+    library_paths = docstore.corpus_files(database) + \
+        docstore.library_files(database)
+    all_paths = {os.path.basename(path): path for path in library_paths}
+    for path in named_paths:
+        title = os.path.splitext(os.path.basename(path))[0]
+        status = status_of(layer_, database, title, os.path.basename(path),
+                           as_of=as_of)
+        evidence = status.get("evidence") or {}
+        replacement = re.sub(
+            r"[（(]该文件生效时同时废止[）)]$", "",
+            str(evidence.get("repealed_by") or "")).strip()
+        if status["status"] not in (REPEALED, SERIES_REPEALED) or not replacement:
+            continue
+        replacement_key = doc_key(replacement)
+        replacement_path = next(
+            (candidate for candidate in library_paths
+             if doc_key(os.path.splitext(os.path.basename(candidate))[0])
+             == replacement_key),
+            None)
+        if not replacement_path:
+            continue
+        parsed = retrieval.parse_articles(replacement_path, {})
+        units = parsed or retrieval.block_units(replacement_path, {})
+        hits = [dict(unit, score=998.0, coverage=1.0)
+                for unit in units] + hits
     all_by_doc: dict[str, list[dict]] = {}
     for article in index.articles:
         all_by_doc.setdefault(article["doc"], []).append(article)
@@ -156,9 +198,7 @@ def recall(database: str, query: str, docs_wanted: int) -> list[dict]:
             groups[key] = {}
             order.append(key)
         groups[key].setdefault(hit["doc"], []).append(hit)
-    paths = {os.path.basename(p): p
-             for p in docstore.corpus_files(database)
-             + docstore.library_files(database)}
+    paths = all_paths
 
     def full_text(basename: str | None) -> str:
         path = paths.get(basename or "")
@@ -254,6 +294,49 @@ def annotated_outline(layer: ForceLayer, docs: list[dict],
     return "\n".join(lines), forces
 
 
+def named_repealed_document(layer: ForceLayer, docs: list[dict],
+                            query: str, database: str,
+                            as_of=None) -> tuple[str, dict, str] | None:
+    """Find an explicitly named document that candidate force marks as repealed."""
+    target = doc_key(retrieval.normalize_query(query))
+    for doc in docs:
+        name = doc["doc"]
+        if doc_key(name) not in target:
+            continue
+        status = status_of(layer, database, name, doc.get("file"), as_of)
+        if status["status"] not in (REPEALED, SERIES_REPEALED):
+            continue
+        evidence = status.get("evidence") or {}
+        replacement = re.sub(
+            r"[（(]该文件生效时同时废止[）)]$", "",
+            str(evidence.get("repealed_by") or "")).strip()
+        return name, status, replacement
+    return None
+
+
+def named_document_notes(layer: ForceLayer, docs: list[dict],
+                         query: str, database: str, as_of=None) -> list[str]:
+    """Expose the status of an explicitly named document above the long outline."""
+    target = doc_key(retrieval.normalize_query(query))
+    notes = []
+    for doc in docs:
+        name = doc["doc"]
+        if doc_key(name) not in target:
+            continue
+        status = status_of(layer, database, name, doc.get("file"), as_of)
+        note = f"问题点名《{name}》，候选状态为「{status['status']}」。"
+        if status["status"] in (REPEALED, SERIES_REPEALED):
+            evidence = status.get("evidence") or {}
+            replacement = re.sub(
+                r"[（(]该文件生效时同时废止[）)]$", "",
+                str(evidence.get("repealed_by") or "")).strip()
+            note += "必须先明确说明该法规已废止，不能把修改决定当作其正文。"
+            if replacement:
+                note += f"现行替代法规为《{replacement}》。"
+        notes.append(note)
+    return notes
+
+
 def parse_selection(selected) -> tuple[set[str], set[tuple[str, str]]]:
     """接受两种寻址：条文（第X条）与段块（第N段）。
 
@@ -346,6 +429,113 @@ def select_blocks(layer: ForceLayer, database: str, docs: list[dict],
     return blocks, notes
 
 
+def repealed_named_answer(layer: ForceLayer, database: str,
+                          docs: list[dict], query: str, as_of=None) -> dict | None:
+    """Deterministic notice when a model refuses a query naming repealed law.
+
+    The replacement statute must contain the express repeal clause used here.
+    This keeps the fallback evidence-based and prevents inventing a successor.
+    """
+    state = named_repealed_document(
+        layer, docs, query, database, as_of)
+    if not state:
+        return None
+    old_title, status, replacement = state
+    if not replacement:
+        return None
+    replacement_key = doc_key(replacement)
+    for doc in docs:
+        if doc_key(doc["doc"]) != replacement_key:
+            continue
+        for article in doc.get("articles", []):
+            if ("废止" in article.get("text", "")
+                    and doc_key(old_title) in doc_key(article.get("text", ""))):
+                blocks, _ = select_blocks(
+                    layer, database, docs,
+                    {"read": [f"{doc['doc']}|{article['article']}"]},
+                    as_of=as_of)
+                if not blocks:
+                    continue
+                sources = [{
+                    "doc": block["doc"],
+                    "article": block["article"],
+                    "status": block["status"],
+                    "doc_number": block["doc_number"],
+                    "reason": block.get("force_reason", ""),
+                    "evidence": block.get("force_detail", {}).get("evidence"),
+                    "caveats": block.get("force_detail", {}).get("caveats", []),
+                } for block in blocks]
+                answer = (
+                    f"**效力提示：** 您点名的《{old_title}》当前状态为“{status['status']}”。"
+                    f"《{replacement}》{article['article']}已明文废止该法规，"
+                    "因此其原规定只能作为历史参考，不能作为现行依据。"
+                    f"如需办理或判断当前事项，应改查现行《{replacement}》。")
+                return {
+                    "answer": answer,
+                    "sources": sources,
+                    "reason": f"问题点名已废止法规；依据现行替代法规的明文废止条款返回失效提示。",
+                    "force_note": answer.split("。", 1)[0] + "。",
+                }
+    return None
+
+
+def ensure_named_repealed_notice(result: dict, layer: ForceLayer,
+                                 docs: list[dict], query: str,
+                                 database: str, as_of=None) -> None:
+    """Guarantee that a named repealed law is labelled even if the model omits it."""
+    repealed = named_repealed_document(
+        layer, docs, query, database, as_of)
+    if not repealed:
+        return
+    old_title, status, replacement = repealed
+    answer = result.get("answer") or ""
+    # Do not treat "未出现『已废止』" as a positive warning merely because
+    # the old title appears elsewhere in the same answer.  Use the same
+    # negation-aware detector as the evaluator, then inject the deterministic
+    # notice when the model only silently substitutes the current file.
+    notice_present = explicit_invalidity(answer)
+    if not notice_present:
+        warning = (
+            f"**效力提示：** 您点名的《{old_title}》当前状态为"
+            f"“{status['status']}”，不能作为现行依据。")
+        if replacement:
+            warning += f"现行替代法规为《{replacement}》。"
+        result["answer"] = warning + "\n\n" + answer
+    if not result.get("force_note"):
+        result["force_note"] = (
+            f"《{old_title}》当前状态为{status['status']}；"
+            + (f"现行替代法规为《{replacement}》。"
+               if replacement else "不得作为现行依据。"))
+
+
+def prune_noncurrent_sources(result: dict, layer: ForceLayer,
+                             docs: list[dict], query: str,
+                             database: str, as_of=None) -> None:
+    """For a generic current-law question, keep current sources when available.
+
+    If the user explicitly names a repealed law, that named-law path takes
+    precedence and is handled by ``ensure_named_repealed_notice`` instead.
+    """
+    if as_of or named_repealed_document(
+            layer, docs, query, database, as_of):
+        return
+    sources = result.get("sources") or []
+    current = [source for source in sources
+               if source.get("status") == IN_FORCE]
+    if not current or len(current) == len(sources):
+        return
+    removed = [source for source in sources
+               if source.get("status") in (REPEALED, SERIES_REPEALED)]
+    if not removed:
+        return
+    result["sources"] = [source for source in sources
+                         if source.get("status") == IN_FORCE]
+    result.setdefault("notes", []).append(
+        "回答使用现行有效条文；已排除"
+        + "、".join(f"《{source['doc']}》" for source in removed)
+        + "等非现行依据。")
+
+
 def _block(layer: ForceLayer, database: str, doc: dict, item: dict,
            as_of=None) -> dict:
     status = status_of(layer, database, doc["doc"], doc.get("file"), as_of)
@@ -413,8 +603,10 @@ def ask(query: str, database: str = DEFAULT_DB, docs_wanted: int = 4,
         result["refusal_stage"] = "scope"
         return result
 
-    docs = recall(database, query, docs_wanted)
+    docs = recall(database, query, docs_wanted, as_of=point)
     outline, forces = annotated_outline(layer, docs, database, point)
+    candidate_notes = named_document_notes(
+        layer, docs, query, database, point)
     result["outline"] = outline
     result["forces"] = forces
     if not docs:
@@ -424,7 +616,8 @@ def ask(query: str, database: str = DEFAULT_DB, docs_wanted: int = 4,
 
     try:
         raw = ask_model([{"role": "user",
-                          "content": build_select_prompt(query, outline, point)}])
+                          "content": build_select_prompt(
+                              query, outline, point, candidate_notes)}])
     except Exception as exc:                      # noqa: BLE001
         result["refusal"] = f"模型调用失败：{type(exc).__name__}: {exc}"
         result["refusal_stage"] = "llm_error"
@@ -439,6 +632,11 @@ def ask(query: str, database: str = DEFAULT_DB, docs_wanted: int = 4,
     result["reason"] = picked.get("reason") or ""
     result["force_note"] = picked.get("force_note") or ""
     if picked.get("answerable") is False:
+        fallback = repealed_named_answer(
+            layer, database, docs, query, point)
+        if fallback:
+            result.update(fallback)
+            return result
         result["refusal"] = (f"候选中没有能回答该问题的条文。"
                              f"模型理由：{picked.get('reason') or '未说明'}")
         result["refusal_stage"] = "model"
@@ -462,11 +660,15 @@ def ask(query: str, database: str = DEFAULT_DB, docs_wanted: int = 4,
         "evidence": block.get("force_detail", {}).get("evidence"),
         "caveats": block.get("force_detail", {}).get("caveats", []),
     } for block in blocks]
+    prune_noncurrent_sources(
+        result, layer, docs, query, database, point)
     try:
         result["answer"] = ask_model(
             [{"role": "user",
               "content": build_answer_prompt(query, blocks, notes, point)}],
             temperature=temperature)
+        ensure_named_repealed_notice(
+            result, layer, docs, query, database, point)
     except Exception as exc:                      # noqa: BLE001
         result["refusal"] = f"模型调用失败：{type(exc).__name__}: {exc}"
         result["refusal_stage"] = "llm_error"
@@ -490,7 +692,7 @@ def main():
         else temporal.find_as_of(args.query)
     if args.dry_run:
         layer = ForceLayer(args.database)
-        docs = recall(args.database, args.query, args.docs)
+        docs = recall(args.database, args.query, args.docs, as_of=point)
         outline, _ = annotated_outline(layer, docs, args.database, point)
         total = sum(len(d["articles"]) for d in docs)
         if point:

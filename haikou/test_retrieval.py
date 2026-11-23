@@ -1,9 +1,11 @@
 """A few probe questions for the retrieval layer."""
+import os
 import subprocess
 import sys
 
 PY = sys.executable
-SCRIPT = r"C:\Users\Lenovo\Desktop\PageIndex\haikou\retrieval.py"
+HERE = os.path.dirname(os.path.abspath(__file__))
+SCRIPT = os.path.join(HERE, "retrieval.py")
 
 QUESTIONS = [
     ("现金句（现行文件）", "免税店的设立需要什么条件"),

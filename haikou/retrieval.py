@@ -327,12 +327,29 @@ def docs_named_in(query: str, database: str = DEFAULT_DB) -> list[str]:
         title = os.path.splitext(os.path.basename(path))[0]
         # 文件名常带"…关于印发《X》的通知"外壳；问的是 X。两种都当候选名。
         candidates = {doc_key(title)}
-        inner = re.search(r"[《〈]([^》〉]{4,60})[》〉]", title)
-        if inner:
-            candidates.add(doc_key(inner.group(1)))
+        # “关于修改《X》的决定”不能因为标题里出现 X，就被当成 X 正文。
+        # 只有问题明确在问修改/修订决定时才接受内层法规名作为别名。
+        instrument_target = amendment_target(title)
+        if instrument_target and not any(
+                word in query for word in ("修改", "修订", "修正", "决定")):
+            candidates = {doc_key(title)}
+        else:
+            inner = re.search(r"[《〈]([^》〉]{4,60})[》〉]", title)
+            if inner:
+                candidates.add(doc_key(inner.group(1)))
         if any(len(name) >= 6 and name in target for name in candidates):
             out.append(path)
     return out
+
+
+AMENDMENT_TITLE = re.compile(
+    r"关于(?:批准)?修改[《〈]([^》〉]{4,100})[》〉].{0,40}决定")
+
+
+def amendment_target(title: str) -> str:
+    """Return X when ``title`` is an amending instrument for regulation X."""
+    match = AMENDMENT_TITLE.search(title or "")
+    return match.group(1).strip() if match else ""
 
 
 # ── 查询归一：繁 → 简 ────────────────────────────────────────────
@@ -371,7 +388,12 @@ _INDEX_CACHE: dict[tuple[str, str], "Index"] = {}
 
 
 def corpus_fingerprint(database: str) -> str:
-    """语料指纹：文件数 + 总字节 + 最新修改时间。语料一变就失效。"""
+    """Corpus plus force-index fingerprint.
+
+    Retrieval units embed the document and article status.  A repeal or force
+    rebuild can therefore make the cached index stale even when no text file
+    changed.  Include the derived force artifacts in the freshness key.
+    """
     digest = hashlib.sha1()
     files = docstore.corpus_files(database) + docstore.library_files(database)
     for path in sorted(files):
@@ -380,6 +402,15 @@ def corpus_fingerprint(database: str) -> str:
         except OSError:
             continue
         digest.update(os.path.basename(path).encode("utf-8", "ignore"))
+        digest.update(str(stat.st_size).encode())
+        digest.update(str(int(stat.st_mtime)).encode())
+    for name in ("_force_status.json", "_repeal_index.json",
+                 "_embedded_repeals.json", "_article_force_index.json"):
+        path = os.path.join(database, name)
+        if not os.path.exists(path):
+            continue
+        stat = os.stat(path)
+        digest.update(name.encode("utf-8"))
         digest.update(str(stat.st_size).encode())
         digest.update(str(int(stat.st_mtime)).encode())
     return digest.hexdigest()[:16]

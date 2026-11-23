@@ -15,7 +15,8 @@ import sys
 import time
 import urllib.parse
 
-sys.path.insert(0, r"C:\Users\Lenovo\Desktop\PageIndex\haikou")
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
 
 from repeal import fetch
 

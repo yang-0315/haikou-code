@@ -2,6 +2,9 @@
 
 本文用于整理代码仓库和软著材料的边界，不构成法律意见。
 
+最终申请目标和执行步骤见
+[`SOFTWARE_COPYRIGHT_APPLICATION_PLAN.md`](SOFTWARE_COPYRIGHT_APPLICATION_PLAN.md)。
+
 ## 建议纳入自研申报范围
 
 - `haikou/force_layer.py`
@@ -18,10 +21,16 @@
 - `haikou/pageindex_force_adapter.py`
 - `haikou/llm_provider.py`
 - `haikou/catalog_index.py`
+- `haikou/data_debt.py`
+- `haikou/document_numbers.py`
+- `haikou/policy_update_scan.py`
+- `haikou/update_workflow.py`
 - `haikou/service.py`
 - `haikou/web/`
 - `haikou/audit_*.py`
 - `haikou/build_*.py`
+- `docs/UPDATE_WORKFLOW_RUNBOOK.md`
+- `docs/DATA_DEBT_RUNBOOK.md`
 - `SPINE.md`、`progress.md` 和本目录中的设计说明
 
 ## 建议排除

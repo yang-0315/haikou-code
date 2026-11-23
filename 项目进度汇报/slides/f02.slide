@@ -1,0 +1,85 @@
+<Slide style={{ width: 1280, height: 720, background: 'linear-gradient(155deg, #F5F9FF 0%, #FFFFFF 50%, #EDF3FC 100%)', padding: 0 }}>
+  <Box style={{ position: 'relative', width: '100%', height: '100%', flexDirection: 'column' }}>
+    <Box style={{ position: 'absolute', top: 72, right: 0, width: 260, height: 260, background: 'linear-gradient(225deg, #DCE8F7 0%, #FFFFFF 100%)', opacity: 0.6, borderRadius: '0 0 0 130px' }} />
+
+    <Box style={{ position: 'relative', height: 72, background: 'linear-gradient(90deg, #1E4FA8 0%, #3D7BD9 100%)', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 60px' }}>
+      <Text style={{ fontSize: 34, fontWeight: 'bold', color: '#FFFFFF' }}>当前进度与测试</Text>
+      <Text style={{ fontSize: 16, color: '#DCE8F7' }}>01 · PROGRESS & TEST</Text>
+    </Box>
+
+    <Box style={{ position: 'relative', flex: 1, flexDirection: 'column', padding: '20px 60px 0 60px' }}>
+      <Box style={{ flexDirection: 'row', gap: 16, marginBottom: 14 }}>
+        {[
+          { n: '1,248', u: '份', t: '政策正文', d: '覆盖目录约 99%' },
+          { n: '43,642', u: '个', t: '检索单元', d: '条文＋句块' },
+          { n: '84', u: '题', t: 'validity-QA', d: '评测 100% 通过' },
+        ].map((k, i) => (
+          <Box key={i} style={{ flex: 1, background: 'linear-gradient(135deg, #FFFFFF 0%, #F5F9FF 100%)', border: '1px solid #D6DCE5', borderTop: '3px solid #1E4FA8', padding: '12px 18px' }}>
+            <Box style={{ flexDirection: 'row', alignItems: 'flex-end', gap: 6 }}>
+              <Text style={{ fontSize: 44, fontWeight: 'bold', color: '#1E4FA8', lineHeight: 1.1 }}>{k.n}</Text>
+              <Text style={{ fontSize: 18, color: '#4A5568', marginBottom: 6 }}>{k.u}</Text>
+            </Box>
+            <Text style={{ fontSize: 18, fontWeight: 600, color: '#1A2230', marginTop: 4 }}>{k.t}</Text>
+            <Text style={{ fontSize: 14, color: '#8B97A8', marginTop: 2 }}>{k.d}</Text>
+          </Box>
+        ))}
+      </Box>
+
+      <Text style={{ fontSize: 20, fontWeight: 600, color: '#1E4FA8', marginBottom: 8 }}>本轮测试（批次 2026-11-22_round-01 · Git a20edc3）</Text>
+      <Box style={{ flexDirection: 'row', gap: 12, marginBottom: 12 }}>
+        {[
+          { n: '19/19', t: '自研核心' }, { n: '22/22', t: 'Web 服务' },
+          { n: '84/84', t: 'validity-QA' }, { n: '10/10', t: '真实 PageIndex' },
+        ].map((k, i) => (
+          <Box key={i} style={{ flex: 1, background: '#FFFFFF', border: '1px solid #D6DCE5', padding: '10px 14px', flexDirection: 'row', alignItems: 'center', gap: 14 }}>
+            <Text style={{ fontSize: 30, fontWeight: 'bold', color: '#1E4FA8' }}>{k.n}</Text>
+            <Text style={{ fontSize: 16, color: '#4A5568' }}>{k.t}</Text>
+          </Box>
+        ))}
+      </Box>
+
+      <Box style={{ flexDirection: 'row', gap: 28, flex: 1 }}>
+        <Box style={{ flex: 1, flexDirection: 'column' }}>
+          <Text style={{ fontSize: 19, fontWeight: 600, color: '#1E4FA8', marginBottom: 8 }}>效力判定分布（1,244 份）</Text>
+          {[
+            { c: '#1E4FA8', n: '现行有效', v: '1,178（95%）' },
+            { c: '#D9534F', n: '已废止', v: '35' },
+            { c: '#B8860B', n: '效力存疑', v: '24' },
+            { c: '#8B97A8', n: '系列已废止', v: '7' },
+          ].map((s, i) => (
+            <Box key={i} style={{ flexDirection: 'row', alignItems: 'center', gap: 12, padding: '6px 0', borderBottom: '1px solid #E5E7EB' }}>
+              <Box style={{ width: 11, height: 11, background: s.c, borderRadius: 6 }} />
+              <Text style={{ fontSize: 16, color: '#1A2230', flex: 1 }}>{s.n}</Text>
+              <Text style={{ fontSize: 16, color: '#1A2230', fontWeight: 600 }}>{s.v}</Text>
+            </Box>
+          ))}
+        </Box>
+        <Box style={{ flex: 1, flexDirection: 'column' }}>
+          <Text style={{ fontSize: 19, fontWeight: 600, color: '#1E4FA8', marginBottom: 8 }}>84 题分项 · 答案 57/57 · 引用合规 84/84</Text>
+          <Box style={{ flexDirection: 'row', gap: 8, flexWrap: 'wrap' }}>
+            {[
+              { n: '48/48', t: '现行有效' }, { n: '21/21', t: '失效陷阱' },
+              { n: '8/8', t: '效力存疑' }, { n: '6/6', t: '语料外拒答' }, { n: '1/1', t: '历史时点' },
+            ].map((k, i) => (
+              <Box key={i} style={{ width: '30%', background: '#FFFFFF', border: '1px solid #E5E7EB', padding: '7px 10px', marginBottom: 8 }}>
+                <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#1E4FA8' }}>{k.n}</Text>
+                <Text style={{ fontSize: 13, color: '#4A5568' }}>{k.t}</Text>
+              </Box>
+            ))}
+          </Box>
+        </Box>
+      </Box>
+
+      <Box style={{ background: 'linear-gradient(90deg, #E8EFF8 0%, #FFFFFF 100%)', borderLeft: '3px solid #1E4FA8', padding: '10px 16px', marginTop: 10, marginBottom: 14 }}>
+        <Text style={{ fontSize: 14.5, color: '#4A5568', lineHeight: 1.5 }}>
+          <span style={{ fontWeight: 600, color: '#1A2230' }}>12 项离线审计全过</span>（协议 6/6 · 路由 13/13 · 树 10/10 · 时点 13/13 · 条文级 28/28 · 服务 22/22 …）；上游 PageIndex 668 passed / 77 skipped / 5 failed，5 项均 Windows 平台前提，未改上游源码。
+        </Text>
+      </Box>
+    </Box>
+
+    <Box style={{ position: 'relative', height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 60px' }}>
+      <Text style={{ fontSize: 14, color: '#8B97A8' }}>项目进度汇报 · 2026-11-22</Text>
+      <Text style={{ fontSize: 14, color: '#8B97A8' }}>02 / 05</Text>
+    </Box>
+  </Box>
+</Slide>

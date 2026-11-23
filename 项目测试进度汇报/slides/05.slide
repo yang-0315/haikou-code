@@ -1,0 +1,79 @@
+<Slide style={{ width: 1280, height: 720, background: '#F5F9FF', padding: 60, fontFamily: 'Microsoft YaHei, Arial' }}>
+  <Box style={{ position: 'relative', width: '100%', height: '100%', gap: 16 }}>
+
+    <Box style={{ height: 84, gap: 8 }}>
+      <Box style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+        <Text style={{ fontSize: 14, color: '#3D7BD9', fontWeight: 600, letterSpacing: 2 }}>POLICY LIBRARY PROGRESS · 05</Text>
+        <Text style={{ fontSize: 14, color: '#6B7C93' }}>同一 DeepSeek 模型 · 同一 84 题</Text>
+      </Box>
+      <Text style={{ fontSize: 32, fontWeight: 'bold', color: '#1A2230', lineHeight: 1.2 }}>效力约束把前台问答完整通过率从 3% 拉到 100%</Text>
+      <Box style={{ height: 1, background: '#D7E3F4' }} />
+    </Box>
+
+    <Box style={{ height: 392, flexDirection: 'row', gap: 32 }}>
+
+      <Box style={{ width: 610, height: 392, padding: 20, borderRadius: 10, background: '#FFFFFF', border: '1px solid #D7E3F4', gap: 8 }}>
+        <Text style={{ fontSize: 21, fontWeight: 600, color: '#1A2230' }}>完整通过题数（满分 84）</Text>
+        <Text style={{ fontSize: 14, color: '#8B9BB0', marginTop: -6 }}>条形长度按通过题数等比例绘制</Text>
+        {[
+          { label: '效力层', value: 84, width: 372, color: '#1E4FA8' },
+          { label: '普通本地 RAG', value: 49, width: 217, color: '#3D7BD9' },
+          { label: '直接模型', value: 3, width: 14, color: '#D9534F' },
+        ].map((item, idx) => (
+          <Box key={idx} style={{ height: 68, flexDirection: 'row', alignItems: 'center', gap: 12, padding: '0 6px', background: idx % 2 === 0 ? '#F8FAFD' : '#FFFFFF', borderRadius: 8 }}>
+            <Text style={{ width: 128, fontSize: 17, fontWeight: 600, color: '#1A2230' }}>{item.label}</Text>
+            <Box style={{ width: 376, height: 34, borderRadius: 6, background: '#E8EFF8', justifyContent: 'center' }}>
+              <Box style={{ width: item.width, height: 34, borderRadius: 6, background: item.color }} />
+            </Box>
+            <Text style={{ width: 34, fontSize: 22, fontWeight: 'bold', color: item.color }}>{item.value}</Text>
+          </Box>
+        ))}
+        <Text style={{ fontSize: 14, color: '#6B7C93', lineHeight: 1.4, marginTop: 2 }}>
+          效力层 100% · 普通 RAG 58% · 直接模型 4%<br />完整通过 = 要点 + 证据 + 效力 + 拒答同时正确
+        </Text>
+      </Box>
+
+      <Box style={{ width: 518, height: 392, padding: 18, borderRadius: 10, background: '#FFFFFF', border: '1px solid #D7E3F4', gap: 4 }}>
+        <Text style={{ fontSize: 21, fontWeight: 600, color: '#1A2230' }}>分题型正确率对比（同一 84 题）</Text>
+        <Box style={{ height: 1, background: '#E2EAF5', marginBottom: 2 }} />
+
+        <Box style={{ height: 32, flexDirection: 'row', alignItems: 'center', padding: '0 10px', background: '#EEF4FC', borderRadius: 6 }}>
+          <Text style={{ width: 196, fontSize: 15, fontWeight: 600, color: '#1E4FA8' }}>题型</Text>
+          <Text style={{ width: 88, fontSize: 15, fontWeight: 600, color: '#1E4FA8' }}>政策库问答</Text>
+          <Text style={{ width: 84, fontSize: 15, fontWeight: 600, color: '#1E4FA8' }}>本地 RAG</Text>
+          <Text style={{ width: 84, fontSize: 15, fontWeight: 600, color: '#1E4FA8' }}>直接模型</Text>
+        </Box>
+        {[
+          { t: '正题（48）', a: '48/48', b: '39/48', c: '1/48' },
+          { t: '已废止陷阱（21）', a: '21/21', b: '4/21', c: '0/21' },
+          { t: '效力存疑（8）', a: '8/8', b: '0/8', c: '0/8' },
+          { t: '语料外（6）', a: '6/6', b: '6/6', c: '2/6' },
+          { t: '历史时点（1）', a: '1/1', b: '0/1', c: '0/1' },
+        ].map((item, idx) => (
+          <Box key={idx} style={{ height: 48, flexDirection: 'row', alignItems: 'center', padding: '0 10px', background: idx % 2 === 0 ? '#FFFFFF' : '#F8FAFD', borderRadius: 6 }}>
+            <Text style={{ width: 196, fontSize: 16, color: '#1A2230' }}>{item.t}</Text>
+            <Text style={{ width: 88, fontSize: 17, fontWeight: 'bold', color: '#1E4FA8' }}>{item.a}</Text>
+            <Text style={{ width: 84, fontSize: 16, color: '#6B7C93' }}>{item.b}</Text>
+            <Text style={{ width: 84, fontSize: 16, color: '#D9534F' }}>{item.c}</Text>
+          </Box>
+        ))}
+        <Box style={{ height: 34, flexDirection: 'row', alignItems: 'center', padding: '0 10px', marginTop: 2, background: '#FFF4F3', borderRadius: 6 }}>
+          <Text style={{ fontSize: 15, color: '#1A2230' }}>失效引用未标注：<span style={{ fontWeight: 'bold', color: '#1E4FA8' }}>0</span> / 17 / 3　（政策库问答 / RAG / 直接模型）</Text>
+        </Box>
+      </Box>
+    </Box>
+
+    <Box style={{ height: 56, padding: '0 20px', borderRadius: 10, background: '#E7F0FB', flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+      <Box style={{ width: 4, height: 30, borderRadius: 2, background: '#D9534F' }} />
+      <Text style={{ fontSize: 15, color: '#1A2230', lineHeight: 1.4 }}>
+        <span style={{ fontWeight: 'bold' }}>真实任务对比：</span>海南消防条例企业处罚案，本系统 8.1 秒零登录作答并排除已废止旧法；北大法宝游客模式正文受付费墙阻断，待同权限盲评。
+      </Text>
+    </Box>
+
+    <Box style={{ position: 'absolute', left: 0, right: 0, bottom: 18, flexDirection: 'row', justifyContent: 'space-between' }}>
+      <Text style={{ fontSize: 13, color: '#8B9BB0' }}>来源：comparison-01 / 2026-11-23_pkulaw-real-task-01</Text>
+      <Text style={{ fontSize: 13, color: '#8B9BB0' }}>边界：内部测试集 · 直接模型无联网</Text>
+      <Text style={{ fontSize: 13, color: '#8B9BB0' }}>05 / 07</Text>
+    </Box>
+  </Box>
+</Slide>

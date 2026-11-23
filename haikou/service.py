@@ -30,6 +30,7 @@ sys.path.insert(0, HERE)
 import llm_provider
 import reasoning_retrieval
 import temporal
+import update_workflow
 
 SERVICE_NAME = "琼策"
 SERVICE_VERSION = "1.0.0"
@@ -244,6 +245,8 @@ class AskRunner:
         with self._lock:
             if self._closed:
                 raise RuntimeError("服务正在关闭")
+            if update_workflow.is_publish_in_progress(self.database):
+                raise RuntimeError("政策库正在发布更新，请稍后重新提交")
             self._prune_locked()
             self._jobs[job_id] = record
             self._executor.submit(self._run, job_id)
@@ -348,6 +351,7 @@ class ServiceApplication:
         index_path = os.path.join(self.database, "_retrieval_index.pkl")
         index_ready = os.path.isfile(index_path)
         provider = provider_status()
+        updates = update_workflow.public_update_summary(self.database, limit=0)
         status = "ok"
         if not database_ready or not provider["configured"]:
             status = "degraded"
@@ -362,6 +366,11 @@ class ServiceApplication:
                 "retrieval_index": index_ready,
             },
             "provider": provider,
+            "updates": {
+                key: updates.get(key) for key in (
+                    "available", "pending", "verified", "published",
+                    "message")
+            },
         }
 
     def close(self) -> None:
@@ -389,6 +398,13 @@ class PolicyRequestHandler(BaseHTTPRequestHandler):
             return
         if path == "/api/health":
             self._send_json(HTTPStatus.OK, self.server.app.health())
+            return
+        if path == "/api/updates":
+            self._send_json(
+                HTTPStatus.OK,
+                update_workflow.public_update_summary(
+                    self.server.app.database),
+            )
             return
         match = re.fullmatch(r"/api/ask/([0-9a-f]{32})", path)
         if match:
@@ -491,7 +507,7 @@ class PolicyRequestHandler(BaseHTTPRequestHandler):
                                "no-cache" if content_type.startswith("text/html")
                                else "public, max-age=3600")
             return
-        if path == "/api/health":
+        if path in {"/api/health", "/api/updates"}:
             self._send_headers(HTTPStatus.OK,
                                "application/json; charset=utf-8", 0)
             return

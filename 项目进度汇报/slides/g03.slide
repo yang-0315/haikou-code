@@ -1,0 +1,88 @@
+<Slide style={{ width: 1280, height: 720, background: 'linear-gradient(135deg, #F7FAFE 0%, #FFFFFF 55%, #F2F7FD 100%)', padding: 0 }}>
+  <Box style={{ position: 'relative', width: '100%', height: '100%', flexDirection: 'column' }}>
+    <Box style={{ position: 'absolute', top: 84, right: 0, width: 260, height: 260, opacity: 0.5 }}>
+      <svg width={260} height={260} viewBox='0 0 260 260'>
+        <circle cx='150' cy='110' r='120' fill='none' stroke='#9DBFE8' strokeWidth='1' opacity='0.4' />
+        <circle cx='150' cy='110' r='84' fill='none' stroke='#7FA9DE' strokeWidth='1' opacity='0.5' />
+        <circle cx='150' cy='110' r='48' fill='none' stroke='#E8B75A' strokeWidth='1.5' opacity='0.55' />
+        <circle cx='234' cy='110' r='4' fill='#E8B75A' />
+      </svg>
+    </Box>
+
+    <Box style={{ position: 'relative', height: 76, background: 'linear-gradient(90deg, #0A2342 0%, #16457C 100%)', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 60px' }}>
+      <Box style={{ flexDirection: 'row', alignItems: 'center', gap: 16 }}>
+        <Box style={{ width: 5, height: 34, background: 'linear-gradient(180deg, #E8B75A, #00C2D6)', borderRadius: 3 }} />
+        <Text style={{ fontSize: 33, fontWeight: 'bold', color: '#FFFFFF' }}>现存问题 · 最重要的三项</Text>
+      </Box>
+      <Box style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+        <Text style={{ fontSize: 15, color: '#8FB3DC', letterSpacing: 1 }}>KEY ISSUES</Text>
+        <Text style={{ fontSize: 26, fontWeight: 'bold', color: '#E8B75A' }}>03</Text>
+      </Box>
+    </Box>
+
+    <Box style={{ position: 'relative', flex: 1, flexDirection: 'column', padding: '18px 60px 0 60px' }}>
+      <Text style={{ fontSize: 14.5, color: '#5A6B80', marginBottom: 14 }}>
+        选自 progress.md 高优先级待办，按对交付质量的影响排序；每项说明现象、成因、影响与处理。
+      </Text>
+
+      {[
+        {
+          n: '01', t: '条款可直引率仅 27%', c: '#C0392B', ic: 'file-text',
+          a: '2,839 个事项中仅 27% 能直引原文，其余只给事项名＋法律名＋核对提示。',
+          b: '网页正文列式摊平，改从 PDF 用字符坐标还原 6 列；后段章节列位偏移。',
+          c: '这部分回答不能引原文，用户须自行核对，削弱可溯源性。',
+          d: '按章节做列模板，或争取官方 Excel 版（最高优先级）。',
+        },
+        {
+          n: '02', t: '独立第二人盲评缺失', c: '#D9972A', ic: 'users',
+          a: 'A/B 两表 80/80 通过、κ=1.000，但报告标记为"非独立"，非两名评审者。',
+          b: '两表来自同一所有者确认后转录，κ 高只说明自我一致。',
+          c: '不能作为"独立人工评测"证据，评测可信度受限。',
+          d: '由未参与实现者填新匿名表，形成独立一致率与有效 κ。',
+        },
+        {
+          n: '03', t: '156 份缺明确施行日', c: '#1E5AA8', ic: 'calendar',
+          a: '1,248 份入时点索引：明确施行日 635、发布型 305、需人工补证 156。',
+          b: '源网页未写施行日；发布型按发布日处理，法规类缺日期无法推断。',
+          c: '涉及时点查询时只能保守降为"效力存疑"，无法给确定答案。',
+          d: '待补队列在 review_queue.csv，按官方来源补填后回灌覆盖索引。',
+        },
+      ].map((it, i) => (
+        <Box key={i} style={{ background: '#FFFFFF', border: '1px solid #E3EBF5', borderRadius: 10, boxShadow: '0 4px 14px rgba(10,35,66,0.07)', borderLeft: '5px solid ' + it.c, padding: '13px 20px', marginBottom: 13 }}>
+          <Box style={{ flexDirection: 'row', alignItems: 'center', gap: 13, marginBottom: 9 }}>
+            <Box style={{ width: 40, height: 40, borderRadius: 9, background: it.c + '16', alignItems: 'center', justifyContent: 'center' }}>
+              <FAIcon name={it.ic} style={{ fill: it.c, width: 21, height: 21 }} />
+            </Box>
+            <Text style={{ fontSize: 17, fontWeight: 'bold', color: it.c }}>{it.n}</Text>
+            <Text style={{ fontSize: 22, fontWeight: 600, color: '#0A2342' }}>{it.t}</Text>
+          </Box>
+          <Box style={{ flexDirection: 'row', gap: 20, marginBottom: 5 }}>
+            <Box style={{ flex: 1, flexDirection: 'row', gap: 8 }}>
+              <Text style={{ fontSize: 13.5, fontWeight: 600, color: it.c, width: 34 }}>现象</Text>
+              <Text style={{ fontSize: 13.5, color: '#5A6B80', lineHeight: 1.5, flex: 1 }}>{it.a}</Text>
+            </Box>
+            <Box style={{ flex: 1, flexDirection: 'row', gap: 8 }}>
+              <Text style={{ fontSize: 13.5, fontWeight: 600, color: it.c, width: 34 }}>成因</Text>
+              <Text style={{ fontSize: 13.5, color: '#5A6B80', lineHeight: 1.5, flex: 1 }}>{it.b}</Text>
+            </Box>
+          </Box>
+          <Box style={{ flexDirection: 'row', gap: 20 }}>
+            <Box style={{ flex: 1, flexDirection: 'row', gap: 8 }}>
+              <Text style={{ fontSize: 13.5, fontWeight: 600, color: '#1E5AA8', width: 34 }}>影响</Text>
+              <Text style={{ fontSize: 13.5, color: '#5A6B80', lineHeight: 1.5, flex: 1 }}>{it.c}</Text>
+            </Box>
+            <Box style={{ flex: 1, flexDirection: 'row', gap: 8 }}>
+              <Text style={{ fontSize: 13.5, fontWeight: 600, color: '#1E5AA8', width: 34 }}>处理</Text>
+              <Text style={{ fontSize: 13.5, color: '#16243A', fontWeight: 600, lineHeight: 1.5, flex: 1 }}>{it.d}</Text>
+            </Box>
+          </Box>
+        </Box>
+      ))}
+    </Box>
+
+    <Box style={{ position: 'relative', height: 34, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 60px' }}>
+      <Text style={{ fontSize: 12.5, color: '#9AA6B6' }}>项目进度汇报 · 2026-11-22</Text>
+      <Text style={{ fontSize: 12.5, color: '#9AA6B6', fontWeight: 600 }}>04 / 06</Text>
+    </Box>
+  </Box>
+</Slide>

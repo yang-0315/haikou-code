@@ -39,7 +39,7 @@ def load_records(store: tree_index.LocalTreeStore, database: str, query: str,
                  docs_wanted: int,
                  as_of=None) -> tuple[list[dict], dict[str, set[str]]]:
     """候选文档沿用已验证的文档级召回，再取出它们各自的树。"""
-    hits = rr.recall(database, query, docs_wanted)
+    hits = rr.recall(database, query, docs_wanted, as_of=as_of)
     records, matched = [], {}
     layer = ForceLayer(database)
     for hit in hits:
@@ -197,11 +197,16 @@ def tree_ask(query: str, database: str = DEFAULT_DB, docs_wanted: int = 4,
                       refusal_stage="recall")
         return result
     outline = tree_outline(store, records, matched)
+    layer = ForceLayer(database)
+    pseudo_docs = [{"doc": record["title"], "file": record["file"]}
+                   for record in records]
+    candidate_notes = rr.named_document_notes(
+        layer, pseudo_docs, query, database, point)
 
     try:
         raw = ask_model([{"role": "user",
                           "content": build_node_select_prompt(
-                              query, outline, point)}])
+                              query, outline, point, candidate_notes)}])
     except Exception as exc:                      # noqa: BLE001
         result.update(refusal=f"模型调用失败：{type(exc).__name__}: {exc}",
                       refusal_stage="llm_error")
@@ -216,6 +221,14 @@ def tree_ask(query: str, database: str = DEFAULT_DB, docs_wanted: int = 4,
     result["reason"] = picked.get("reason") or ""
     result["force_note"] = picked.get("force_note") or ""
     if picked.get("answerable") is False:
+        flat_docs = rr.recall(
+            database, query, max(docs_wanted, 4), as_of=point)
+        fallback = rr.repealed_named_answer(
+            layer, database, flat_docs, query, point)
+        if fallback:
+            result.update(fallback)
+            result["path"] = "tree"
+            return result
         result.update(refusal=("候选中没有能回答该问题的节点。模型理由："
                                f"{picked.get('reason') or '未说明'}"),
                       refusal_stage="model")
@@ -238,11 +251,19 @@ def tree_ask(query: str, database: str = DEFAULT_DB, docs_wanted: int = 4,
                           "caveats": block.get("force_detail", {}).get(
                               "caveats", [])}
                          for block in blocks]
+    flat_docs = rr.recall(
+        database, query, max(docs_wanted, 4), as_of=point)
+    rr.prune_noncurrent_sources(
+        result, layer, flat_docs, query, database, point)
     try:
         result["answer"] = ask_model(
             [{"role": "user",
               "content": build_answer_prompt(query, blocks, notes, point)}],
             temperature=temperature)
+        flat_docs = rr.recall(
+            database, query, max(docs_wanted, 4), as_of=point)
+        rr.ensure_named_repealed_notice(
+            result, layer, flat_docs, query, database, point)
     except Exception as exc:                      # noqa: BLE001
         result.update(refusal=f"模型调用失败：{type(exc).__name__}: {exc}",
                       refusal_stage="llm_error")

@@ -1,0 +1,75 @@
+<Slide style={{ width: 1280, height: 720, background: '#FFFFFF', padding: 0 }}>
+  <Box style={{ width: '100%', height: '100%', flexDirection: 'column' }}>
+    <Box style={{ height: 72, background: '#1E4FA8', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 60px' }}>
+      <Text style={{ fontSize: 34, fontWeight: 'bold', color: '#FFFFFF' }}>当前进度总览</Text>
+      <Text style={{ fontSize: 16, color: '#C9DAF5' }}>03 · PROGRESS</Text>
+    </Box>
+
+    <Box style={{ flex: 1, flexDirection: 'column', padding: '28px 60px 0 60px' }}>
+      <Box style={{ flexDirection: 'row', gap: 20 }}>
+        {[
+          { n: '1,248', u: '份', t: '政策正文', d: '目录去重约 1,255 份 → 覆盖 99%' },
+          { n: '43,642', u: '个', t: '检索单元', d: '条文 24,471 + 句块 19,171' },
+          { n: '84', u: '题', t: 'validity-QA', d: '本轮评测总正确率 100%' },
+        ].map((k, i) => (
+          <Box key={i} style={{ flex: 1, border: '1px solid #D6DCE5', borderTop: '3px solid #1E4FA8', padding: '18px 20px' }}>
+            <Box style={{ flexDirection: 'row', alignItems: 'flex-end', gap: 6 }}>
+              <Text style={{ fontSize: 54, fontWeight: 'bold', color: '#1E4FA8', lineHeight: 1.1 }}>{k.n}</Text>
+              <Text style={{ fontSize: 20, color: '#4A5568', marginBottom: 8 }}>{k.u}</Text>
+            </Box>
+            <Text style={{ fontSize: 20, fontWeight: 600, color: '#1A2230', marginTop: 6 }}>{k.t}</Text>
+            <Text style={{ fontSize: 15, color: '#8B97A8', marginTop: 4 }}>{k.d}</Text>
+          </Box>
+        ))}
+      </Box>
+
+      <Box style={{ flexDirection: 'row', gap: 28, marginTop: 24, flex: 1 }}>
+        <Box style={{ flex: 1, flexDirection: 'column' }}>
+          <Text style={{ fontSize: 23, fontWeight: 600, color: '#1E4FA8', marginBottom: 12 }}>语料与索引</Text>
+          {[
+            '去空白总字数 887 万（中位 4,460 字）',
+            '1,244 份全部可检索（覆盖从 654 提升）',
+            '效力树 33,665 节点 / 24,387 条文',
+            '倒排词条 276,199；索引 41 MB',
+            '冷启动 0.68s，进程内 0.16s',
+          ].map((s, i) => (
+            <Box key={i} style={{ flexDirection: 'row', gap: 10, marginBottom: 10 }}>
+              <Text style={{ fontSize: 18, color: '#3D7BD9', fontWeight: 'bold' }}>·</Text>
+              <Text style={{ fontSize: 17, color: '#1A2230', lineHeight: 1.45 }}>{s}</Text>
+            </Box>
+          ))}
+        </Box>
+        <Box style={{ width: 1, background: '#D6DCE5' }} />
+        <Box style={{ flex: 1, flexDirection: 'column' }}>
+          <Text style={{ fontSize: 23, fontWeight: 600, color: '#1E4FA8', marginBottom: 12 }}>效力判定分布（1,244 份）</Text>
+          {[
+            { c: '#1E4FA8', n: '现行有效', v: '1,178（95%）' },
+            { c: '#D9534F', n: '已废止', v: '35' },
+            { c: '#FFC107', n: '效力存疑', v: '24' },
+            { c: '#8B97A8', n: '系列已废止', v: '7' },
+          ].map((s, i) => (
+            <Box key={i} style={{ flexDirection: 'row', alignItems: 'center', gap: 12, marginBottom: 12 }}>
+              <Box style={{ width: 12, height: 12, background: s.c, borderRadius: 6 }} />
+              <Text style={{ fontSize: 18, color: '#1A2230', flex: 1 }}>{s.n}</Text>
+              <Text style={{ fontSize: 18, color: '#1A2230', fontWeight: 600 }}>{s.v}</Text>
+            </Box>
+          ))}
+          <Text style={{ fontSize: 15, color: '#8B97A8', marginTop: 8, lineHeight: 1.5 }}>
+            废止依据：通知 23 份 + 151 份正文内的「同时废止」条款
+          </Text>
+        </Box>
+      </Box>
+
+      <Box style={{ background: '#E8EFF8', padding: '14px 20px', marginBottom: 18 }}>
+        <Text style={{ fontSize: 18, color: '#1A2230' }}>
+          <span style={{ fontWeight: 'bold', color: '#1E4FA8' }}>覆盖已完成：</span>语料 99%、检索 100%、效力判定全量；工作重心已从「补数据」转向「提质量与补核验」。
+        </Text>
+      </Box>
+    </Box>
+
+    <Box style={{ height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 60px' }}>
+      <Text style={{ fontSize: 14, color: '#8B97A8' }}>项目进度汇报 · 2026-11-22</Text>
+      <Text style={{ fontSize: 14, color: '#8B97A8' }}>05 / 12</Text>
+    </Box>
+  </Box>
+</Slide>

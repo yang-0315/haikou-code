@@ -1,0 +1,56 @@
+<Slide style={{ width: 1280, height: 720, background: '#FFFFFF', padding: 0 }}>
+  <Box style={{ width: '100%', height: '100%', flexDirection: 'column' }}>
+    <Box style={{ height: 72, background: '#1E4FA8', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 60px' }}>
+      <Text style={{ fontSize: 34, fontWeight: 'bold', color: '#FFFFFF' }}>项目定位</Text>
+      <Text style={{ fontSize: 16, color: '#C9DAF5' }}>01 · POSITIONING</Text>
+    </Box>
+
+    <Box style={{ flex: 1, flexDirection: 'column', padding: '32px 60px 0 60px' }}>
+      <Box style={{ background: '#E8EFF8', borderLeft: '4px solid #1E4FA8', padding: '18px 24px' }}>
+        <Text style={{ fontSize: 18, fontWeight: 600, color: '#1E4FA8', marginBottom: 6 }}>核心问题</Text>
+        <Text style={{ fontSize: 20, color: '#1A2230', lineHeight: 1.5 }}>
+          政策问答的真正风险不是「答不上」，而是把<span style={{ fontWeight: 'bold', color: '#D9534F' }}>已废止条文当成现行依据</span>答出来。
+        </Text>
+      </Box>
+
+      <Box style={{ flexDirection: 'row', gap: 32, marginTop: 28, flex: 1 }}>
+        <Box style={{ flex: 1, flexDirection: 'column' }}>
+          <Text style={{ fontSize: 24, fontWeight: 600, color: '#1E4FA8', marginBottom: 12 }}>我们做了什么</Text>
+          <Text style={{ fontSize: 19, color: '#1A2230', lineHeight: 1.7 }}>
+            在 PageIndex 之上做「法律效力感知」的政策问答与比对系统：文档的效力状态作为<span style={{ fontWeight: 'bold' }}>推理的一等维度</span>进入检索与作答，而不是检索完成后再过滤。
+          </Text>
+          <Text style={{ fontSize: 19, color: '#1A2230', lineHeight: 1.7, marginTop: 14 }}>
+            当前端到端可跑，支持按<span style={{ fontWeight: 'bold' }}>历史时点</span>重算效力；语料覆盖约 99%。
+          </Text>
+        </Box>
+        <Box style={{ width: 1, background: '#D6DCE5' }} />
+        <Box style={{ flex: 1, flexDirection: 'column' }}>
+          <Text style={{ fontSize: 24, fontWeight: 600, color: '#1E4FA8', marginBottom: 12 }}>效力四态</Text>
+          {[
+            { c: '#1E4FA8', t: '现行有效', d: '可作为当前依据引用' },
+            { c: '#FFC107', t: '效力存疑', d: '引用时须提示核实' },
+            { c: '#D9534F', t: '已废止', d: '只能说明历史沿革' },
+            { c: '#8B97A8', t: '系列已废止', d: '版本难分，请核对版本' },
+          ].map((s, i) => (
+            <Box key={i} style={{ flexDirection: 'row', alignItems: 'center', gap: 12, marginBottom: 12 }}>
+              <Box style={{ width: 12, height: 12, background: s.c, borderRadius: 6 }} />
+              <Text style={{ fontSize: 19, color: '#1A2230', width: 120, fontWeight: 600 }}>{s.t}</Text>
+              <Text style={{ fontSize: 17, color: '#4A5568' }}>{s.d}</Text>
+            </Box>
+          ))}
+        </Box>
+      </Box>
+
+      <Box style={{ background: '#F7F9FC', borderTop: '1px solid #D6DCE5', padding: '14px 20px', marginBottom: 20 }}>
+        <Text style={{ fontSize: 18, color: '#1A2230' }}>
+          <span style={{ fontWeight: 'bold', color: '#1E4FA8' }}>一句话：</span>把「这条还算出数吗」变成模型读目录时就看见的维度，而非事后补一层过滤。
+        </Text>
+      </Box>
+    </Box>
+
+    <Box style={{ height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 60px' }}>
+      <Text style={{ fontSize: 14, color: '#8B97A8' }}>项目进度汇报 · 2026-11-22</Text>
+      <Text style={{ fontSize: 14, color: '#8B97A8' }}>03 / 12</Text>
+    </Box>
+  </Box>
+</Slide>

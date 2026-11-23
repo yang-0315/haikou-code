@@ -1,0 +1,55 @@
+<Slide style={{ width: 1280, height: 720, background: '#FFFFFF', padding: 0 }}>
+  <Box style={{ width: '100%', height: '100%', flexDirection: 'column' }}>
+    <Box style={{ height: 72, background: '#1E4FA8', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 60px' }}>
+      <Text style={{ fontSize: 34, fontWeight: 'bold', color: '#FFFFFF' }}>系统架构主线</Text>
+      <Text style={{ fontSize: 16, color: '#C9DAF5' }}>02 · ARCHITECTURE</Text>
+    </Box>
+
+    <Box style={{ flex: 1, flexDirection: 'column', padding: '26px 60px 0 60px' }}>
+      <Box style={{ background: '#E8EFF8', border: '1px solid #3D7BD9', padding: '14px 20px', alignItems: 'center' }}>
+        <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#1E4FA8' }}>force_protocol.py · 效力推理协议（spine）</Text>
+        <Text style={{ fontSize: 16, color: '#4A5568', marginTop: 4 }}>状态含义 / 选条规则 / 作答规则 / agent 提示 / 输出契约 — 一处定义，三种渲染</Text>
+      </Box>
+
+      <Text style={{ fontSize: 15, color: '#8B97A8', textAlign: 'center', marginTop: 8, marginBottom: 8 }}>三类检索后端，共用同一份协议</Text>
+      <Box style={{ flexDirection: 'row', gap: 16 }}>
+        {[
+          { n: '后端 1', t: '条文清单寻址', d: 'bigram 倒排召回，按条号选读；主 demo，全流程可离线复现' },
+          { n: '后端 2', t: '沿树 node_id 寻址', d: '本地带效力树，章→条层级，按节点选读并给出溯源路径' },
+          { n: '后端 3', t: '真实 PageIndex 客户端', d: '包装三接缝注入 force，进入 PageIndex 原生工具循环' },
+        ].map((c, i) => (
+          <Box key={i} style={{ flex: 1, background: '#FFFFFF', border: '1px solid #D6DCE5', borderTop: '3px solid #3D7BD9', padding: '16px 18px' }}>
+            <Text style={{ fontSize: 15, color: '#3D7BD9', fontWeight: 600 }}>{c.n}</Text>
+            <Text style={{ fontSize: 21, fontWeight: 'bold', color: '#1A2230', marginTop: 6, marginBottom: 8 }}>{c.t}</Text>
+            <Text style={{ fontSize: 16, color: '#4A5568', lineHeight: 1.5 }}>{c.d}</Text>
+          </Box>
+        ))}
+      </Box>
+
+      <Text style={{ fontSize: 15, color: '#8B97A8', textAlign: 'center', marginTop: 16, marginBottom: 8 }}>共享数据层与调用接缝</Text>
+      <Box style={{ flexDirection: 'row', gap: 12 }}>
+        {[
+          '检索路由 retrieval_router',
+          '带效力树 force_trees',
+          '时点 + 条文级效力',
+          '统一 Provider',
+        ].map((s, i) => (
+          <Box key={i} style={{ flex: 1, background: '#F7F9FC', border: '1px solid #E5E7EB', padding: '12px 10px', alignItems: 'center' }}>
+            <Text style={{ fontSize: 16, color: '#1A2230', fontWeight: 600 }}>{s}</Text>
+          </Box>
+        ))}
+      </Box>
+
+      <Box style={{ background: '#F7F9FC', borderTop: '1px solid #D6DCE5', padding: '14px 20px', marginTop: 18, marginBottom: 18 }}>
+        <Text style={{ fontSize: 18, color: '#1A2230' }}>
+          <span style={{ fontWeight: 'bold', color: '#1E4FA8' }}>关键设计：</span>协议一处定义、三种渲染；换引擎、换模型、换领域，协议不动。效力判定走同一 ForceLayer，三后端结果一致。
+        </Text>
+      </Box>
+    </Box>
+
+    <Box style={{ height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 60px' }}>
+      <Text style={{ fontSize: 14, color: '#8B97A8' }}>项目进度汇报 · 2026-11-22</Text>
+      <Text style={{ fontSize: 14, color: '#8B97A8' }}>04 / 12</Text>
+    </Box>
+  </Box>
+</Slide>

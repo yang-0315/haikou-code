@@ -16,7 +16,8 @@ import re
 import sys
 import time
 
-sys.path.insert(0, r"C:\Users\Lenovo\Desktop\PageIndex\haikou")
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
 
 from repeal import body_text, fetch, meta_fields
 

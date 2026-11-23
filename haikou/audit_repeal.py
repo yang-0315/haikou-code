@@ -4,6 +4,7 @@ import os
 import re
 
 from paths import DEFAULT_DATABASE as DB
+from repeal import declared_repeal_count
 
 COUNT_HINT = re.compile(r"等\s*([一二三四五六七八九十百\d]+)\s*(?:件|个|部|项)")
 CN = {"一": 1, "二": 2, "三": 3, "四": 4, "五": 5, "六": 6, "七": 7,
@@ -31,8 +32,9 @@ def main():
         names = notice["repealed_documents"]
         flags = []
 
-        hint = COUNT_HINT.search(title)
-        expected = cn_int(hint.group(1)) if hint else None
+        expected = notice.get("declared_count")
+        if expected is None:
+            expected = declared_repeal_count(title)
         if expected and len(names) < expected:
             flags.append(f"数量不符：标题说 {expected} 件，只识别出 {len(names)} 件")
 
@@ -43,8 +45,9 @@ def main():
         if any(re.sub(r"\s+", "", n) == own for n in names):
             flags.append("把通知自己的标题当成了被废止文件")
 
-        if "修改" in title and "废止" in title:
-            flags.append("混合决定：同一文件既修改又废止，需分别归类")
+        if "修改" in title and "废止" in title and \
+                notice.get("declared_count") is None:
+            flags.append("混合决定未识别废止数量")
 
         if not notice.get("issuer"):
             flags.append("未识别发布机关")
@@ -75,6 +78,10 @@ def main():
             counter[key] = counter.get(key, 0) + 1
     for key, value in sorted(counter.items(), key=lambda kv: -kv[1]):
         print(f"  {value:>3}  {key}")
+    if problems:
+        print(f"\n问题 {len(problems)}/{len(notices)}")
+        raise SystemExit(1)
+    print(f"\n通过 {len(notices)}/{len(notices)}")
 
 
 if __name__ == "__main__":

@@ -6,7 +6,8 @@ import sys
 import urllib.parse
 import urllib.request
 
-sys.path.insert(0, r"C:\Users\Lenovo\Desktop\PageIndex\haikou")
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
 
 from repeal import CTX, UA, fetch, meta_fields
 

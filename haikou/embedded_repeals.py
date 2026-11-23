@@ -16,6 +16,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
+from document_numbers import own_numbers as extract_own_numbers
 from warn import doc_key, is_usable_name  # noqa: E402
 
 from paths import DEFAULT_DATABASE as DEFAULT_DB
@@ -103,11 +104,8 @@ def effective_date_of(text: str) -> str | None:
 
 
 def document_number_of(text: str) -> str | None:
-    flat = re.sub(r"\s+", "", text)
-    number = re.search(
-        r"((?:琼府办|琼府)\s*〔\s*20\d{2}\s*〕\s*\d+\s*号"
-        r"|海南省人民政府令第\s*\d+\s*号)", flat[:400])
-    return number.group(1) if number else None
+    found = extract_own_numbers(text)
+    return found[0] if found else None
 
 
 def scan_file(path: str) -> dict | None:
@@ -152,14 +150,9 @@ def record_in_index(database: str, record: dict) -> bool:
     return True
 
 
-def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--database", default=DEFAULT_DB)
-    parser.add_argument("--root", default="",
-                        help="扫描根目录，默认扫描整个 database（含 library）")
-    args = parser.parse_args()
-
-    root = args.root or args.database
+def build_index(database: str, root: str = "") -> list[dict]:
+    """Rebuild embedded-repeal records and return them after atomic write."""
+    root = root or database
     records = []
     scanned = 0
     for folder, dirs, files in os.walk(root):
@@ -174,7 +167,7 @@ def main():
             scanned += 1
             record = scan_file(os.path.join(folder, name))
             if record:
-                record["folder"] = os.path.relpath(folder, args.database)
+                record["folder"] = os.path.relpath(folder, database)
                 records.append(record)
 
     # 同名文件可能分布在多个栏目（library/<栏目>/同名.txt），按文件名去重，
@@ -186,17 +179,30 @@ def main():
             best[key] = record
     records = list(best.values())
 
-    print(f"扫描 {scanned} 份文件，发现 {len(records)} 份自带废止条款\n")
+    path = os.path.join(database, "_embedded_repeals.json")
+    temp = path + ".tmp"
+    with open(temp, "w", encoding="utf-8") as fh:
+        json.dump(records, fh, ensure_ascii=False, indent=2)
+    os.replace(temp, path)
+    print(f"扫描 {scanned} 份文件，发现 {len(records)} 份自带废止条款")
+    print(f"\n→ {path}")
+    return records
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--database", default=DEFAULT_DB)
+    parser.add_argument("--root", default="",
+                        help="扫描根目录，默认扫描整个 database（含 library）")
+    args = parser.parse_args()
+
+    records = build_index(args.database, args.root)
+    print()
     for record in records:
         print(f"◆ {record['source_title'][:44]}")
         print(f"    生效: {record['effective_date'] or '未识别'}"
               f"   文号: {record['source_number'] or '未标注'}")
         print(f"    废止: {record['repeals']}")
-
-    path = os.path.join(args.database, "_embedded_repeals.json")
-    with open(path, "w", encoding="utf-8") as fh:
-        json.dump(records, fh, ensure_ascii=False, indent=2)
-    print(f"\n→ {path}")
 
 
 if __name__ == "__main__":

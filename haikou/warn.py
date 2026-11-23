@@ -15,6 +15,7 @@ import json
 import os
 import re
 
+from document_numbers import own_numbers as extract_own_numbers
 from paths import DEFAULT_DATABASE as DEFAULT_DB
 
 IN_FORCE = "现行有效"
@@ -122,6 +123,7 @@ def load_index(database: str) -> dict:
 
 
 def corpus_documents(database: str) -> list[dict]:
+    """All curated and cached policy bodies, with unique relative-path keys."""
     docs = []
     for name in sorted(os.listdir(database)):
         if name.startswith("_") or not name.lower().endswith((".txt", ".md")):
@@ -129,8 +131,31 @@ def corpus_documents(database: str) -> list[dict]:
         path = os.path.join(database, name)
         head = open(path, encoding="utf-8", errors="ignore").read(4000)
         numbers = own_numbers(head)
-        docs.append({"file": name, "title": os.path.splitext(name)[0],
-                     "doc_numbers": list(dict.fromkeys(numbers))})
+        docs.append({
+            "file": name,
+            "key": name,
+            "path": path,
+            "title": os.path.splitext(name)[0],
+            "doc_numbers": list(dict.fromkeys(numbers)),
+            "text": head,
+        })
+    library = os.path.join(database, "library")
+    for folder, dirs, files in os.walk(library):
+        dirs[:] = sorted(d for d in dirs if not d.startswith("_"))
+        for name in sorted(files):
+            if name.startswith("_") or not name.lower().endswith((".txt", ".md")):
+                continue
+            path = os.path.join(folder, name)
+            head = open(path, encoding="utf-8", errors="ignore").read(4000)
+            numbers = own_numbers(head)
+            docs.append({
+                "file": name,
+                "key": os.path.relpath(path, database),
+                "path": path,
+                "title": os.path.splitext(name)[0],
+                "doc_numbers": list(dict.fromkeys(numbers)),
+                "text": head,
+            })
     return docs
 
 
@@ -143,11 +168,7 @@ def own_numbers(text: str) -> list[str]:
     """
     # 先压平空白：文号会被折行切开（"海南省人民\n政府令第329号"），
     # 正则里再多的 \s* 也接不住这种断法。PDF 抽取的正文尤其常见。
-    head = re.sub(r"\s+", "", text[:300])
-    found = re.findall(
-        r"((?:琼府办|琼府|国办发|国发|财税)\s*〔\s*20\d{2}\s*〕\s*\d+\s*号"
-        r"|海南省人民政府令第\s*\d+\s*号)", head)
-    return [re.sub(r"\s+", "", found[0])] if found else []
+    return extract_own_numbers(text or "")
 
 
 # 只有文书类型、没有具体名称的词。正文里常见"（以下简称《条例》）"这类简称，
@@ -350,20 +371,19 @@ def status_for(doc: dict, index: dict) -> dict:
                     reason, {"note": reason}, caveats, index)
 
 
-def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--database", default=DEFAULT_DB)
-    args = parser.parse_args()
-
-    index = load_index(args.database)
-    docs = corpus_documents(args.database)
-    print(f"语料 {len(docs)} 份，废止文件索引 {len(index.get('notices', []))} 份\n")
-
+def build_status(database: str) -> dict:
+    """Compute and atomically store document-level force for the library."""
+    index = load_index(database)
+    docs = corpus_documents(database)
     result = {}
     for doc in docs:
         status = status_for(doc, index)
-        result[doc["file"]] = {"title": doc["title"],
-                               "doc_numbers": doc["doc_numbers"], **status}
+        result[doc.get("key") or doc["file"]] = {
+            "title": doc["title"],
+            "file": doc["file"],
+            "doc_numbers": doc["doc_numbers"],
+            **status,
+        }
         mark = {IN_FORCE: "○", REPEALED: "×", SERIES_REPEALED: "△",
                 QUESTIONABLE: "?", UNKNOWN: "?"}.get(status["status"], "?")
         print(f"{mark} {doc['title'][:40]}")
@@ -376,14 +396,28 @@ def main():
             print(f"    注意: {caveat}")
         print()
 
-    path = os.path.join(args.database, "_force_status.json")
-    with open(path, "w", encoding="utf-8") as fh:
+    path = os.path.join(database, "_force_status.json")
+    temp = path + ".tmp"
+    with open(temp, "w", encoding="utf-8") as fh:
         json.dump(result, fh, ensure_ascii=False, indent=2)
+    os.replace(temp, path)
+    return result
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--database", default=DEFAULT_DB)
+    args = parser.parse_args()
+
+    index = load_index(args.database)
+    docs = corpus_documents(args.database)
+    print(f"语料 {len(docs)} 份，废止文件索引 {len(index.get('notices', []))} 份\n")
+    result = build_status(args.database)
     counts = {}
     for item in result.values():
         counts[item["status"]] = counts.get(item["status"], 0) + 1
     print("状态汇总:", counts)
-    print("索引 →", path)
+    print("索引 →", os.path.join(args.database, "_force_status.json"))
 
 
 if __name__ == "__main__":

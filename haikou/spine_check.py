@@ -87,7 +87,7 @@ def check_backends_use_protocol():
 
 def check_dependency_direction():
     """协议只依赖 warn 与标准库；后端可以被单独替换。"""
-    allowed = {"__future__", "argparse", "os", "sys", "warn"}
+    allowed = {"__future__", "argparse", "os", "re", "sys", "warn"}
     tree = ast.parse(open(os.path.join(HERE, "force_protocol.py"),
                           encoding="utf-8").read())
     imported = set()

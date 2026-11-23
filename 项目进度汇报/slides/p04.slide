@@ -1,0 +1,58 @@
+<Slide style={{ width: 1280, height: 720, background: '#FFFFFF', padding: 0 }}>
+  <Box style={{ width: '100%', height: '100%', flexDirection: 'column' }}>
+    <Box style={{ height: 72, background: '#1E4FA8', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 60px' }}>
+      <Text style={{ fontSize: 34, fontWeight: 'bold', color: '#FFFFFF' }}>本轮测试 · 批次总览</Text>
+      <Text style={{ fontSize: 16, color: '#C9DAF5' }}>02 · TEST RESULTS</Text>
+    </Box>
+
+    <Box style={{ flex: 1, flexDirection: 'column', padding: '24px 60px 0 60px' }}>
+      <Box style={{ flexDirection: 'row', alignItems: 'center', gap: 16, marginBottom: 16 }}>
+        <Box style={{ background: '#E8EFF8', padding: '8px 14px' }}>
+          <Text style={{ fontSize: 16, fontWeight: 600, color: '#1E4FA8' }}>批次 2026-11-22_round-01</Text>
+        </Box>
+        <Text style={{ fontSize: 15, color: '#4A5568' }}>21:20–21:28 · Git a20edc3 · 核心结论 PASS · 在线模型 PASS</Text>
+      </Box>
+
+      <Box style={{ flexDirection: 'row', gap: 16, marginBottom: 18 }}>
+        {[
+          { n: '19/19', t: '自研核心测试', c: '#1E4FA8' },
+          { n: '22/22', t: 'Web 服务审计', c: '#1E4FA8' },
+          { n: '84/84', t: 'validity-QA', c: '#1E4FA8' },
+        ].map((k, i) => (
+          <Box key={i} style={{ flex: 1, border: '1px solid #D6DCE5', padding: '12px 18px', flexDirection: 'row', alignItems: 'center', gap: 16 }}>
+            <Text style={{ fontSize: 36, fontWeight: 'bold', color: k.c }}>{k.n}</Text>
+            <Text style={{ fontSize: 17, color: '#4A5568' }}>{k.t}</Text>
+          </Box>
+        ))}
+      </Box>
+
+      <Text style={{ fontSize: 20, fontWeight: 600, color: '#1E4FA8', marginBottom: 10 }}>本轮完成事项（6 个模块）</Text>
+      <Box style={{ flexDirection: 'column', gap: 10, flex: 1 }}>
+        {[
+          ['测试基础设施', '新增批量测试脚本，逐条捕获输出/退出码/耗时/环境快照，结果独立归档；历史材料统一快照 52 份'],
+          ['评测集扩至 84 题', '基础 30 + 新增 50 + v4 路由覆盖 4；数据契约校验通过，自动评测全对'],
+          ['时点证据完整性', '正式索引覆盖 1,248 份：明确施行日 635、政策发布型 305、需人工补证 156'],
+          ['Provider 解耦', 'DeepSeek / OpenAI / 兼容接口 / 本地模型可切换，主业务与建索引收口同一层'],
+          ['条文级部分废止', '从修改决定提取删条/删款项事件，检索链路各层统一使用条文级状态'],
+          ['用户服务入口', '本机 Web 页面 + 异步 JSON API，支持提问、历史时点、效力状态、拒答与引用展示'],
+        ].map((r, i) => (
+          <Box key={i} style={{ flexDirection: 'row', gap: 16, borderLeft: '3px solid #3D7BD9', padding: '6px 0 6px 14px' }}>
+            <Text style={{ fontSize: 17, fontWeight: 600, color: '#1A2230', width: 150 }}>{r[0]}</Text>
+            <Text style={{ fontSize: 15, color: '#4A5568', flex: 1, lineHeight: 1.45 }}>{r[1]}</Text>
+          </Box>
+        ))}
+      </Box>
+
+      <Box style={{ background: '#F7F9FC', borderTop: '1px solid #D6DCE5', padding: '12px 18px', marginTop: 12, marginBottom: 16 }}>
+        <Text style={{ fontSize: 16, color: '#4A5568' }}>
+          上游 PageIndex 单元测试 <span style={{ fontWeight: 'bold', color: '#1A2230' }}>668 passed / 77 skipped / 5 failed</span>；5 项失败均为 Windows 平台前提问题，未改动上游源码（归因见后页）。
+        </Text>
+      </Box>
+    </Box>
+
+    <Box style={{ height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 60px' }}>
+      <Text style={{ fontSize: 14, color: '#8B97A8' }}>项目进度汇报 · 2026-11-22</Text>
+      <Text style={{ fontSize: 14, color: '#8B97A8' }}>04 / 10</Text>
+    </Box>
+  </Box>
+</Slide>

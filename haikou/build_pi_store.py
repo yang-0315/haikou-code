@@ -37,8 +37,15 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 SAMPLE_DIR = os.path.join(HERE, "_pi_samples")
 STORE_DIR = os.path.join(HERE, "_pi_store")
 MANIFEST = os.path.join(HERE, "_pi_manifest.json")
-PI_REPO = r"C:\Users\Lenovo\Desktop\PageIndex\PageIndex"
-FONT = r"C:\Windows\Fonts\simhei.ttf"
+PI_REPO = os.path.join(os.path.dirname(HERE), "PageIndex")
+_FONT_CANDIDATES = [
+    os.environ.get("POLICY_PDF_FONT", ""),
+    os.path.join(os.environ.get("WINDIR", r"C:\Windows"),
+                 "Fonts", "simhei.ttf"),
+    "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
+]
+FONT = next((path for path in _FONT_CANDIDATES
+             if path and os.path.exists(path)), _FONT_CANDIDATES[1])
 
 # 三份样例：括号里第二项是"挑它来覆盖哪一态"，不是判定结果——
 # 判定结果一律由 force_layer 现算（见 build_pdfs），这里只是选题意图。

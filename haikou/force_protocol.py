@@ -14,6 +14,7 @@ ForceLayer。`spine_check.py` 会守住这条线——加一条规则只改 POLI
 from __future__ import annotations
 
 import os
+import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -23,6 +24,62 @@ from warn import (ARTICLE_PARTIAL, ARTICLE_REPEALED, IN_FORCE, QUESTIONABLE,
 
 # 选条数量的硬上限。提示词里写了 8，解析时也要拦一次，模型超选不能带崩上下文。
 MAX_BLOCKS = 8
+
+INVALIDATION_WORDS = (
+    "已废止",
+    "系列已废止",
+    "失效",
+    "不再有效",
+    "不能作为现行依据",
+    "不得作为现行依据",
+)
+NEGATED_BEFORE = (
+    "未发现",
+    "没有发现",
+    "未出现",
+    "没有出现",
+    "未见",
+    "不存在",
+    "并未",
+    "尚未",
+    "没有被",
+    "未被",
+    "不是",
+    "无需",
+)
+CONTRAST = re.compile(r"(?:但是?|然而|不过|可是|仍应|仍需)")
+
+
+def explicit_invalidity(answer: str) -> bool:
+    """Whether an answer positively says a source is no longer usable.
+
+    The same detector is used for answer repair and evaluation.  A bare
+    substring check would confuse "未发现已废止" with a positive warning.
+    """
+    answer = answer or ""
+    for word in INVALIDATION_WORDS:
+        start = 0
+        while True:
+            position = answer.find(word, start)
+            if position == -1:
+                break
+            sentence_start = max(
+                answer.rfind(mark, 0, position)
+                for mark in ("。", "；", "\n")
+            ) + 1
+            clause = answer[sentence_start:position]
+            negated_at = max(
+                (clause.rfind(negated) for negated in NEGATED_BEFORE),
+                default=-1,
+            )
+            tail = clause[negated_at:] if negated_at >= 0 else ""
+            if negated_at < 0 or CONTRAST.search(tail):
+                return True
+            start = position + len(word)
+    return bool(re.search(
+        r"(?:已被|已由|已经由)[^。；\n]{0,40}(?:取代|替代|废止)",
+        answer,
+    ))
 
 # 三态在两种渲染里的说法。法律状态只有一个源，措辞按读者不同。
 STATUS_MEANING = [
@@ -71,6 +128,16 @@ POLICY = {
         "agent": "只有当现行有效条文无法回答问题时，才引用已废止的，"
                  "并在答案中明确说明该内容已失效及其依据",
     },
+    "named_document_no_substitution": {
+        "select": "问题点名某法规时，先选该法规本身；若它已废止，保留该法规条目"
+                  "并可按废止依据另选现行替代法规。不得用“关于修改该法规的"
+                  "决定”顶替被点名的法规正文",
+        "answer": "问题点名某法规时，必须明确回答该法规；若已废止，说明其失效"
+                  "状态及内容仅供参考，不得把修改决定说成该法规本身。可另行说明"
+                  "现行替代法规",
+        "agent": "用户点名某法规时，不得用对该法规的修改决定顶替其正文；"
+                 "法规已废止时必须明确说明",
+    },
     "questionable_flag": {
         "answer": "依据中若有「效力存疑」，提示需人工核实",
         "agent": "引用存疑条文时标注需核实",
@@ -99,13 +166,16 @@ POLICY = {
 }
 
 # 每条的编号顺序单独给：同一条规则在选条与作答里的先后本来就不一样。
-SELECT_ORDER = ["temporal_scope", "in_force_first", "repealed_only_if_needed",
+SELECT_ORDER = ["temporal_scope", "named_document_no_substitution",
+                "in_force_first", "repealed_only_if_needed",
                 "article_level_force", "max_blocks", "refuse_insufficient"]
-ANSWER_ORDER = ["temporal_scope", "conclusion_first", "cite_source_and_force",
+ANSWER_ORDER = ["temporal_scope", "named_document_no_substitution",
+                "conclusion_first", "cite_source_and_force",
                 "article_level_force", "repealed_only_if_needed",
                 "questionable_flag",
                 "refuse_insufficient"]
-AGENT_ORDER = ["temporal_scope", "in_force_first", "repealed_only_if_needed",
+AGENT_ORDER = ["temporal_scope", "named_document_no_substitution",
+               "in_force_first", "repealed_only_if_needed",
                "article_level_force", "questionable_flag",
                "cite_source_and_force",
                "refuse_insufficient"]
@@ -181,24 +251,34 @@ def agent_instructions(as_of: dict | None = None) -> str:
 
 
 def build_select_prompt(query: str, outline: str,
-                        as_of: dict | None = None) -> str:
+                        as_of: dict | None = None,
+                        candidate_notes: list[str] | None = None) -> str:
     """选条提示：目录每条带效力，模型选条或判定答不了。"""
-    return "\n".join(
-        ["你是政策检索助手。下面是候选条文的目录，每条带所属文档的效力状态。",
-         ""] + force_meaning(as_of) + [""] + select_rules() + [
-            "", f"问题：{query}", "", "目录：", outline, "",
-            "只输出 JSON，不要其他文字：", SELECT_SCHEMA])
+    lines = ["你是政策检索助手。下面是候选条文的目录，每条带所属文档的效力状态。"]
+    if candidate_notes:
+        lines += ["", "问题点名文件提示："] + [
+            f"- {note}" for note in candidate_notes]
+    lines += ([""] + force_meaning(as_of) + [""] + select_rules() + [
+        "", f"问题：{query}", "", "目录：", outline, "",
+        "只输出 JSON，不要其他文字：", SELECT_SCHEMA])
+    return "\n".join(lines)
 
 
 def build_node_select_prompt(query: str, outline: str,
-                             as_of: dict | None = None) -> str:
+                             as_of: dict | None = None,
+                             candidate_notes: list[str] | None = None) -> str:
     """沿树选节点的提示：目录是树（章 → 条），每个节点带 node_id 与效力。"""
-    return "\n".join(
-        ["你是政策检索助手。下面是候选文档的树目录，节点带 node_id 与效力状态。",
-         "选节点时给出 node_id（照抄目录里的编号），不要改写。",
-         ""] + force_meaning(as_of) + [""] + select_rules() + [
-            "", f"问题：{query}", "", "树目录：", outline, "",
-            "只输出 JSON，不要其他文字：", SELECT_NODE_SCHEMA])
+    lines = [
+        "你是政策检索助手。下面是候选文档的树目录，节点带 node_id 与效力状态。",
+        "选节点时给出 node_id（照抄目录里的编号），不要改写。",
+    ]
+    if candidate_notes:
+        lines += ["", "问题点名文件提示："] + [
+            f"- {note}" for note in candidate_notes]
+    lines += ([""] + force_meaning(as_of) + [""] + select_rules() + [
+        "", f"问题：{query}", "", "树目录：", outline, "",
+        "只输出 JSON，不要其他文字：", SELECT_NODE_SCHEMA])
+    return "\n".join(lines)
 
 
 def build_answer_prompt(query: str, blocks: list[dict],

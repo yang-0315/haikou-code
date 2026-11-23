@@ -1,0 +1,72 @@
+<Slide style={{ width: 1280, height: 720, background: '#F5F9FF', padding: 60, fontFamily: 'Microsoft YaHei, Arial' }}>
+  <Box style={{ position: 'relative', width: '100%', height: '100%', gap: 16 }}>
+
+    <Box style={{ height: 84, gap: 8 }}>
+      <Box style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+        <Text style={{ fontSize: 14, color: '#3D7BD9', fontWeight: 600, letterSpacing: 2 }}>COPYRIGHT FILING · 03</Text>
+        <Text style={{ fontSize: 14, color: '#6B7C93' }}>原创性初筛 2026-11-23</Text>
+      </Box>
+      <Text style={{ fontSize: 32, fontWeight: 'bold', color: '#1A2230', lineHeight: 1.2 }}>自研主体已成型，申报范围收敛为 37 个文件</Text>
+      <Box style={{ height: 1, background: '#D7E3F4' }} />
+    </Box>
+
+    <Box style={{ height: 392, flexDirection: 'row', gap: 28 }}>
+
+      <Box style={{ width: 360, height: 392, padding: 24, borderRadius: 10, background: '#FFFFFF', border: '1px solid #D7E3F4', gap: 12 }}>
+        <Text style={{ fontSize: 21, fontWeight: 600, color: '#1A2230' }}>自研代码规模</Text>
+        <Box style={{ height: 1, background: '#E2EAF5' }} />
+        <Box style={{ height: 66, borderBottom: '1px solid #EEF3F9', justifyContent: 'center' }}>
+          <Text style={{ fontSize: 46, fontWeight: 'bold', color: '#1E4FA8' }}>37 <span style={{ fontSize: 18, color: '#6B7C93' }}>文件</span></Text>
+        </Box>
+        <Box style={{ height: 66, borderBottom: '1px solid #EEF3F9', justifyContent: 'center' }}>
+          <Text style={{ fontSize: 46, fontWeight: 'bold', color: '#1E4FA8' }}>12,993 <span style={{ fontSize: 18, color: '#6B7C93' }}>行</span></Text>
+        </Box>
+        <Box style={{ height: 66, borderBottom: '1px solid #EEF3F9', justifyContent: 'center' }}>
+          <Text style={{ fontSize: 46, fontWeight: 'bold', color: '#1E4FA8' }}>454 <span style={{ fontSize: 18, color: '#6B7C93' }}>函数</span></Text>
+        </Box>
+        <Box style={{ height: 60, justifyContent: 'center' }}>
+          <Text style={{ fontSize: 46, fontWeight: 'bold', color: '#1E4FA8' }}>21 <span style={{ fontSize: 18, color: '#6B7C93' }}>类</span></Text>
+        </Box>
+      </Box>
+
+      <Box style={{ width: 772, height: 392, padding: 20, borderRadius: 10, background: '#FFFFFF', border: '1px solid #D7E3F4', gap: 10 }}>
+        <Text style={{ fontSize: 21, fontWeight: 600, color: '#1A2230' }}>分组构成与第三方边界</Text>
+        <Box style={{ height: 1, background: '#E2EAF5' }} />
+        <Box style={{ height: 34, flexDirection: 'row', alignItems: 'center', padding: '0 12px', background: '#EEF4FC', borderRadius: 6 }}>
+          <Text style={{ width: 150, fontSize: 15, fontWeight: 600, color: '#1E4FA8' }}>分组</Text>
+          <Text style={{ width: 110, fontSize: 15, fontWeight: 600, color: '#1E4FA8' }}>文件数</Text>
+          <Text style={{ width: 120, fontSize: 15, fontWeight: 600, color: '#1E4FA8' }}>行数</Text>
+          <Text style={{ width: 350, fontSize: 15, fontWeight: 600, color: '#1E4FA8' }}>说明</Text>
+        </Box>
+        {[
+          { g: 'core 核心', f: '16', l: '6,586', d: '效力判定、检索、路由、服务' },
+          { g: 'support 支撑', f: '16', l: '3,646', d: '审计、评测、版本与差异工具' },
+          { g: 'web 前端', f: '3', l: '2,036', d: '页面、脚本、样式' },
+          { g: 'tools 工具', f: '2', l: '725', d: '测试轮次与历史归档' },
+        ].map((item, idx) => (
+          <Box key={idx} style={{ height: 46, flexDirection: 'row', alignItems: 'center', padding: '0 12px', background: idx % 2 === 0 ? '#FFFFFF' : '#F8FAFD', borderRadius: 6 }}>
+            <Text style={{ width: 150, fontSize: 16, fontWeight: 600, color: '#1A2230' }}>{item.g}</Text>
+            <Text style={{ width: 110, fontSize: 16, color: '#1E4FA8', fontWeight: 600 }}>{item.f}</Text>
+            <Text style={{ width: 120, fontSize: 16, color: '#1A2230' }}>{item.l}</Text>
+            <Text style={{ width: 350, fontSize: 15, color: '#6B7C93' }}>{item.d}</Text>
+          </Box>
+        ))}
+        <Box style={{ height: 44, flexDirection: 'row', alignItems: 'center', padding: '0 12px', marginTop: 2, background: '#FFF4F3', borderRadius: 6 }}>
+          <Text style={{ fontSize: 15, color: '#1A2230' }}>与 PageIndex 非平凡重合仅 <span style={{ fontWeight: 'bold', color: '#D9534F' }}>4 行</span>；PageIndex、语料、依赖与密钥全部排除。</Text>
+        </Box>
+      </Box>
+    </Box>
+
+    <Box style={{ height: 56, padding: '0 20px', borderRadius: 10, background: '#E7F0FB', flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+      <Box style={{ width: 4, height: 30, borderRadius: 2, background: '#1E4FA8' }} />
+      <Text style={{ fontSize: 16, color: '#1A2230', lineHeight: 1.4 }}>
+        <span style={{ fontWeight: 'bold' }}>原创性初筛：</span>未发现大段上游源码行重合、无第三方版权头；最终原创性仍由申请人确认。
+      </Text>
+    </Box>
+
+    <Box style={{ position: 'absolute', left: 0, right: 0, bottom: 0, flexDirection: 'row', justifyContent: 'space-between' }}>
+      <Text style={{ fontSize: 13, color: '#8B9BB0' }}>来源：docs/SOFTWARE_ORIGINALITY_REVIEW.md</Text>
+      <Text style={{ fontSize: 13, color: '#8B9BB0' }}>03 / 07</Text>
+    </Box>
+  </Box>
+</Slide>

@@ -35,7 +35,7 @@ from warn import own_numbers
 
 from paths import DEFAULT_DATABASE as DEFAULT_DB
 HERE = os.path.dirname(os.path.abspath(__file__))
-PI_REPO = r"C:\Users\Lenovo\Desktop\PageIndex\PageIndex"
+PI_REPO = os.path.join(os.path.dirname(HERE), "PageIndex")
 PI_STORE = os.path.join(HERE, "_pi_store")
 PI_MANIFEST = os.path.join(HERE, "_pi_manifest.json")
 

@@ -96,13 +96,18 @@ def main():
     def every_node_carries_force():
         missing, wrong = [], []
         for record in docs:
-            verdict = record["status"]["status"]
+            document_status = record["status"]
             for node in tree_index.walk(record["structure"]):
                 force = node.get("force")
                 if not isinstance(force, dict):
                     missing.append(record["file"])
                     break
-                if force.get("status") != verdict:
+                article = node.get("article", "")
+                expected = layer.article_status_for(
+                    record["title"], article, document_status,
+                    file=record["file"])["status"] if article else \
+                    document_status["status"]
+                if force.get("status") != expected:
                     wrong.append(record["file"])
                     break
         return (not missing and not wrong), \
@@ -247,7 +252,11 @@ def main():
 
     passed = sum(1 for ok, _ in results if ok is True)
     skipped = sum(1 for ok, _ in results if ok is None)
+    failed = len(results) - passed - skipped
     print(f"\n通过 {passed}/{len(results) - skipped}（跳过 {skipped}）")
+    if failed:
+        print(f"问题 {failed} 项")
+        raise SystemExit(1)
 
 
 def json_dumps_safe(value) -> str:

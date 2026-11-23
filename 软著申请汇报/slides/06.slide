@@ -1,0 +1,61 @@
+<Slide style={{ width: 1280, height: 720, background: '#F5F9FF', padding: 60, fontFamily: 'Microsoft YaHei, Arial' }}>
+  <Box style={{ position: 'relative', width: '100%', height: '100%', gap: 16 }}>
+
+    <Box style={{ height: 84, gap: 8 }}>
+      <Box style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+        <Text style={{ fontSize: 14, color: '#3D7BD9', fontWeight: 600, letterSpacing: 2 }}>COPYRIGHT FILING · 06</Text>
+        <Text style={{ fontSize: 14, color: '#6B7C93' }}>问题与解决方案</Text>
+      </Box>
+      <Text style={{ fontSize: 32, fontWeight: 'bold', color: '#1A2230', lineHeight: 1.2 }}>申报前的五个缺口都有明确解法</Text>
+      <Box style={{ height: 1, background: '#D7E3F4' }} />
+    </Box>
+
+    <Box style={{ height: 392, flexDirection: 'row', gap: 28 }}>
+
+      <Box style={{ width: 250, height: 392, padding: 26, borderRadius: 10, background: 'linear-gradient(155deg, #1E4FA8 0%, #103A67 100%)', justifyContent: 'space-between' }}>
+        <Box>
+          <Text style={{ fontSize: 16, color: '#BFD6F0', letterSpacing: 2 }}>关键缺口</Text>
+          <Text style={{ fontSize: 92, fontWeight: 'bold', color: '#FFFFFF', lineHeight: 1.05, marginTop: 10 }}>5</Text>
+          <Text style={{ fontSize: 24, fontWeight: 600, color: '#00D4E8', marginTop: 6 }}>按序处理</Text>
+        </Box>
+        <Box style={{ height: 1, background: 'rgba(255,255,255,0.28)' }} />
+        <Text style={{ fontSize: 17, color: '#D6E5F7', lineHeight: 1.6 }}>
+          核心源码边界已清楚；剩余工作集中在材料生成、真实截图与版本冻结。
+        </Text>
+      </Box>
+
+      <Box style={{ width: 882, height: 392, padding: 16, borderRadius: 10, background: '#FFFFFF', border: '1px solid #D7E3F4', gap: 6 }}>
+        <Box style={{ height: 32, flexDirection: 'row', alignItems: 'center', padding: '0 12px', background: '#EEF4FC', borderRadius: 6 }}>
+          <Text style={{ width: 220, fontSize: 16, fontWeight: 600, color: '#1E4FA8' }}>问题</Text>
+          <Text style={{ width: 270, fontSize: 16, fontWeight: 600, color: '#1E4FA8' }}>影响</Text>
+          <Text style={{ width: 350, fontSize: 16, fontWeight: 600, color: '#1E4FA8' }}>解决方案</Text>
+        </Box>
+        {[
+          { p: '源码材料未生成', i: '清单已有，缺 SHA-256 与排版 PDF', s: '生成 source_inventory、50 行/页 PDF 与前后 30 页' },
+          { p: '用户说明书未完成', i: '软著申报必须的用户文档', s: '按 14 章目录撰写，覆盖安装、功能与错误处理' },
+          { p: '功能截图不齐', i: '至少十类核心功能需真实截图', s: '用当前 V1.0 程序补齐，不含个人信息' },
+          { p: '版本未冻结', i: '本轮修复与实验仍是未提交改动', s: '建立申报标签、源码指纹与版本快照' },
+          { p: '两道旧法陷阱题失败', i: 'trap-05/07 未说明失效；156 份缺施行日', s: '如实写入已知边界；按官方证据补证队列处理' },
+        ].map((item, idx) => (
+          <Box key={idx} style={{ height: 60, flexDirection: 'row', alignItems: 'center', padding: '0 12px', background: idx % 2 === 0 ? '#FFFFFF' : '#F8FAFD', borderRadius: 6 }}>
+            <Text style={{ width: 220, fontSize: 15, fontWeight: 600, color: idx === 4 ? '#D9534F' : '#1A2230' }}>{item.p}</Text>
+            <Text style={{ width: 270, fontSize: 15, color: '#6B7C93', lineHeight: 1.4 }}>{item.i}</Text>
+            <Text style={{ width: 350, fontSize: 15, color: '#1A2230', lineHeight: 1.4 }}>{item.s}</Text>
+          </Box>
+        ))}
+      </Box>
+    </Box>
+
+    <Box style={{ height: 56, padding: '0 20px', borderRadius: 10, background: '#E7F0FB', flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+      <Box style={{ width: 4, height: 30, borderRadius: 2, background: '#1E4FA8' }} />
+      <Text style={{ fontSize: 16, color: '#1A2230', lineHeight: 1.4 }}>
+        <span style={{ fontWeight: 'bold' }}>优先级：</span>先冻结范围与源码，再生成材料与截图，最后做申请前复核；技术债不影响申报但需如实披露。
+      </Text>
+    </Box>
+
+    <Box style={{ position: 'absolute', left: 0, right: 0, bottom: 0, flexDirection: 'row', justifyContent: 'space-between' }}>
+      <Text style={{ fontSize: 13, color: '#8B9BB0' }}>来源：SOFTWARE_COPYRIGHT_APPLICATION_PLAN.md / progress.md 未完成待办</Text>
+      <Text style={{ fontSize: 13, color: '#8B9BB0' }}>06 / 07</Text>
+    </Box>
+  </Box>
+</Slide>
